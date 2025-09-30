@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North West Passage Holdings (NWPH) | Arctic Innovation & Resilience</title>
+    <!-- Load essential libraries for modern features -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Load Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        :root {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom Arctic Color Palette */
+        :root {
+            --color-arctic-blue: 4, 34, 60; 
+            --color-inuit-teal: 0, 168, 150;
+            --color-deep-white: 249, 250, 251;
+        }
+        .arctic-bg { background-color: rgb(var(--color-arctic-blue)); }
+        .arctic-blue-gradient { background: linear-gradient(135deg, rgb(var(--color-arctic-blue)) 0%, #005A9C 100%); }
+        .text-inuit-teal { color: rgb(var(--color-inuit-teal)); }
+        .bg-inuit-teal { background-color: rgb(var(--color-inuit-teal)); }
+        .border-inuit-teal { border-color: rgb(var(--color-inuit-teal)); }
+        .hover\:bg-inuit-teal-dark:hover { background-color: #008f7f; }
+        
+        html { scroll-behavior: smooth; }
+
+        /* Modern Frosted Glass Effect */
+        .frosted-glass {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+        }
+        
+        /* Custom scrollbar styling */
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: rgb(var(--color-deep-white)); }
+        body::-webkit-scrollbar-thumb { background: rgb(var(--color-arctic-blue)); border-radius: 4px; }
+        body::-webkit-scrollbar-thumb:hover { background: rgb(var(--color-inuit-teal)); }
+
+        /* Radial Progress Bar CSS */
+        .radial-progress-bar {
+            position: relative;
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--progress-color) var(--progress), 
+                #e5e7eb var(--progress)
+            );
+            transition: background 2s ease-out;
+        }
+        .radial-progress-bar::after {
+            content: attr(data-progress);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .radial-progress-bar-unit {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        /* Canvas and 3D Styling */
+        #investor-chart-canvas {
+            border: 2px solid #374151;
+            background-color: #1f2937;
+            width: 100%;
+            max-width: 800px;
+            height: 300px;
+            border-radius: 12px;
+        }
+        #threejs-housing-canvas {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            display: block;
+        }
+
+        /* Hero Background Styling (Enhanced for better visuals) */
+        #Home {
+            background-color: rgb(var(--color-arctic-blue));
+            position: relative;
+        }
+        #Home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="p" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="rgb(0, 168, 150, 0.1)"></rect></pattern></defs><rect width="100%" height="100%" fill="url(%23p)"></rect></svg>');
+            opacity: 0.2;
+            z-index: 0;
+        }
+        .hero-content {
+            z-index: 10;
+            position: relative;
+        }
+        
+        /* Overlay Style */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .overlay-content {
+            max-width: 900px;
+            width: 95%;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Global Data and Application Logic (Significantly expanded NWPH_App Class) -->
+    <script type="module">
+        // Import necessary Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setLogLevel, doc, setDoc, getDoc, collection, query, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Ensure THREE is globally available for Three.js operations
+        const THREE = window.THREE;
+
+        // --- Core Application Data (Business Data - Strictly Unchanged) ---
+        const NWPH_DATA = {
+            currentLanguage: 'en',
+            translations: {
+                en: {
+                    logoTitle: "North West Passage Holdings",
+                    vision: "Arctic Innovation. Inuit Resilience. Global Impact.",
+                    homeTitle: "Pioneering the Sustainable Arctic Economy",
+                    homeSubtitle: "An Inuit-led, multi-sector holding company transforming Nunavut's future.",
+                    homeIntro: "North West Passage Holdings (NWPH) is strategically positioned in Qikiqtarjuaq, Nunavut, driving a sustainable, interconnected, and Inuit-led economic transformation. We view the North West Passage not as a remote frontier, but as a critical axis for global innovation and climate resilience. Our core vision is to build generational wealth and secure the future of our communities.",
+                    homeStrategy: "Our strategy focuses on creating long-term, intergenerational wealth by investing in infrastructure, technology, and human capital, ensuring that value creation remains anchored in the local communities we serve. This is guided by the fundamental Inuit value of *Inuuqatigiitsiarniq* (respecting others, relationships, and caring for people).",
+                    navHome: "Vision", navSubsidiaries: "Divisions", navGovernance: "Leadership", navImpact: "Impact Index", navInvestors: "Investor Portal", navTeam: "Corporate Team",
+                    subsidiaryTitle: "Strategic Divisions: Building the Future of the North",
+                    impactTitle: "Intergenerational Impact Index (I2)",
+                    impactSubtitle: "Real-time metrics tracking our commitment to community development and environmental stewardship, guided by Inuit values and measurable outcomes.",
+                    employment: "Inuit Employment Rate", housing: "Modular Housing Units Built (YTD)", apprenticeships: "Youth Apprenticeship Enrollment", sustainability: "CO₂ Offset (Tons/Year)", renewable: "Renewable Energy Adoption (%)", localHiring: "Local Hiring Across Subsidiaries (%)",
+                    governanceTitle: "Inuit-Led Governance & Accountability", ceoRole: "Responsible for NWPH’s overall strategy, subsidiary coordination, investor relations, and Inuit-led governance. Directs the launch of Polar Beacons Technologies as the flagship.",
+                    board: "Board of Directors: Inuit-majority board ensuring cultural relevance and community accountability in all strategic decisions, leveraging traditional knowledge.", council: "Youth Apprenticeship Council: Inuit youth advisors shaping future workforce programs across all subsidiaries, including ArcTrek Expeditions and Polar Express, ensuring youth perspectives are heard.",
+                    investorTitle: "The NWPH Investor Edge: Arctic Growth & Stability", downloadReport: "Quarterly Financial Report", roadMap: "5-Year Strategic Roadmap", dividend: "Sustainable Dividend Policy",
+                    languageToggle: "Inuktitut (ᐃᓄᒃᑎᑐᑦ)", languageToggleBack: "English (EN)",
+                    detailOverview: "Overview", detailData: "Advanced Data Systems", detailFinance: "Financial Modeling", featureAccess: "Access Portal", accessSimulated: "Simulated Access", projectedReturn: "Projected 5-Year Return (CAGR)", currentValue: "Mock Market Value (AUM)", arcticIndex: "Arctic Resilience Index (ARI)", housingCalculator: "Modular Home Savings Calculator",
+                    threeDViewer: "Modular Home 3D Preview (Illuvigaq)",
+                    teamTitle: "Our Corporate Leadership Team", teamSubtitle: "Visionaries driving our multi-sector strategy with deep community roots and global expertise.",
+                    // Illuvigaq Calculator strings
+                    calcTitle: "Illuvigaq Home Savings Calculator", calcIntro: "Calculate the projected long-term savings of using our energy-efficient, locally-built modular homes compared to traditional housing.", calcInitialCost: "Traditional Home Initial Cost (C$)", calcNWPHCost: "Illuvigaq Home Initial Cost (C$)", calcEnergySavings: "Annual Energy Savings (%)", calcMaintSavings: "Annual Maintenance Savings (%)", calcCalculate: "Calculate Savings", calcResults: "Projected 20-Year Savings", calcBreakdown: "Breakdown", calcEnergy: "Total Energy Savings", calcMaint: "Total Maintenance Savings", calcDifference: "Initial Cost Difference",
+                    // New strings for complexity
+                    investorLogin: "Simulated Investor Login", loginPrompt: "Enter any password to access the simulated performance dashboard.", loginButton: "Login to Dashboard",
+                },
+                iu: {
+                    logoTitle: "ᓄᓇᑦᓯᐊᖅ ᐃᓪᓗᕕᒐᖅ ᑐᖅᑯᖅᓴᖅᑐᖅ",
+                    vision: "ᐅᑭᐅᖅᑕᖅᑐᖅ ᓴᓇᐅᒪᔪᖅ. ᐃᓄᐃᑦ ᐊᓯᐅᓇᖏᑦᑐᑦ. ᓄᓇᕐᔪᐊᖅ ᐱᐅᓯᑐᖅ.",
+                    homeTitle: "ᐅᑭᐅᖅᑕᖅᑐᒥ ᑮᓇᐅᔭᓕᐅᕈᑎ ᐊᓯᙳᖅᑎᑦᑎᔨ",
+                    homeSubtitle: "ᐃᓄᐃᑦ ᐊᐅᓚᑦᑎᕙᓪᓕᐊᓂᖅ, ᐊᕕᒃᑐᖅᓯᒪᔪᓂ ᐱᓕᕆᕝᕕᖅ ᓄᓇᕗᑦ ᓯᕗᓂᒃᓴᖓᓂ ᐊᓯᙳᖅᑎᑦᑎᔨ.",
+                    homeIntro: "ᓄᓇᑦᓯᐊᖅ ᐃᓪᓗᕕᒐᖅ ᑐᖅᑯᖅᓴᖅᑐᖅ (NWPH) ᖃᒪᓂᑦᑐᐊᖅᒥ ᑐᓐᖓᕕᖃᖅᑐᖅ, ᓄᓇᕗᑦ, ᐊᐅᓚᑦᑎᕙᓪᓕᐊᕗᖅ ᐊᕙᑎᒧᑦ ᐊᑐᖅᑐᐊᕐᓂᖅ, ᐃᓄᐃᑦ ᐊᐅᓚᑦᑎᓂᖅ, ᐊᒻᒪᓗ ᑮᓇᐅᔭᓕᐅᕈᑎ ᐊᓯᙳᖅᑎᑦᑎᓂᖅ. ᐅᑭᐅᖅᑕᖅᑐᒥ ᑰᒃ ᐊᐅᓪᓛᕐᕕᒃ ᐅᓪᓗᒥ ᐃᓱᒪᑦᓯᐊᕐᓂᖅ ᐊᒻᒪᓗ ᐊᕙᑎᒧᑦ ᖃᓄᐃᖏᑦᑐᖅ ᑐᓐᖓᕕᐅᕗᖅ. ᑐᖓᕕᒋᔭᕗᑦ ᐊᑯᓂᐅᓂᖅᓴᐅᔪᒃᓴᖅ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᑦ ᓄᓇᓕᑦᑎᓐᓄᑦ ᐊᒻᒪᓗ ᑮᓇᐅᔭᖅᑖᖅᑎᓄᑦ ᐊᐅᓚᐅᑎᓕᕆᓂᕐᒧᑦ.",
+                    homeStrategy: "ᑐᖓᕕᒋᔭᕗᑦ ᐊᑯᓂᐅᓂᖅᓴᐅᔪᒃᓴᖅ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᑦ ᓄᓇᓕᑦᑎᓐᓄᑦ ᐊᒻᒪᓗ ᑮᓇᐅᔭᖅᑖᖅᑎᓄᑦ, ᐊᐅᓚᐅᑎᓕᕆᓂᕐᒧᑦ, ᓴᓇᐅᒪᔪᓕᕆᓂᕐᒧᑦ, ᐊᒻᒪᓗ ᐃᓄᖕᓂ ᐱᓕᕆᐊᖃᕐᓂᖅ, ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᑦ ᓄᓇᓕᑦᑎᓐᓂ ᑐᓐᖓᕕᖃᕐᓂᖏᑦ ᐱᓕᕆᐊᕆᓪᓗᒍ. ᑕᒪᓐᓇ ᐃᓄᖕᓂ ᐃᓕᖅᑯᓯᖅ ᒪᓕᒃᑐᖅ *ᐃᓅᖃᑎᒌᑦᓯᐊᕐᓂᖅ* (ᑐᓐᖓᓱᒃᑎᑦᑎᓂᖅ, ᐱᓕᕆᖃᑎᒌᓐᓂᖅ, ᐃᓄᖕᓂ ᑲᒪᒋᔭᖃᕐᓂᖅ) ᒪᓕᒃᑐᖅ.",
+                    navHome: "ᐱᒋᐊᕐᕕᒃ", navSubsidiaries: "ᐊᕕᒃᑐᖅᓯᒪᔪᑦ", navGovernance: "ᐊᐅᓚᑦᑎᔨᐊᓗᐃᑦ", navImpact: "ᐱᓕᕆᓂᕗᑦ ᖃᐅᔨᓇᓱᐊᕐᓂᖅ", navInvestors: "ᑮᓇᐅᔭᖅᑖᖅᑎᓕᕆᓂᖅ", navTeam: "ᐊᐅᓚᑦᑎᔨᓂᑦ ᐱᓕᕆᔨᑯᑦ",
+                    subsidiaryTitle: "ᑐᖓᕕᒋᔭᕗᑦ ᐊᕕᒃᑐᖅᓯᒪᔪᑦ: ᐅᑭᐅᖅᑕᖅᑐᒥ ᓯᕗᓂᒃᓴᖅ ᓴᓇᓂᖅ",
+                    impactTitle: "ᐊᑯᓂᐅᔪᖅ ᐱᓕᕆᓂᕗᑦ ᖃᐅᔨᓇᓱᐊᕐᓂᖅ",
+                    impactSubtitle: "ᖃᐅᔨᓴᕐᓂᖅ ᐱᓕᕆᐊᖑᔪᑦ ᓄᓇᓕᑦ ᐊᒻᒪᓗ ᐊᕙᑎᒧᑦ ᐱᓕᕆᓂᕗᑦ, ᐃᓄᐃᑦ ᐃᓕᖅᑯᓯᖏᑦ ᒪᓕᒃᑐᑦ.",
+                    employment: "ᐃᓄᐃᑦ ᐱᓇᓱᐊᖅᑐᑦ ᐱᔭᕆᐅᖅᓴᐃᓂᖓ", housing: "ᐃᓪᓗᑦ ᓴᓇᔭᐅᔪᑦ (ᐅᓪᓗᒥᒧᑦ)", apprenticeships: "ᐃᓄᐃᑦ ᐃᓕᓐᓂᐊᖅᑎᑦᑎᓂᖅ", sustainability: "CO₂ ᐊᓯᔾᔨᖅᑕᖅᑐᖅ (ᑐᓐᓯ/ᐅᑭᐅᖅ)", renewable: "ᓄᑖᖅ ᓴᓂᕐᕙᐃᓂᖅ ᐊᑐᖅᑐᖅ (%)", localHiring: "ᓄᓇᓕᑦ ᐱᓇᓱᐊᖅᑎᖏᑦ (%)",
+                    governanceTitle: "ᐃᓄᐃᑦ-ᐊᐅᓚᑦᑎᓂᖅ ᐊᒻᒪᓗ ᓇᓗᓇᐃᒃᑯᑕᖅ", ceoRole: "NWPH ᐊᐅᓚᑦᑎᓂᖅ, ᐊᕕᒃᑐᖅᓯᒪᔪᓂ ᑲᒪᒋᔭᖃᖅᑐᖅ, ᑮᓇᐅᔭᖅᑖᖅᑎᓕᕆᓂᖅ, ᐃᓄᐃᑦ-ᐊᐅᓚᑦᑎᓂᖅ. ᓄᓇᖅ ᓇᓗᓇᐃᒃᑯᑎᓕᕆᔨᑯᑦ ᐱᒋᐊᖅᑎᑦᑎᓂᖅ.",
+                    board: "ᐊᐅᓚᑦᑎᓂᕐᒧᑦ ᑲᑎᒪᔨ: ᐃᓄᐃᑦ-ᐊᖏᓂᖅᓴᐅᔪᑦ ᑲᑎᒪᔨ ᓄᓇᓕᑦ ᐊᒻᒪᓗ ᐃᓕᖅᑯᓯᖅ ᐱᓕᕆᐊᖑᓂᖏᑦ ᖃᐅᔨᒋᐊᕐᓗᒋᑦ.", council: "ᐃᓄᐃᑦ ᐃᓕᓐᓂᐊᖅᑎᑦᑎᓂᕐᒧᑦ ᑲᑎᒪᔨ: ᐃᓄᐃᑦ ᐅᑭᐅᖅᑐᖅᑐᑦ ᐅᖃᐅᓯᖃᖅᑐᑦ ᐱᓕᕆᐊᓂᑦ ᒪᓕᒃᑐᑦ ArcTrek ᐊᒻᒪᓗ Polar Express ᐃᖅᑲᓇᐃᔭᖅᑎᑖᕐᓂᖅ.",
+                    investorTitle: "NWPH ᑮᓇᐅᔭᖅᑖᖅᑎᑦ ᐱᓕᕆᐊᖓ: ᐅᑭᐅᖅᑕᖅᑐᖅ ᐱᕈᖅᐸᓪᓕᐊᓂᖅ ᐊᒻᒪᓗ ᖃᓄᐃᖏᑦᑐᖅ", downloadReport: "ᑮᓇᐅᔭᓕᐅᕈᑎᑦ ᐅᓪᓗᒥᒧᑦ ᐅᓂᒃᑲᐅᓯᖅ", roadMap: "5-ᐅᑭᐅᖅ ᐱᓕᕆᐊᒃᓴᖅ", dividend: "ᑮᓇᐅᔭᖅᑖᖅᑎᑦ ᑮᓇᐅᔭᖅᑖᖅᑐᑦ ᐊᑐᖅᑐᐊᕐᓂᖓ",
+                    languageToggle: "English (EN)", languageToggleBack: "ᐃᓄᒃᑎᑐᑦ (IU)",
+                    detailOverview: "ᖃᐅᔨᒪᓂᖅ", detailData: "ᓄᓇᑦᓯᐊᖅ ᓇᓗᓇᐃᒃᑯᑎᓕᕆᓂᖅ", detailFinance: "ᑮᓇᐅᔭᓕᐅᕈᑎᑦ", featureAccess: "ᐱᓕᕆᕝᕕᒃ", accessSimulated: "ᖃᓄᐃᓕᐅᖅᑎᑦᑎᓂᖅ", projectedReturn: "5-ᐅᑭᐅᖅ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᖅ (CAGR)", currentValue: "ᑮᓇᐅᔭᓕᐅᕈᑎ ᖃᓄᐃᑦᑐᖅ (AUM)", arcticIndex: "ᐅᑭᐅᖅᑕᖅᑐᖅ ᐱᓕᕆᓂᖅ ᓇᓗᓇᐃᒃᑯᑕᖅ (ARI)", housingCalculator: "ᐃᓪᓗᓕᕆᓂᖅ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᖅ",
+                    threeDViewer: "ᐃᓪᓗᕕᒐᖅ 3D ᕿᒥᕐᕈᓂᖅ",
+                    teamTitle: "ᐊᐅᓚᑦᑎᔨᓂᑦ ᐱᓕᕆᔨᑯᑦ", teamSubtitle: "ᓯᕗᓂᒃᓴᓕᐅᖅᑎᑦ ᐊᐅᓚᑦᑎᕙᓪᓕᐊᓂᖅ ᐊᕕᒃᑐᖅᓯᒪᔪᓂ ᐱᓕᕆᐊᓂᑦ ᓄᓇᓕᑦ ᐊᒻᒪᓗ ᓄᓇᕐᔪᐊᖅ ᖃᐅᔨᒪᓂᖅ.",
+                    // Illuvigaq Calculator strings (Inuktitut simplified)
+                    calcTitle: "ᐃᓪᓗᕕᒐᖅ ᐃᓪᓗᖅ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᖅ", calcIntro: "ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᑦ ᖃᐅᔨᓇᓱᐊᕐᓗᒋᑦ ᐊᑯᓂᐅᔪᓂ ᐃᑯᒪᓇᖏᑦᑐᑦ, ᓄᓇᓕᑦ ᓴᓇᔭᐅᔪᑦ ᐃᓪᓗᑦ ᐊᑐᕐᓗᒋᑦ.", calcInitialCost: "ᖃᖓᑐᐃᓐᓇᖅ ᐃᓪᓗᑦ ᑮᓇᐅᔭᖓ (C$)", calcNWPHCost: "ᐃᓪᓗᕕᒐᖅ ᐃᓪᓗᑦ ᑮᓇᐅᔭᖓ (C$)", calcEnergySavings: "ᐊᕐᕌᒍᑕᒫᑦ ᐃᑯᒪ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᖅ (%)", calcMaintSavings: "ᐊᕐᕌᒍᑕᒫᑦ ᐊᐅᓚᐅᑎ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᖅ (%)", calcCalculate: "ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᑦ ᖃᐅᔨᓇᓱᐊᕐᓗᒋᑦ", calcResults: "20-ᐊᕐᕌᒍᐃᑦ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᑦ", calcBreakdown: "ᖃᓄᐃᓕᖓᓂᖓ", calcEnergy: "ᑲᑎᖅᓱᖅᓯᒪᔪᑦ ᐃᑯᒪ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᖅ", calcMaint: "ᑲᑎᖅᓱᖅᓯᒪᔪᑦ ᐊᐅᓚᐅᑎ ᑮᓇᐅᔭᓕᐅᕈᑎᒃᓴᖅ", calcDifference: "ᐱᒋᐊᕐᕕᐅᔪᖅ ᑮᓇᐅᔭᖓ ᐊᓯᔾᔨᕐᓂᖅ",
+                    // New strings for complexity
+                    investorLogin: "ᑮᓇᐅᔭᖅᑖᖅᑎᑦ ᐱᓕᕆᕝᕕᒃ", loginPrompt: "ᓅᕿᔪᖅ ᐅᖃᐅᓯᖅ ᐱᓕᕆᕝᕕᒃ ᖃᐅᔨᓇᓱᐊᕐᓗᒍ.", loginButton: "ᐱᓕᕆᕝᕕᒃ",
+                }
+            },
+            subsidiaries: [
+                { id: 'polarBeacons', name: "Polar Beacons Technologies Ltd.", icon: 'CloudLightning', division: "Arctic Technology & Data Infrastructure", color: 'blue-600', narrative: "Polar Beacons is the technological spearhead of NWPH. It develops IoT-powered weather stations, forming the **NunaNet mesh network**, which enables real-time monitoring of weather, permafrost, and environmental change. This data is critical for aviation, shipping, tourism, insurance, and climate science. Our goal is 99.99% uptime in extreme conditions.", metrics: { nodes: 127, partners: 14, coverage: 78 } },
+                { id: 'arctrek', name: "ArcTrek Expeditions Ltd.", icon: 'Compass', division: "Adventure & Cultural Tourism", color: 'teal-600', narrative: "ArcTrek offers premium guided expeditions across Nunavut’s national parks and landscapes, combining **Inuit cultural knowledge** with world-class outdoor experiences. It also runs the Guide Apprenticeship Pathway, training Inuit youth to become certified wilderness guides. We project a 25% increase in cultural tourism revenue YoY.", metrics: { expeditions: 45, guides: 18, satisfaction: 98 } },
+                { id: 'polarExpress', name: "Polar Express Stores / Ulu & Brew", icon: 'Store', division: "Retail & Food Services", color: 'orange-600', narrative: "Polar Express modernizes northern retail, providing affordable essentials, hunting gear, and Inuit crafts. The **Ulu & Brew** café offers northern foods and serves as a vital community gathering hub. We emphasize price comparison to highlight affordability and ensure supply chain stability.", metrics: { stores: 6, volume: 1.2, localSourcing: 65 } },
+                { id: 'illuvigaq', name: "Illuvigaq Real Estate", icon: 'Home', division: "Housing & Infrastructure", color: 'slate-600', narrative: "Illuvigaq addresses Nunavut’s housing crisis with **modular, efficient homes** designed for Arctic conditions. Standard features include extended-family layouts, mudrooms, and durable insulation. Future expansion includes hotels and NWPH facility builds, targeting a 30% reduction in heating costs for residents.", metrics: { unitsYTD: 42, backlog: 180, efficiency: 30 } },
+                { id: 'northWinds', name: "North Winds Airlines", icon: 'Plane', division: "Aviation", color: 'sky-600', narrative: "North Winds is a community-based airline prioritizing affordability and reliability. Each Baffin community has its own small aircraft operated by **Inuit pilots and mechanics**. ATR combi aircraft provide reliable cargo + passenger routes, essential for the region’s socio-economic lifeline.", metrics: { routes: 12, onTime: 89, cargoTons: 3500 } },
+                { id: 'imaSealift', name: "Ima Sealift Solutions", icon: 'Ship', division: "Marine Logistics", color: 'indigo-600', narrative: "Ima Sealift provides **Inuit-owned control** of Nunavut’s lifeline shipping system. It handles community resupply, bulk materials, and specialized cargo, with long-term plans to field its own ice-capable vessels, thereby reducing reliance on external shipping firms.", metrics: { sailings: 5, communities: 16, cargoTEU: 450 } },
+                { id: 'glacierLabs', name: "GlacierLabs", icon: 'ThermometerSnowflake', division: "Environmental Science", color: 'cyan-600', narrative: "GlacierLabs is NWPH’s research arm, partnering with universities to study climate change, permafrost melt, and Arctic ecosystems. **Inuit traditional knowledge** is blended with scientific methods, creating unique, vital datasets for climate resilience planning.", metrics: { projects: 12, publications: 22, youthResearchers: 8 } },
+                { id: 'nunabank', name: "NunaBank (Future)", icon: 'Landmark', division: "Finance", color: 'yellow-600', narrative: "NunaBank is NWPH’s long-term ambition: a northern-focused financial institution offering banking, credit, microloans, and **digital wallets**. It reinvests profits directly into communities instead of sending them south, establishing a true Northern circular economy.", metrics: { microloans: 0, usersTarget: 500, communityInvest: 0 } },
+            ],
+            leadership: [
+                { name: "Adam Aliqatuqtuq", title: "Founder & Chief Executive Officer (CEO)", bio: "Visionary entrepreneur from Qikiqtarjuaq. Dedicated to merging traditional Inuit values with modern technology to secure Nunavut’s economic sovereignty. Drives the overall strategy and vision for intergenerational wealth creation. Current user ID: N/A", photoUrl: "https://placehold.co/150x150/003366/FFFFFF?text=AA" },
+                { name: "Sila Arnaquq", title: "Chief Financial Officer (CFO)", bio: "A finance veteran with experience in large-scale infrastructure funding and Arctic investment portfolios. Manages investor capital and the long-term sustainable dividend policy.", photoUrl: "https://placehold.co/150x150/005A9C/FFFFFF?text=SA" },
+                { name: "Tupiq Mikigaq", title: "Chief Operations Officer (COO)", bio: "Expert in northern logistics and supply chain management. Coordinates efficiency across Polar Express, North Winds Airlines, and Ima Sealift, ensuring 99% operational continuity.", photoUrl: "https://placehold.co/150x150/00A896/FFFFFF?text=TM" },
+                { name: "Pani Nanook", title: "Chief Technology Officer (CTO)", bio: "Leads Polar Beacons and GlacierLabs, specializing in IoT sensor networks and data fusion. Oversees the development of the NunaNet mesh infrastructure.", photoUrl: "https://placehold.co/150x150/FF9900/FFFFFF?text=PN" },
+                { name: "Qaqqiq Kinguatsiaq", title: "Chief Sustainability Officer (CSO)", bio: "Focuses on environmental, social, and cultural alignment. Ensures all NWPH ventures adhere to the highest standards of stewardship and Inuit Qaujimajatuqangit (IQ).", photoUrl: "https://placehold.co/150x150/607D8B/FFFFFF?text=QK" },
+            ],
+            mockImpactMetrics: {
+                employment: { value: 82, max: 100, unit: '%', color: '#2563eb', icon: 'Users' },
+                housing: { value: 42, max: 100, unit: ' Units', color: '#00A896', icon: 'Home' },
+                apprenticeships: { value: 125, max: 200, unit: ' Students', color: '#ea580c', icon: 'GraduationCap' },
+                sustainability: { value: 15500, max: 20000, unit: ' Tons', color: '#16a34a', icon: 'Leaf' },
+                renewable: { value: 45, max: 100, unit: '%', color: '#06b6d4', icon: 'Zap' },
+                localHiring: { value: 88, max: 100, unit: '%', color: '#4f46e5', icon: 'Briefcase' }
+            },
+            investorMetrics: {
+                cagr: 18.5,
+                aum: 2.1, // $2.1 Billion
+                ari: 7.9, // Arctic Resilience Index out of 10
+                performanceData: [100, 105, 115, 120, 118, 130, 145, 155, 170, 195] // Mock stock performance
+            }
+        };
+
+        // --- Firebase Configuration and Global Variables ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        let db, auth;
+
+        // --- NWPH Application Class (Core Logic and State Management) ---
+
+        class NWPH_App {
+            constructor(data) {
+                this.data = data;
+                this.state = {
+                    language: data.currentLanguage,
+                    activeSubsidiary: null,
+                    isAuthReady: false,
+                    userId: 'N/A',
+                    calcInputs: { costTrad: 500000, costNWPH: 400000, energy: 30, maint: 10 },
+                    calcResults: null, 
+                    investorLoggedIn: false,
+                    isChartDrawn: false,
+                    lastCalc: null, // Stores last saved calculation from Firestore
+                };
+                this.listeners = [];
+                this.threeJs = {}; // Container for all Three.js objects
+                this.animationFrameId = null;
+            }
+
+            // --- State Management ---
+            setState(newState, shouldRender = true) {
+                this.state = { ...this.state, ...newState };
+                this.listeners.forEach(listener => listener(this.state));
+                if (shouldRender) {
+                    this.renderAll();
+                }
+            }
+
+            subscribe(listener) {
+                this.listeners.push(listener);
+                listener(this.state);
+                return () => {
+                    this.listeners = this.listeners.filter(l => l !== listener);
+                };
+            }
+
+            // --- Internationalization (i18n) Helper ---
+            getT(key) {
+                return this.data.translations[this.state.language][key] || key;
+            }
+            
+            // --- Firebase Integration ---
+            async initializeFirebase() {
+                try {
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+                    setLogLevel('Debug');
+
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    onAuthStateChanged(auth, (user) => {
+                        let userId = user ? user.uid : 'Auth Failed';
+                        this.setState({ userId, isAuthReady: true }, false); // Do not render on initial auth change
+                        this.updateLeaderBio(userId);
+                        if (user) {
+                             this.fetchPrivateUserSettings(userId);
+                             this.fetchLatestCalculation(userId); // Fetch latest calculator results
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error initializing Firebase:", error);
+                    this.setState({ userId: 'Auth Failed', isAuthReady: true }, false);
+                }
+            }
+
+            async fetchPrivateUserSettings(userId) {
+                const userSettingsRef = doc(db, `artifacts/${appId}/users/${userId}/settings/preferences`);
+                try {
+                    const docSnap = await getDoc(userSettingsRef);
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        if (data.language && data.language !== this.state.language) {
+                            this.data.currentLanguage = data.language;
+                            this.setState({ language: data.language });
+                        }
+                    } else {
+                        await setDoc(userSettingsRef, { language: 'en', createdAt: new Date().toISOString() });
+                    }
+                } catch (error) {
+                    console.error("Error fetching user settings:", error);
+                }
+            }
+
+            async saveLanguagePreference(newLang) {
+                const user = auth.currentUser;
+                if (this.state.isAuthReady && user && user.uid) {
+                    const userSettingsRef = doc(db, `artifacts/${appId}/users/${user.uid}/settings/preferences`);
+                    try {
+                        await setDoc(userSettingsRef, { language: newLang }, { merge: true });
+                        console.log("Language preference saved to Firestore.");
+                    } catch (error) {
+                        console.error("Error saving language preference:", error);
+                    }
+                }
+            }
+
+            async fetchLatestCalculation(userId) {
+                const q = query(collection(db, `artifacts/${appId}/users/${userId}/illuvigaq_calcs`), limit(1));
+                try {
+                    const querySnapshot = await getDocs(q);
+                    if (!querySnapshot.empty) {
+                        const latestCalc = querySnapshot.docs[0].data();
+                        this.setState({ lastCalc: latestCalc, calcResults: latestCalc.results });
+                    }
+                } catch (error) {
+                    console.error("Error fetching latest calculation:", error);
+                }
+            }
+
+            async saveCalculation(inputs, results) {
+                const user = auth.currentUser;
+                if (!user || !user.uid) {
+                    console.error("Cannot save calculation: User not authenticated.");
+                    return;
+                }
+                const docRef = doc(db, `artifacts/${appId}/users/${user.uid}/illuvigaq_calcs`, 'latest');
+                const calcData = {
+                    inputs,
+                    results,
+                    timestamp: new Date().toISOString(),
+                };
+                try {
+                    // Use setDoc to either create or overwrite the single 'latest' document
+                    await setDoc(docRef, calcData, { merge: true });
+                    this.setState({ lastCalc: calcData });
+                    console.log("Calculation saved to Firestore.");
+                } catch (error) {
+                    console.error("Error saving calculation:", error);
+                }
+            }
+            
+            updateLeaderBio(userId) {
+                const leader = this.data.leadership.find(l => l.name === 'Adam Aliqatuqtuq');
+                if (leader) {
+                    if (userId !== 'N/A' && userId !== 'Auth Failed') {
+                       leader.bio = `Founder and Visionary. Adam drives the overall strategy and vision for intergenerational wealth creation. Current User ID: ${userId}`;
+                    } else {
+                       // This assumes the original bio is always the english version 
+                       leader.bio = this.data.translations['en'].leadership[0].bio; 
+                    }
+                }
+                this.renderTeam(); 
+            }
+
+            // --- UI Interactions ---
+            toggleLanguage = () => {
+                const newLang = this.state.language === 'en' ? 'iu' : 'en';
+                this.data.currentLanguage = newLang;
+                this.setState({ language: newLang, calcResults: null }); 
+                this.saveLanguagePreference(newLang);
+            }
+
+            handleScrollAnimation = () => {
+                const navbar = document.getElementById('main-navbar');
+                if (window.scrollY > 100) {
+                    navbar.classList.add('h-16', 'shadow-2xl', 'bg-opacity-95');
+                    navbar.classList.remove('h-20', 'bg-opacity-100', 'py-4');
+                } else {
+                    navbar.classList.add('h-20', 'bg-opacity-100', 'py-4');
+                    navbar.classList.remove('h-16', 'shadow-2xl', 'bg-opacity-95');
+                }
+                this.updateActiveNavLink();
+            }
+
+            updateActiveNavLink() {
+                const sections = ['Home', 'Subsidiaries', 'ImpactIndex', 'CorporateTeam', 'Investors'];
+                let activeSection = 'Home';
+                let scrollY = window.scrollY + 100; // Offset for fixed navbar
+
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    const section = document.getElementById(sections[i]);
+                    if (section && scrollY >= section.offsetTop) {
+                        activeSection = sections[i];
+                        break;
+                    }
+                }
+
+                document.querySelectorAll('#nav-links a').forEach(link => {
+                    if (link.getAttribute('href').includes(activeSection)) {
+                        link.classList.add('border-b-2', 'border-inuit-teal', 'text-inuit-teal');
+                        link.classList.remove('border-transparent', 'hover:text-inuit-teal');
+                    } else {
+                        link.classList.remove('border-b-2', 'border-inuit-teal', 'text-inuit-teal');
+                        link.classList.add('border-transparent', 'hover:text-inuit-teal');
+                    }
+                });
+            }
+
+            // --- Three.js 3D Viewer Logic ---
+
+            initThreeJS(containerId) {
+                const container = document.getElementById(containerId);
+                if (!container || this.threeJs.scene) return; // Prevent re-initialization
+
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                this.threeJs.scene = new THREE.Scene();
+                this.threeJs.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+                this.threeJs.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                this.threeJs.renderer.setSize(width, height);
+                container.appendChild(this.threeJs.renderer.domElement);
+
+                // Create a stylized modular house (simple cube for demonstration)
+                const geometry = new THREE.BoxGeometry(2, 1.5, 2);
+                const material = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+                this.threeJs.cube = new THREE.Mesh(geometry, material);
+                this.threeJs.scene.add(this.threeJs.cube);
+                
+                // Add a simple roof (pyramid)
+                const roofGeometry = new THREE.ConeGeometry(1.5, 0.8, 4);
+                const roofMaterial = new THREE.MeshPhongMaterial({ color: 0x005A9C });
+                const roof = new THREE.Mesh(roofGeometry, roofMaterial);
+                roof.position.set(0, 1.15, 0); // Position above the house
+                this.threeJs.cube.add(roof);
+
+                // Lighting (Simulated Arctic Sunlight)
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(5, 5, 5).normalize();
+                this.threeJs.scene.add(directionalLight);
+                
+                const ambientLight = new THREE.AmbientLight(0x404040, 3); // Soft white light
+                this.threeJs.scene.add(ambientLight);
+
+                this.threeJs.camera.position.z = 4;
+                
+                // Handle resize
+                const handleResize = () => {
+                    const w = container.clientWidth;
+                    const h = container.clientHeight;
+                    this.threeJs.camera.aspect = w / h;
+                    this.threeJs.camera.updateProjectionMatrix();
+                    this.threeJs.renderer.setSize(w, h);
+                };
+                window.addEventListener('resize', handleResize);
+                this.threeJs.handleResize = handleResize; // Store reference to remove later
+
+                this.animateThreeJS();
+            }
+
+            animateThreeJS = () => {
+                if (this.threeJs.renderer) {
+                    this.animationFrameId = requestAnimationFrame(this.animateThreeJS);
+                    this.threeJs.cube.rotation.y += 0.005;
+                    this.threeJs.renderer.render(this.threeJs.scene, this.threeJs.camera);
+                }
+            }
+
+            disposeThreeJS() {
+                if (this.animationFrameId) {
+                    cancelAnimationFrame(this.animationFrameId);
+                }
+                if (this.threeJs.renderer) {
+                    this.threeJs.renderer.dispose();
+                    const container = document.getElementById('threejs-housing-container');
+                    if (container) {
+                        while (container.firstChild) {
+                            container.removeChild(container.firstChild);
+                        }
+                    }
+                }
+                if (this.threeJs.handleResize) {
+                    window.removeEventListener('resize', this.threeJs.handleResize);
+                }
+                this.threeJs = {}; // Reset container
+                this.animationFrameId = null;
+            }
+
+            // --- Subsidiary Detail Overlay ---
+            showDetailOverlay(id) {
+                const sub = this.data.subsidiaries.find(s => s.id === id);
+                if (!sub) return;
+
+                this.setState({ activeSubsidiary: sub }, false);
+                const overlay = document.getElementById('subsidiary-detail-overlay');
+                const overlayContent = document.getElementById('detail-content');
+                
+                let extraContent = '';
+                if (id === 'illuvigaq') {
+                    extraContent = this.renderIlluvigaqCalculator();
+                }
+
+                overlayContent.innerHTML = `
+                    <div class="p-8 md:p-12 frosted-glass text-gray-800 relative shadow-2xl">
+                        <button onclick="window.app.hideDetailOverlay()" class="absolute top-4 right-4 p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition">
+                            <i data-lucide="X" class="w-6 h-6"></i>
+                        </button>
+                        <div class="flex items-center space-x-4 mb-6 border-b pb-4">
+                            <div class="p-4 rounded-xl bg-${sub.color.replace('-600', '-100')} flex-shrink-0 shadow-lg">
+                                <i data-lucide="${sub.icon}" class="w-10 h-10 text-${sub.color}"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-4xl font-extrabold text-gray-900">${sub.name}</h2>
+                                <p class="text-xl text-${sub.color} font-semibold">${sub.division}</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <!-- Column 1: Overview & Narrative -->
+                            <div class="lg:col-span-2 space-y-6">
+                                <h3 class="text-2xl font-bold text-arctic-blue">${this.getT('detailOverview')}</h3>
+                                <p class="text-lg leading-relaxed text-gray-700">${sub.narrative}</p>
+
+                                <!-- Core Metrics -->
+                                <div class="grid grid-cols-3 gap-4 border p-4 rounded-xl bg-gray-50">
+                                    ${Object.keys(sub.metrics).map(key => `
+                                        <div class="text-center p-3 border rounded-lg bg-white shadow-sm">
+                                            <p class="text-3xl font-extrabold text-blue-700">${sub.metrics[key]}${sub.id === 'polarExpress' ? (key === 'volume' ? 'M' : (key === 'localSourcing' ? '%' : '')) : ''}</p>
+                                            <p class="text-xs uppercase font-medium text-gray-500">${key.toUpperCase()}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <!-- Column 2: Advanced Features / 3D Viewer -->
+                            <div class="space-y-6">
+                                ${sub.id === 'illuvigaq' ? `
+                                    <h3 class="text-2xl font-bold text-arctic-blue">${this.getT('threeDViewer')}</h3>
+                                    <div id="threejs-housing-container" class="rounded-xl shadow-inner bg-gray-900 overflow-hidden">
+                                        <canvas id="threejs-housing-canvas"></canvas>
+                                    </div>
+                                    ${extraContent}
+                                ` : `
+                                    <h3 class="text-2xl font-bold text-arctic-blue">${this.getT('detailData')}</h3>
+                                    <div class="p-4 bg-gray-100 rounded-xl shadow-inner">
+                                        <p class="font-semibold mb-2">Advanced Data Feed</p>
+                                        <ul class="text-sm space-y-2 text-gray-700">
+                                            <li><i data-lucide="Activity" class="w-4 h-4 inline mr-2 text-blue-500"></i> Live data nodes: ${sub.metrics.nodes || sub.metrics.routes || 0}</li>
+                                            <li><i data-lucide="Globe" class="w-4 h-4 inline mr-2 text-blue-500"></i> Arctic Coverage: ${sub.metrics.coverage || sub.metrics.communities || 0}%</li>
+                                            <li><i data-lucide="Shield" class="w-4 h-4 inline mr-2 text-blue-500"></i> Projected Uptime: 99.9%</li>
+                                        </ul>
+                                    </div>
+                                    <button class="w-full bg-gray-800 text-white p-3 rounded-xl hover:bg-gray-700 transition font-semibold">
+                                        ${this.getT('featureAccess')}
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+                overlay.style.display = 'flex';
+
+                // Initialize 3D viewer if Illuvigaq
+                if (id === 'illuvigaq') {
+                    // Give the browser a moment to render the canvas before initializing Three.js
+                    setTimeout(() => {
+                        this.initThreeJS('threejs-housing-canvas');
+                        this.calculateIlluvigaqSavings(); // Initial calculation render
+                    }, 50); 
+                }
+            }
+
+            hideDetailOverlay() {
+                document.getElementById('subsidiary-detail-overlay').style.display = 'none';
+                this.disposeThreeJS(); // Clean up Three.js instance
+                this.setState({ activeSubsidiary: null }, false);
+            }
+            
+            // --- Illuvigaq Calculator Logic ---
+            
+            calculateIlluvigaqSavings = () => {
+                const inputs = this.state.calcInputs;
+
+                // Grab values from rendered DOM if they exist (after initial render)
+                const costTrad = parseFloat(document.getElementById('calc-trad-cost')?.value || inputs.costTrad);
+                const costNWPH = parseFloat(document.getElementById('calc-nwph-cost')?.value || inputs.costNWPH);
+                const energySavingsRate = parseFloat(document.getElementById('calc-energy-savings')?.value || inputs.energy) / 100;
+                const maintSavingsRate = parseFloat(document.getElementById('calc-maint-savings')?.value || inputs.maint) / 100;
+
+                // Mock annual utility and maintenance costs (simplified for demonstration)
+                const annualUtilityTrad = costTrad * 0.05; // 5% of cost
+                const annualMaintenanceTrad = costTrad * 0.01; // 1% of cost
+                const period = 20; // 20 years
+
+                // Calculations
+                const initialDifference = costTrad - costNWPH;
+                const totalEnergySavings = annualUtilityTrad * energySavingsRate * period;
+                const totalMaintenanceSavings = annualMaintenanceTrad * maintSavingsRate * period;
+                const projectedSavings = initialDifference + totalEnergySavings + totalMaintenanceSavings;
+
+                const results = {
+                    projectedSavings: projectedSavings,
+                    initialDifference: initialDifference,
+                    totalEnergySavings: totalEnergySavings,
+                    totalMaintenanceSavings: totalMaintenanceSavings
+                };
+
+                this.setState({ 
+                    calcInputs: { costTrad, costNWPH, energy: energySavingsRate * 100, maint: maintSavingsRate * 100 },
+                    calcResults: results 
+                }, false);
+
+                this.renderIlluvigaqCalculatorResults(results);
+                
+                // Save the latest calculation to Firestore if logged in
+                if (this.state.isAuthReady && this.state.userId !== 'N/A' && this.state.userId !== 'Auth Failed') {
+                    this.saveCalculation(this.state.calcInputs, results);
+                }
+            }
+            
+            handleCalculatorInput = (event) => {
+                const { id, value } = event.target;
+                let key = '';
+                if (id.includes('trad-cost')) key = 'costTrad';
+                else if (id.includes('nwph-cost')) key = 'costNWPH';
+                else if (id.includes('energy-savings')) key = 'energy';
+                else if (id.includes('maint-savings')) key = 'maint';
+
+                this.state.calcInputs[key] = parseFloat(value);
+            }
+            
+            renderIlluvigaqCalculator() {
+                const T = (key) => this.getT(key);
+                const inputs = this.state.calcInputs;
+
+                return `
+                    <div class="mt-8 p-6 bg-white rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-700 mb-4">${T('calcTitle')}</h3>
+                        <p class="text-sm text-gray-600 mb-6">${T('calcIntro')}</p>
+                        
+                        <form onsubmit="event.preventDefault(); window.app.calculateIlluvigaqSavings();">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <!-- Input 1: Traditional Cost -->
+                                <label class="block">
+                                    <span class="text-sm font-medium text-gray-700">${T('calcInitialCost')}</span>
+                                    <input type="number" id="calc-trad-cost" value="${inputs.costTrad}" min="100000" step="10000"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500" 
+                                        oninput="window.app.handleCalculatorInput(event)">
+                                </label>
+                                <!-- Input 2: NWPH Cost -->
+                                <label class="block">
+                                    <span class="text-sm font-medium text-gray-700">${T('calcNWPHCost')}</span>
+                                    <input type="number" id="calc-nwph-cost" value="${inputs.costNWPH}" min="100000" step="10000"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
+                                        oninput="window.app.handleCalculatorInput(event)">
+                                </label>
+                                <!-- Input 3: Energy Savings -->
+                                <label class="block">
+                                    <span class="text-sm font-medium text-gray-700">${T('calcEnergySavings')}</span>
+                                    <input type="number" id="calc-energy-savings" value="${inputs.energy}" min="0" max="100"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
+                                        oninput="window.app.handleCalculatorInput(event)">
+                                </label>
+                                <!-- Input 4: Maintenance Savings -->
+                                <label class="block">
+                                    <span class="text-sm font-medium text-gray-700">${T('calcMaintSavings')}</span>
+                                    <input type="number" id="calc-maint-savings" value="${inputs.maint}" min="0" max="100"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
+                                        oninput="window.app.handleCalculatorInput(event)">
+                                </label>
+                            </div>
+                            <button type="submit" class="w-full bg-inuit-teal text-white font-bold py-3 rounded-xl hover:bg-inuit-teal-dark transition shadow-md">
+                                ${T('calcCalculate')}
+                            </button>
+                        </form>
+                        
+                        <!-- Results Section -->
+                        <div id="calculator-results" class="mt-6 pt-6 border-t border-slate-200">
+                            ${this.renderIlluvigaqCalculatorResults(this.state.calcResults || this.state.lastCalc?.results)}
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderIlluvigaqCalculatorResults(results) {
+                const resultsContainer = document.getElementById('calculator-results');
+                if (!results) {
+                    return resultsContainer ? '' : `<p class="text-center text-gray-500">Enter values and click 'Calculate Savings' to view 20-Year projection.</p>`;
+                }
+                
+                const T = (key) => this.getT(key);
+                const formatCurrency = (amount) => new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(amount);
+
+                const html = `
+                    <h4 class="text-3xl font-extrabold text-gray-900 mb-4">${T('calcResults')}</h4>
+                    
+                    <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6 rounded-lg shadow-inner">
+                        <p class="text-xl font-bold text-blue-800">${T('calcResults')}</p>
+                        <p class="text-4xl font-black text-blue-900 mt-1">${formatCurrency(results.projectedSavings)}</p>
+                    </div>
+
+                    <h5 class="text-xl font-bold text-gray-700 mb-3">${T('calcBreakdown')}</h5>
+                    <div class="space-y-3">
+                        ${this.renderResultItem(T('calcDifference'), results.initialDifference, results.initialDifference < 0 ? 'red' : 'green')}
+                        ${this.renderResultItem(T('calcEnergy'), results.totalEnergySavings, 'green')}
+                        ${this.renderResultItem(T('calcMaint'), results.totalMaintenanceSavings, 'green')}
+                    </div>
+                `;
+
+                if (resultsContainer) {
+                    resultsContainer.innerHTML = html;
+                    return;
+                }
+                return html;
+            }
+
+            renderResultItem(label, value, color) {
+                const formattedValue = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(value);
+                return `
+                    <div class="flex justify-between items-center text-md border-b pb-2">
+                        <span class="text-gray-600">${label}</span>
+                        <span class="font-semibold text-${color}-600">${formattedValue}</span>
+                    </div>
+                `;
+            }
+
+            // --- Investor Portal Logic and Rendering ---
+            
+            handleInvestorLogin = () => {
+                const passwordInput = document.getElementById('investor-password');
+                const password = passwordInput ? passwordInput.value : '';
+                
+                // Simulated login: any input works, demonstrating controlled access
+                if (password.trim() !== '') {
+                    this.setState({ investorLoggedIn: true });
+                } else {
+                    document.getElementById('login-message').innerText = "Access denied. Please enter a simulated password.";
+                    passwordInput.focus();
+                }
+            }
+            
+            renderInvestorPortal() {
+                const T = (key) => this.getT(key);
+                const metrics = this.data.investorMetrics;
+                const isLoggedIn = this.state.investorLoggedIn;
+                
+                const content = document.getElementById('Investors');
+                if (!content) return;
+
+                content.innerHTML = `
+                    <div class="max-w-7xl mx-auto py-24 px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h1 class="text-5xl font-extrabold text-gray-900 mb-4">${T('investorTitle')}</h1>
+                            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Providing transparent, risk-adjusted returns anchored in long-term Arctic sustainability.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                            <!-- Left Column: Core Downloads/Info -->
+                            <div class="space-y-6">
+                                ${this.renderInvestorCard('book-open', 'blue', T('roadMap'), "Our comprehensive five-year plan detailing strategic milestones and capital allocation.", '#')}
+                                ${this.renderInvestorCard('file-text', 'teal', T('downloadReport'), "Download the Q3 2024 Financial Report detailing divisional performance and outlook.", '#')}
+                                ${this.renderInvestorCard('wallet', 'indigo', T('dividend'), "Details on our commitment to sustainable, predictable returns for long-term investors.", '#')}
+                            </div>
+
+                            <!-- Right Column: Simulated Data Portal -->
+                            <div class="lg:col-span-2 frosted-glass p-8 shadow-2xl border-t-8 border-inuit-teal">
+                                <h2 class="text-3xl font-bold text-gray-900 mb-6">${isLoggedIn ? T('detailData') : T('investorLogin')}</h2>
+
+                                ${isLoggedIn ? this.renderInvestorDashboard(metrics, T) : this.renderInvestorLogin(T)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                lucide.createIcons();
+
+                // Draw chart if logged in and not already drawn
+                if (isLoggedIn && !this.state.isChartDrawn) {
+                    // Must wait for the DOM to update
+                    setTimeout(() => {
+                         this.drawPerformanceChart('investor-chart-canvas', metrics.performanceData);
+                         this.setState({ isChartDrawn: true }, false);
+                    }, 100);
+                   
+                } else if (!isLoggedIn) {
+                     this.setState({ isChartDrawn: false }, false); // Reset state if logged out
+                }
+            }
+
+            renderInvestorCard(icon, color, title, description, link) {
+                return `
+                    <div class="p-6 frosted-glass rounded-xl border-l-4 border-${color}-500 shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="${icon}" class="w-8 h-8 text-${color}-600 flex-shrink-0"></i>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">${title}</h3>
+                                <p class="text-sm text-gray-600 mt-1">${description}</p>
+                                <a href="${link}" class="text-sm font-semibold text-inuit-teal hover:underline mt-2 inline-block">View Document &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderInvestorLogin(T) {
+                return `
+                    <div class="text-center p-12 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+                        <i data-lucide="Lock" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                        <p class="text-lg text-gray-600 mb-6">${T('loginPrompt')}</p>
+                        <input type="password" id="investor-password" placeholder="Enter simulated password" class="w-full max-w-sm p-3 border border-gray-300 rounded-lg text-center focus:ring-inuit-teal focus:border-inuit-teal">
+                        <button onclick="window.app.handleInvestorLogin()" class="mt-4 bg-arctic-blue text-white font-bold py-3 px-8 rounded-xl hover:bg-inuit-teal transition shadow-lg">
+                            ${T('loginButton')}
+                        </button>
+                        <p id="login-message" class="text-sm text-red-500 mt-3"></p>
+                    </div>
+                `;
+            }
+
+            renderInvestorDashboard(metrics, T) {
+                return `
+                    <div class="grid grid-cols-3 gap-6 mb-8">
+                        <div class="p-4 bg-blue-50 rounded-xl text-center border-b-4 border-blue-600">
+                            <p class="text-sm font-medium text-gray-600">${T('projectedReturn')}</p>
+                            <p class="text-4xl font-extrabold text-blue-900 mt-1">${metrics.cagr}%</p>
+                        </div>
+                        <div class="p-4 bg-teal-50 rounded-xl text-center border-b-4 border-teal-600">
+                            <p class="text-sm font-medium text-gray-600">${T('currentValue')}</p>
+                            <p class="text-4xl font-extrabold text-teal-900 mt-1">$${metrics.aum}B</p>
+                        </div>
+                        <div class="p-4 bg-indigo-50 rounded-xl text-center border-b-4 border-indigo-600">
+                            <p class="text-sm font-medium text-gray-600">${T('arcticIndex')}</p>
+                            <p class="text-4xl font-extrabold text-indigo-900 mt-1">${metrics.ari} / 10</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4">Performance Timeline (Since Inception)</h3>
+                    <div class="bg-gray-800 p-4 rounded-xl shadow-inner">
+                        <canvas id="investor-chart-canvas"></canvas>
+                        <p class="text-xs text-gray-400 mt-2 text-center">Simulated Market Value indexed to 100 at launch.</p>
+                    </div>
+                `;
+            }
+            
+            drawPerformanceChart(canvasId, data) {
+                const canvas = document.getElementById(canvasId);
+                if (!canvas) return;
+
+                const ctx = canvas.getContext('2d');
+                const width = canvas.width;
+                const height = canvas.height;
+
+                // Clear previous drawings
+                ctx.clearRect(0, 0, width, height);
+                
+                // Set canvas size to match display size for non-blurry rendering
+                canvas.style.width = '100%';
+                canvas.style.height = '300px';
+                canvas.width = canvas.offsetWidth;
+                canvas.height = 300;
+
+                const padding = 40;
+                const chartWidth = width - 2 * padding;
+                const chartHeight = height - 2 * padding;
+                const maxVal = Math.max(...data) + 10;
+                const minVal = Math.min(...data) - 10;
+                const range = maxVal - minVal;
+                const stepX = chartWidth / (data.length - 1);
+                
+                // Draw Axes and Labels
+                ctx.strokeStyle = '#4b5563'; // Gray-600
+                ctx.lineWidth = 1;
+                
+                // Y-axis (Value)
+                for (let i = 0; i <= 4; i++) {
+                    const y = padding + chartHeight * (i / 4);
+                    const labelValue = Math.round(maxVal - range * (i / 4));
+                    
+                    // Grid line
+                    ctx.beginPath();
+                    ctx.moveTo(padding, y);
+                    ctx.lineTo(width - padding, y);
+                    ctx.strokeStyle = '#374151'; // Darker grid
+                    ctx.stroke();
+
+                    // Label
+                    ctx.fillStyle = '#9ca3af'; // Gray-400
+                    ctx.font = '12px Inter';
+                    ctx.fillText(labelValue, 5, y + 4);
+                }
+
+                // X-axis (Timeline - Mock Quarters)
+                for (let i = 0; i < data.length; i++) {
+                    const x = padding + i * stepX;
+                    const label = `Q${(i % 4) + 1} Y${Math.floor(i / 4) + 1}`;
+                    ctx.fillStyle = '#9ca3af';
+                    ctx.font = '10px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(label, x, height - 10);
+                }
+
+                // Draw Performance Line
+                ctx.beginPath();
+                ctx.strokeStyle = '#00A896'; // Inuit Teal
+                ctx.lineWidth = 3;
+                
+                data.forEach((value, index) => {
+                    const x = padding + index * stepX;
+                    const y = padding + chartHeight * (1 - (value - minVal) / range);
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                    
+                    // Draw point
+                    ctx.fillStyle = '#00A896';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                ctx.stroke();
+            }
+
+
+            // --- Full Render Cycle ---
+            renderAll() {
+                this.renderNavbar();
+                this.renderHome();
+                this.renderSubsidiaries();
+                this.renderImpactIndex();
+                this.renderTeam();
+                this.renderInvestorPortal();
+                // Governance is static content and doesn't need re-rendering unless language changes
+            }
+
+            // --- Remaining Renders (Navbar, Subsidiaries, Impact, Team) ---
+
+            renderNavbar() {
+                const T = (key) => this.getT(key);
+                const isMobileMenuOpen = document.getElementById('mobile-menu')?.classList.contains('flex');
+                
+                document.getElementById('main-navbar').innerHTML = `
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+                        <!-- Logo / Title -->
+                        <a href="#Home" class="flex-shrink-0 flex items-center text-white text-2xl font-black tracking-wider">
+                            <i data-lucide="IceCream2" class="w-8 h-8 mr-2 text-inuit-teal"></i>
+                            NWPH<span class="font-light ml-1 text-gray-300 hidden md:inline">Holdings</span>
+                        </a>
+
+                        <!-- Desktop Links -->
+                        <div id="nav-links" class="hidden md:flex space-x-8 text-lg font-medium">
+                            <a href="#Home" class="text-white border-b-2 border-inuit-teal pb-1 hover:text-inuit-teal transition">${T('navHome')}</a>
+                            <a href="#Subsidiaries" class="text-white border-b-2 border-transparent pb-1 hover:text-inuit-teal transition">${T('navSubsidiaries')}</a>
+                            <a href="#ImpactIndex" class="text-white border-b-2 border-transparent pb-1 hover:text-inuit-teal transition">${T('navImpact')}</a>
+                            <a href="#CorporateTeam" class="text-white border-b-2 border-transparent pb-1 hover:text-inuit-teal transition">${T('navTeam')}</a>
+                            <a href="#Investors" class="text-white border-b-2 border-transparent pb-1 hover:text-inuit-teal transition">${T('navInvestors')}</a>
+                        </div>
+
+                        <!-- Utility / Mobile Toggle -->
+                        <div class="flex items-center space-x-4">
+                            <button onclick="window.app.toggleLanguage()" class="text-white text-sm font-semibold py-1 px-3 border border-white/30 rounded-full hover:bg-white/10 transition">
+                                ${this.state.language === 'en' ? T('languageToggle') : T('languageToggleBack')}
+                            </button>
+                            
+                            <button id="mobile-menu-button" class="text-white md:hidden" onclick="document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex');">
+                                <i data-lucide="${isMobileMenuOpen ? 'X' : 'Menu'}" class="w-7 h-7"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Menu -->
+                    <div id="mobile-menu" class="md:hidden ${isMobileMenuOpen ? 'flex' : 'hidden'} flex-col bg-arctic-blue px-4 py-4 space-y-3 border-t border-gray-700">
+                        <a href="#Home" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-white text-lg font-medium hover:text-inuit-teal transition">${T('navHome')}</a>
+                        <a href="#Subsidiaries" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-white text-lg font-medium hover:text-inuit-teal transition">${T('navSubsidiaries')}</a>
+                        <a href="#ImpactIndex" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-white text-lg font-medium hover:text-inuit-teal transition">${T('navImpact')}</a>
+                        <a href="#CorporateTeam" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-white text-lg font-medium hover:text-inuit-teal transition">${T('navTeam')}</a>
+                        <a href="#Investors" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-white text-lg font-medium hover:text-inuit-teal transition">${T('navInvestors')}</a>
+                    </div>
+                `;
+                lucide.createIcons();
+                this.updateActiveNavLink(); // Ensure active link is set immediately
+            }
+
+            renderHome() {
+                const content = document.getElementById('Home');
+                if (!content) return;
+                // Static content template remains the same, but we re-render the dynamic text
+                content.innerHTML = `
+                    <div class="relative w-full h-[700px] md:h-[900px] flex items-center justify-center pt-20 overflow-hidden">
+                        <div class="relative max-w-6xl mx-auto text-center hero-content p-6">
+                            <span class="text-lg font-extrabold tracking-widest uppercase text-inuit-teal mb-4 block animate-in fade-in-up duration-1000">
+                                ${this.getT('vision')}
+                            </span>
+                            <h1 class="text-6xl lg:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl animate-in fade-in-up duration-1000 delay-300">
+                                ${this.getT('homeTitle')}
+                            </h1>
+                            <p class="text-2xl text-gray-300 font-light mb-12 max-w-4xl mx-auto animate-in fade-in-up duration-1000 delay-600">
+                                ${this.getT('homeSubtitle')}
+                            </p>
+                            <div class="space-x-4 animate-in fade-in-up duration-1000 delay-900">
+                                <a href="#Subsidiaries" class="bg-inuit-teal text-white font-bold py-4 px-10 rounded-full shadow-2xl hover:bg-inuit-teal-dark transition duration-300 transform hover:scale-105 inline-flex items-center text-lg">
+                                    Explore Divisions <i data-lucide="Briefcase" class="w-5 h-5 ml-3"></i>
+                                </a>
+                                <a href="#Investors" class="bg-white/10 text-white font-semibold py-4 px-10 rounded-full border border-white/30 hover:bg-white/20 transition duration-300 inline-flex items-center text-lg">
+                                    Investor Gateway <i data-lucide="TrendingUp" class="w-5 h-5 ml-3"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strategy Section with Detailed Pillars -->
+                    <div class="max-w-7xl mx-auto py-24 px-6 lg:px-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                            <div class="space-y-8">
+                                <div class="p-8 rounded-2xl border-l-8 border-blue-700 bg-white shadow-xl">
+                                    <h2 class="text-4xl font-extrabold text-gray-900 mb-4">Our Vision: Sovereignty Through Innovation</h2>
+                                    <p class="text-lg text-gray-700 leading-relaxed mb-6">${this.getT('homeIntro')}</p>
+                                    <p class="text-xl text-blue-800 font-semibold leading-relaxed border-t pt-4 mt-4">
+                                        ${this.getT('homeStrategy')}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Key Pillars Visual -->
+                            <div class="space-y-6">
+                                ${this.data.subsidiaries.slice(0, 4).map(sub => `
+                                    <div class="frosted-glass p-6 flex items-start space-x-4 border-l-4 border-${sub.color} shadow-lg hover:shadow-xl transition duration-300 cursor-pointer" onclick="window.app.showDetailOverlay('${sub.id}')">
+                                        <div class="p-3 rounded-xl bg-${sub.color.replace('-600', '-100')} flex-shrink-0 shadow-md">
+                                            <i data-lucide="${sub.icon}" class="w-7 h-7 text-${sub.color}"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-gray-900">${sub.name}</h3>
+                                            <p class="text-sm text-gray-600 mt-1">${sub.narrative.split('.')[0]}.</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+
+            renderSubsidiaries() {
+                const content = document.getElementById('Subsidiaries');
+                if (!content) return;
+                
+                content.innerHTML = `
+                    <div class="max-w-7xl mx-auto py-24 px-6 lg:px-8 bg-gray-50">
+                        <div class="text-center mb-16">
+                            <h1 class="text-5xl font-extrabold text-gray-900 mb-4">${this.getT('subsidiaryTitle')}</h1>
+                            <p class="text-xl text-gray-600 max-w-3xl mx-auto">NWPH is a diversified holding company structured around eight key divisions, each driving a strategic pillar of the Arctic economy.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            ${this.data.subsidiaries.map(sub => `
+                                <div class="frosted-glass p-8 rounded-2xl shadow-xl border-t-8 border-${sub.color} flex flex-col h-full transition hover:shadow-2xl">
+                                    <div class="flex items-center mb-4">
+                                        <div class="p-3 rounded-xl bg-${sub.color.replace('-600', '-100')} flex-shrink-0">
+                                            <i data-lucide="${sub.icon}" class="w-8 h-8 text-${sub.color}"></i>
+                                        </div>
+                                        <h2 class="text-2xl font-bold ml-4 text-gray-900">${sub.name}</h2>
+                                    </div>
+                                    <p class="text-sm font-semibold text-${sub.color} mb-4">${sub.division}</p>
+                                    <p class="text-gray-700 leading-relaxed flex-grow">${sub.narrative}</p>
+                                    
+                                    <button onclick="window.app.showDetailOverlay('${sub.id}')" 
+                                        class="mt-6 w-full bg-gray-800 text-white font-medium py-3 rounded-full hover:bg-inuit-teal transition transform hover:scale-[1.02] shadow-md">
+                                        View Deep Dive &rarr;
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+
+            renderImpactIndex() {
+                const content = document.getElementById('ImpactIndex');
+                if (!content) return;
+
+                const T = (key) => this.getT(key);
+                const metrics = this.data.mockImpactMetrics;
+
+                content.innerHTML = `
+                    <div class="arctic-blue-gradient py-24 px-6 lg:px-8">
+                        <div class="max-w-7xl mx-auto text-white">
+                            <div class="text-center mb-16">
+                                <h1 class="text-5xl font-extrabold mb-4">${T('impactTitle')}</h1>
+                                <p class="text-xl text-gray-300 max-w-4xl mx-auto">${T('impactSubtitle')}</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                                ${Object.keys(metrics).map(key => {
+                                    const m = metrics[key];
+                                    const percentage = (m.value / m.max) * 100;
+                                    const progressStyle = `style="--progress: ${percentage}%; --progress-color: ${m.color};" data-progress="${m.value}${m.unit}"`;
+                                    
+                                    return `
+                                        <div class="flex flex-col items-center text-center p-4 frosted-glass/95 text-gray-800 rounded-xl shadow-xl">
+                                            <div class="radial-progress-bar mb-4" ${progressStyle}>
+                                                <div class="radial-progress-bar-unit">${T(key)}</div>
+                                            </div>
+                                            <p class="text-sm font-medium text-gray-600">${T(key)}</p>
+                                            <p class="text-xs text-gray-400">Target: ${m.max}${m.unit}</p>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+
+                            <!-- Footer note on accountability -->
+                            <div class="mt-16 text-center pt-8 border-t border-gray-600">
+                                <p class="text-lg font-light text-gray-400">
+                                    <i data-lucide="Feather" class="w-5 h-5 inline mr-2 text-inuit-teal"></i>
+                                    Measurement based on **Inuit Qaujimajatuqangit (IQ)** principles for holistic community and environmental impact.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+
+            renderTeam() {
+                const content = document.getElementById('CorporateTeam');
+                if (!content) return;
+                
+                const T = (key) => this.getT(key);
+
+                content.innerHTML = `
+                    <div class="max-w-7xl mx-auto py-24 px-6 lg:px-8 bg-white">
+                        <div class="text-center mb-16">
+                            <h1 class="text-5xl font-extrabold text-gray-900 mb-4">${T('teamTitle')}</h1>
+                            <p class="text-xl text-gray-600 max-w-3xl mx-auto">${T('teamSubtitle')}</p>
+                        </div>
+
+                        <!-- Executive Leadership Grid (5 wide) -->
+                        <h2 class="text-3xl font-bold text-blue-700 mb-8 border-b pb-3">Executive Leadership: The Visionaries</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-20">
+                            ${this.data.leadership.map(leader => `
+                                <div class="frosted-glass p-6 rounded-xl shadow-xl border-t-8 border-blue-500 flex flex-col items-center text-center transition hover:shadow-2xl h-full">
+                                    <img src="${leader.photoUrl}" alt="${leader.name}" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-lg">
+                                    <h3 class="text-xl font-bold text-gray-900">${leader.name}</h3>
+                                    <p class="text-sm font-semibold text-blue-600 mb-3">${leader.title}</p>
+                                    <p class="text-sm text-gray-600 flex-grow">${leader.bio}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <!-- Governance Structure -->
+                        <h2 class="text-3xl font-bold text-inuit-teal mb-8 border-b pb-3">${T('governanceTitle')}</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                            <div class="p-8 border rounded-xl bg-teal-50 shadow-md">
+                                <i data-lucide="Users" class="w-8 h-8 text-teal-700 mb-3"></i>
+                                <h3 class="text-2xl font-bold text-teal-800 mb-2">The Board of Directors</h3>
+                                <p class="text-gray-700">${T('board')}</p>
+                            </div>
+                            <div class="p-8 border rounded-xl bg-blue-50 shadow-md">
+                                <i data-lucide="Feather" class="w-8 h-8 text-blue-700 mb-3"></i>
+                                <h3 class="text-2xl font-bold text-blue-800 mb-2">Youth Apprenticeship Council</h3>
+                                <p class="text-gray-700">${T('council')}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+
+        } // End of NWPH_App Class
+
+        // --- Application Initialization and Event Handlers ---
+        window.app = new NWPH_App(NWPH_DATA);
+
+        window.onload = function () {
+            if (firebaseConfig) {
+                 window.app.initializeFirebase();
+            } else {
+                 // Fallback if Firebase is not configured, still render content
+                 window.app.setState({ isAuthReady: true }, false);
+            }
+            window.app.renderAll();
+            
+            // Re-render navbar and handle active link on scroll
+            window.addEventListener('scroll', window.app.handleScrollAnimation);
+            
+            // Initial check for active navigation link on load
+            window.app.updateActiveNavLink();
+        }
+
+    </script>
+    
+    <!-- Navbar (Fixed Header) -->
+    <header id="main-navbar" class="fixed top-0 left-0 right-0 arctic-bg py-4 z-40 transition-all duration-300 h-20 bg-opacity-100">
+        <!-- Content inserted by renderNavbar -->
+    </header>
+
+    <main class="mt-20">
+        <!-- Section 1: Home / Vision -->
+        <section id="Home" class="arctic-bg pt-20">
+            <!-- Content inserted by renderHome -->
+        </section>
+        
+        <!-- Section 2: Subsidiaries / Divisions -->
+        <section id="Subsidiaries" class="bg-gray-50">
+            <!-- Content inserted by renderSubsidiaries -->
+        </section>
+
+        <!-- Section 3: Impact Index / Metrics -->
+        <section id="ImpactIndex">
+            <!-- Content inserted by renderImpactIndex -->
+        </section>
+
+        <!-- Section 4: Corporate Team / Governance -->
+        <section id="CorporateTeam" class="bg-white">
+            <!-- Content inserted by renderTeam -->
+        </section>
+        
+        <!-- Section 5: Investor Portal -->
+        <section id="Investors" class="bg-gray-50">
+            <!-- Content inserted by renderInvestorPortal -->
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="arctic-bg text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 border-t border-gray-700 pt-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4 flex items-center"><i data-lucide="IceCream2" class="w-6 h-6 mr-2 text-inuit-teal"></i> North West Passage Holdings</h4>
+                    <p class="text-sm text-gray-400">Headquarters: Qikiqtarjuaq, Nunavut, Canada</p>
+                    <p class="text-sm text-gray-400 mt-1">Arctic Innovation. Inuit Resilience. Global Impact.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#Subsidiaries" class="text-gray-400 hover:text-inuit-teal transition">Our Divisions</a></li>
+                        <li><a href="#ImpactIndex" class="text-gray-400 hover:text-inuit-teal transition">I2 Metrics</a></li>
+                        <li><a href="#Investors" class="text-gray-400 hover:text-inuit-teal transition">Investor Relations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact & Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-inuit-teal transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-inuit-teal transition">Careers (Apprenticeships)</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-inuit-teal transition">Media Inquiries</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 text-center text-sm text-gray-500 border-t border-gray-700 pt-8">
+                &copy; 2024 North West Passage Holdings (NWPH). All Rights Reserved. Inuit Qaujimajatuqangit (IQ) guides our path.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Subsidiary Detail Modal/Overlay -->
+    <div id="subsidiary-detail-overlay" class="overlay">
+        <div id="detail-content" class="overlay-content rounded-3xl">
+            <!-- Dynamic content for selected subsidiary goes here -->
+        </div>
+    </div>
+
+</body>
+</html>
