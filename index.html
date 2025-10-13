@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>North West Passage Holdings Corporation (NWPH) – Inuit-Owned, Northern-Driven</title>
+    <meta name="description" content="NWPH is an Inuit-owned northern holding company based in Qikiqtarjuaq, Nunavut, operating North Winds Airlines, Baffin Adventure Cruises, and essential infrastructure across the Arctic.">
+    <meta property="og:title" content="North West Passage Holdings Corporation (NWPH)">
+    <meta property="og:description" content="Community-focused operations in Arctic aviation, logistics, and infrastructure.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nwph.co">
+    <meta property="og:image" content="https://placehold.co/1200x630/0A1B2C/B9D9F8?text=NWPH_Arctic">
+    
+    <!-- Base Organization JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "North West Passage Holdings Corporation (NWPH)",
+      "url": "https://nwph.co",
+      "logo": "https://placehold.co/60x60/0A1B2C/B9D9F8?text=NWPH",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Main Street",
+        "addressLocality": "Qikiqtarjuaq",
+        "addressRegion": "Nunavut",
+        "postalCode": "X0A 0B0",
+        "addressCountry": "CA"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-867-555-NWPH",
+        "contactType": "general"
+      }
+    }
+    </script>
+    
+    <style>
+        /* ====================================================================
+           CSS Styles (Arctic Palette, Mobile-First, Accessible)
+           ==================================================================== */
+        :root {
+            /* Arctic Palette */
+            --color-primary: #0A1B2C; /* Midnight Navy */
+            --color-secondary: #0077B6; /* Ice Blue */
+            --color-accent: #6C5CE7; /* Aurora Purple/Blue */
+            --color-success: #28A745;
+            --color-warning: #FFC107;
+            
+            /* Text & Background - Light Mode */
+            --color-text: #222;
+            --color-background: #F8F9FA;
+            --color-surface: #FFFFFF;
+            --color-border: #E0E0E0;
+            --color-shadow: rgba(0, 0, 0, 0.08);
+
+            /* Utility */
+            --radius-default: 16px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2.5rem;
+            --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        /* Dark Mode Variables */
+        body.dark {
+            --color-text: #E0E7FF;
+            --color-background: #1A2A3A;
+            --color-surface: #0A1B2C;
+            --color-border: #2C3E50;
+            --color-shadow: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Base Styles */
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Accessibility & Focus */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus, [tabindex]:focus {
+            outline: 3px solid var(--color-accent);
+            outline-offset: 3px;
+            border-radius: var(--radius-default);
+        }
+        
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-row { flex-direction: row; }
+        .justify-between { justify-content: space-between; }
+        .items-center { align-items: center; }
+        .gap-md { gap: var(--spacing-md); }
+        .text-center { text-align: center; }
+        .p-md { padding: var(--spacing-md); }
+        .my-lg { margin-top: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
+        .m-0 { margin: 0; }
+        .w-full { width: 100%; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-md); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-md); }
+
+        /* Typography */
+        h1 { font-size: 2.5rem; font-weight: 800; }
+        h2 { font-size: 2rem; font-weight: 700; color: var(--color-primary); margin-bottom: var(--spacing-md); }
+        body.dark h2 { color: var(--color-secondary); }
+        h3 { font-size: 1.5rem; font-weight: 600; }
+
+        /* Buttons & Forms */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-default);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.2s;
+            min-width: 120px;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-surface);
+        }
+        .btn-primary:hover { background-color: var(--color-secondary); color: var(--color-surface); }
+        .btn-secondary {
+            background-color: var(--color-surface);
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+        .btn-secondary:hover { background-color: var(--color-primary); color: var(--color-surface); }
+        body.dark .btn-secondary { background-color: var(--color-surface); color: var(--color-primary); border-color: var(--color-secondary); }
+        body.dark .btn-secondary:hover { background-color: var(--color-secondary); color: var(--color-primary); border-color: var(--color-secondary); }
+
+        input, select, textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-default);
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+        body.dark input, body.dark select, body.dark textarea {
+            border-color: var(--color-border);
+            background-color: var(--color-primary);
+        }
+
+        .form-group { margin-bottom: var(--spacing-sm); }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .error-message { color: var(--color-accent); font-size: 0.875rem; margin-top: 0.25rem; }
+        input[aria-invalid="true"] { border-color: var(--color-accent); }
+        
+        /* Header & Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--color-shadow);
+            padding: var(--spacing-sm) 0;
+        }
+        body.dark header {
+            background-color: var(--color-surface);
+            border-bottom-color: var(--color-primary);
+        }
+        .logo { font-size: 1.8rem; font-weight: 800; text-decoration: none; color: var(--color-primary); }
+        body.dark .logo { color: var(--color-secondary); }
+
+        nav { display: none; } /* Mobile hide main nav */
+        
+        .header-actions { display: flex; align-items: center; gap: var(--spacing-xs); }
+        
+        .nav-toggle-btn { background: none; border: none; font-size: 1.5rem; color: var(--color-text); }
+        
+        /* Desktop/Tablet Navigation */
+        @media (min-width: 768px) {
+            nav { display: flex; gap: var(--spacing-sm); }
+            nav a {
+                color: var(--color-text);
+                text-decoration: none;
+                padding: 0.5rem 0;
+                font-weight: 500;
+                border-bottom: 3px solid transparent;
+                transition: border-color 0.2s, color 0.2s;
+            }
+            nav a:hover, nav a.active {
+                color: var(--color-secondary);
+                border-bottom-color: var(--color-secondary);
+            }
+            .nav-toggle-btn { display: none; }
+        }
+
+        /* Sidebar/Full Nav (Mobile) */
+        #sidebar-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70vw;
+            max-width: 300px;
+            height: 100%;
+            background-color: var(--color-surface);
+            box-shadow: -4px 0 10px var(--color-shadow);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+            padding: var(--spacing-lg) var(--spacing-md);
+            z-index: 150;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        #sidebar-nav.open { transform: translateX(0); }
+        #sidebar-nav a {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--color-border);
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        main { flex-grow: 1; padding: var(--spacing-md) 0; }
+        section { padding: var(--spacing-md) 0; }
+        
+        /* Cards */
+        .card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-default);
+            padding: var(--spacing-md);
+            box-shadow: 0 4px 10px var(--color-shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+            height: 100%;
+        }
+        .card-header { font-size: 1.25rem; margin-bottom: var(--spacing-sm); font-weight: 700; color: var(--color-secondary); }
+
+        /* Tabs */
+        .tabs-nav { display: flex; flex-wrap: wrap; border-bottom: 2px solid var(--color-border); margin-bottom: var(--spacing-md); gap: var(--spacing-sm); }
+        .tabs-nav button {
+            background: none;
+            border: none;
+            padding: 0.75rem 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: border-bottom 0.2s, color 0.2s;
+            border-bottom: 3px solid transparent;
+            color: var(--color-text);
+        }
+        .tabs-nav button.active {
+            border-bottom-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Tables (General) */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--spacing-sm);
+            font-size: 0.9rem;
+        }
+        .data-table th, .data-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .data-table th {
+            background-color: var(--color-background);
+            font-weight: 600;
+            cursor: pointer;
+            position: sticky;
+            top: 0;
+        }
+        body.dark .data-table th { background-color: var(--color-primary); }
+        .data-table tr:hover { background-color: rgba(var(--color-secondary), 0.05); }
+
+        /* Charts */
+        .chart-container { 
+            background-color: var(--color-surface);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-default);
+            box-shadow: 0 2px 5px var(--color-shadow);
+        }
+
+        /* Modals & Toasts */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: var(--spacing-md);
+        }
+
+        .modal-content {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-default);
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .modal-close-btn { 
+            position: absolute; 
+            top: var(--spacing-sm); 
+            right: var(--spacing-sm);
+            background: none; 
+            border: none; 
+            font-size: 1.5rem; 
+            color: var(--color-text);
+            cursor: pointer;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: var(--spacing-md);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+        }
+        .toast {
+            background-color: var(--color-primary);
+            color: var(--color-surface);
+            padding: 0.75rem 1.5rem;
+            margin-top: 0.5rem;
+            border-radius: var(--radius-default);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: all;
+            min-width: 250px;
+            text-align: center;
+        }
+        .toast.show { opacity: 1; transform: translateY(-5px); }
+
+        /* Floating Mobile Quick Actions */
+        #mobile-dock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            box-shadow: 0 -2px 10px var(--color-shadow);
+            z-index: 90;
+            padding: var(--spacing-xs) 0;
+        }
+        #mobile-dock .container { display: flex; justify-content: space-around; }
+        #mobile-dock button {
+            background: none;
+            border: none;
+            color: var(--color-text);
+            font-size: 0.7rem;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: 500;
+        }
+        #mobile-dock button span { font-size: 1.2rem; }
+        @media (min-width: 768px) {
+            #mobile-dock { display: none; }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-primary);
+            color: var(--color-surface);
+            padding: var(--spacing-md) 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+        footer a { color: var(--color-secondary); text-decoration: none; }
+        footer .footer-links a { margin-right: var(--spacing-sm); }
+        
+        /* Helper for showing hidden content in print/download */
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="btn" style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; z-index: 9999; &:focus { left: 0; height: auto; width: auto; padding: 0.5rem; background: var(--color-secondary); color: var(--color-primary); }">Skip to content</a>
+
+    <header role="banner">
+        <div class="container flex justify-between items-center">
+            <a href="#/home" class="logo" aria-label="North West Passage Holdings Corporation, Home">NWPH</a>
+            
+            <nav id="main-nav" role="navigation"></nav>
+
+            <div class="header-actions">
+                <!-- Language Toggle -->
+                <button id="lang-toggle" class="btn btn-secondary" aria-label="Toggle language between English and Inuktitut" style="padding: 0.5rem 0.75rem; min-width: auto; font-size: 0.8rem;">
+                    ᐃᓄᒃᑎᑐᑦ
+                </button>
+                <!-- Dark Mode Toggle -->
+                <button id="dark-mode-toggle" class="nav-toggle-btn" aria-label="Toggle dark mode">
+                    <span id="dark-mode-icon">🌙</span>
+                </button>
+                <!-- Mobile Nav Toggle -->
+                <button id="nav-toggle-btn" class="nav-toggle-btn" aria-label="Open navigation menu">
+                    &#x2261;
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Sidebar -->
+        <div id="sidebar-nav" role="menu" aria-hidden="true" tabindex="-1">
+            <button class="modal-close-btn" id="sidebar-close-btn" aria-label="Close navigation menu">&times;</button>
+            <h3 class="card-header">Menu</h3>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <div class="container" id="app-content">
+            <p class="text-center p-md">Loading NWPH Application...</p>
+        </div>
+    </main>
+    
+    <!-- Floating Mobile Quick Actions Dock -->
+    <div id="mobile-dock" role="navigation">
+        <div class="container">
+            <button onclick="NWPH.UI.showModal('book-flight-modal')"><span>&#x2708;</span> <span class="action-label" data-en="Book Flight" data-iu="ᖃᖓᑦᑕᐅᑎᑦ">Book Flight</span></button>
+            <button onclick="NWPH.UI.showModal('cargo-tracking-modal')"><span>&#x2318;</span> <span class="action-label" data-en="Track Cargo" data-iu="ᓇᒻᒪᑳᑦ ᖃᐅᔨᓴᖅ">Track Cargo</span></button>
+            <button onclick="window.location.hash = '#/contact'"><span>&#x2709;</span> <span class="action-label" data-en="Contact" data-iu="ᐅᖃᖃᑎᒋᑦ">Contact</span></button>
+        </div>
+    </div>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#/governance" class="footer-link">Governance</a>
+                <a href="#/investors" class="footer-link">Investors</a>
+                <a href="#/contact" class="footer-link">Contact</a>
+                <a href="#" onclick="NWPH.Seed.reset(); return false;" class="footer-link hidden" id="reset-button">Developer Reset</a>
+            </div>
+            <p class="m-0">&copy; <span id="current-year"></span> North West Passage Holdings Corporation. All Rights Reserved. Inuit-Owned and Operated from Qikiqtarjuaq, Nunavut.</p>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    
+    <!-- Login/Register Modal -->
+    <div id="login-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="login-title">
+        <div class="modal-content" tabindex="-1">
+            <button class="modal-close-btn" onclick="NWPH.UI.hideModal('login-modal')" aria-label="Close login modal">&times;</button>
+            <h2 id="login-title" class="card-header">NunaMiles Login / Register</h2>
+            <p>Simulating login via NunaNet secure verification. Check back soon!</p>
+            <a href="#" class="btn btn-primary" onclick="NWPH.UI.showToast('Login is unavailable. System maintenance.', false)">Attempt Login</a>
+        </div>
+    </div>
+    
+    <!-- Book Flight Modal -->
+    <div id="book-flight-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="book-title">
+        <div class="modal-content" tabindex="-1">
+            <button class="modal-close-btn" onclick="NWPH.UI.hideModal('book-flight-modal')" aria-label="Close flight booking modal">&times;</button>
+            <h2 id="book-title" class="card-header">Book Flight <span data-lang-key="ACT_BOOK_FLIGHT"></span></h2>
+            <form id="book-flight-form">
+                <!-- Form fields here, simplified for demo -->
+            </form>
+            <div id="fare-calc-results" class="card p-md my-lg hidden" style="border: 2px solid var(--color-secondary);">
+                <p><strong>Calculated Fare:</strong> <span id="calc-fare-total">C$0.00</span></p>
+                <p><strong>NunaMiles Earned:</strong> <span id="calc-miles-earned">0</span></p>
+                <button class="btn btn-primary w-full mt-4" onclick="NWPH.UI.showToast('Booking submitted and awaiting confirmation.', true)">Confirm Booking (Demo)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cargo Tracking Modal -->
+    <div id="cargo-tracking-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cargo-title">
+        <div class="modal-content" tabindex="-1">
+            <button class="modal-close-btn" onclick="NWPH.UI.hideModal('cargo-tracking-modal')" aria-label="Close cargo tracking modal">&times;</button>
+            <h2 id="cargo-title" class="card-header">Track Cargo <span data-lang-key="ACT_TRACK_CARGO"></span></h2>
+            <form id="cargo-tracking-form">
+                <div class="form-group">
+                    <label for="tracking-id">Tracking ID (e.g., NWP-101)</label>
+                    <input type="text" id="tracking-id" required>
+                    <p class="error-message" id="error-tracking-id"></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Track</button>
+            </form>
+            <div id="cargo-timeline-results" class="my-lg hidden">
+                <h3 class="card-header">Shipment NWP-101 Status</h3>
+                <ul id="cargo-timeline" style="list-style: none; padding: 0;"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Verification Modal -->
+    <div id="verification-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="verify-title">
+        <div class="modal-content" tabindex="-1">
+            <button class="modal-close-btn" onclick="NWPH.UI.hideModal('verification-modal')" aria-label="Close verification modal">&times;</button>
+            <h2 id="verify-title" class="card-header">Fare Verification <span id="verify-type"></span></h2>
+            <form id="verification-form">
+                <!-- Form fields populated by JS based on verification type -->
+            </form>
+            <p id="verification-status" class="mt-4"></p>
+        </div>
+    </div>
+    
+    <!-- Investor RFP Modal -->
+    <div id="investor-rfp-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rfp-title">
+        <div class="modal-content" tabindex="-1">
+            <button class="modal-close-btn" onclick="NWPH.UI.hideModal('investor-rfp-modal')" aria-label="Close RFP modal">&times;</button>
+            <h2 id="rfp-title" class="card-header">Submit RFP / Inquiry</h2>
+            <form id="investor-rfp-form">
+                <!-- Form fields: name, email, interest, topic -->
+                <div class="form-group"><label for="rfp-name">Name</label><input type="text" id="rfp-name" required></div>
+                <div class="form-group"><label for="rfp-email">Email</label><input type="email" id="rfp-email" required></div>
+                <div class="form-group"><label for="rfp-interest">Area of Interest</label><select id="rfp-interest" required><option>Aviation</option><option>Tourism</option><option>Infrastructure</option><option>Technology</option><option>General</option></select></div>
+                <div class="form-group"><label for="rfp-topic">Topic/Summary</label><textarea id="rfp-topic" rows="4" required></textarea></div>
+                <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Document Modal -->
+    <div id="doc-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="doc-title">
+        <div class="modal-content" tabindex="-1">
+            <button class="modal-close-btn" onclick="NWPH.UI.hideModal('doc-modal')" aria-label="Close document modal">&times;</button>
+            <h2 id="doc-title" class="card-header">Document Title</h2>
+            <div id="doc-content" style="max-height: 50vh; overflow-y: scroll; padding: var(--spacing-sm); border: 1px solid var(--color-border); border-radius: var(--radius-default);"></div>
+            <button id="doc-download-btn" class="btn btn-secondary mt-4" style="float: right;">Download Document</button>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        // ====================================================================
+        // JavaScript Application Logic (Vanilla JS, Single-File SPA)
+        // ====================================================================
+
+        const NWPH = (function() {
+            // Helper for DOM lookups
+            const get = (id) => document.getElementById(id);
+            const select = (selector) => document.querySelector(selector);
+            
+            const TRANSLATIONS = {
+                NAV_HOME: { en: "Home", iu: "ᐊᖏᕐᕋᖅ" },
+                NAV_AIRLINES: { en: "Airlines", iu: "ᖃᖓᑦᑕᐅᑎᑦ" },
+                NAV_CRUISES: { en: "Cruises", iu: "ᐃᖏᕐᕋᐅᑎᑦ" },
+                NAV_FERRY: { en: "Ferry", iu: "ᐅᒥᐊᕐᔪᐊᖅ" },
+                NAV_RETAIL: { en: "Retail", iu: "ᓂᐅᕕᒃ" },
+                NAV_TECH: { en: "Technology", iu: "ᖃᐅᔨᓴᕈᑎᑦ" },
+                NAV_REALESTATE: { en: "Real Estate", iu: "ᐃᓪᓗᑦ" },
+                NAV_SCIENCE: { en: "Science", iu: "ᖃᐅᔨᓴᕐᓂᖅ" },
+                NAV_SEALIFT: { en: "Sealift", iu: "ᐅᒥᐊᕐᔪᐊᖅ" },
+                NAV_GOVERNANCE: { en: "Governance", iu: "ᐊᐅᓚᑦᑎᓂᖅ" },
+                NAV_INVESTORS: { en: "Investors", iu: "ᑮᓇᐅᔭᓕᐅᖅᑎᑦ" },
+                NAV_CONTACT: { en: "Contact", iu: "ᐅᖃᖃᑎᒋᑦ" },
+                ACT_BOOK_FLIGHT: { en: "Book Flight", iu: "ᖃᖓᑦᑕᐅᑎᑦ ᐱᓕᕆᐊᖅ" },
+                ACT_TRACK_CARGO: { en: "Track Cargo", iu: "ᓇᒻᒪᑳᑦ ᖃᐅᔨᓴᖅ" },
+            };
+            
+            let STATE = {
+                routes: [
+                    { path: '#/home', title: 'Home', description: 'Inuit-owned northern holdings company based in Qikiqtarjuaq, Nunavut.' },
+                    { path: '#/airlines', title: 'North Winds Airlines', description: 'Essential air services, cargo, and community fare programs.' },
+                    { path: '#/cruises', title: 'Baffin Adventure Cruises', description: 'Expedition tourism emphasizing community revenue-share.' },
+                    { path: '#/ferry', title: 'Baffin Ferry', description: 'Seasonal public transport and cargo logistics.' },
+                    { path: '#/retail', title: 'Polar Express Stores & Ulu & Brew', description: 'Northern retail and café accepting NunaMiles.' },
+                    { path: '#/tech', title: 'Polar Beacons Technologies (NunaNet)', description: 'IoT weather/cargo tracking and booking backbone.' },
+                    { path: '#/realestate', title: 'Illuvigaq Real Estate', description: 'Staff housing, modular units, and terminal infrastructure.' },
+                    { path: '#/science', title: 'GlacierLabs', description: 'Environmental monitoring and permafrost sentinel networks.' },
+                    { path: '#/sealift', title: 'Imavik Sealift Solutions', description: 'Seasonal Arctic sealift and cargo logistics.' },
+                    { path: '#/governance', title: 'Governance & Community', description: 'Transparency reports, policies, and community agreements.' },
+                    { path: '#/investors', title: 'Investors', description: 'Investment thesis, milestones, and request for proposals.' },
+                    { path: '#/contact', title: 'Contact NWPH', description: 'Reach our head office in Qikiqtarjuaq.' },
+                    { path: '#/404', title: 'Page Not Found', description: 'The requested page could not be located.' }
+                ],
+                currentRoute: null,
+                language: localStorage.getItem('nwph_lang') || 'en',
+                dark_mode: localStorage.getItem('nwph_dark') === 'true',
+                isNunaFareEligible: localStorage.getItem('nwph_nuna_verified') === 'true',
+                isInuukFareEligible: localStorage.getItem('nwph_inuuk_verified') === 'true',
+                seedData: null,
+                
+                // Live state for forms/tables
+                activeAirlineTab: 'routes',
+                activeFilter: {
+                    airlineRoute: 'All',
+                    cargoTariff: 'standard'
+                },
+                tableSort: { key: 'route', dir: 'asc' },
+                tablePage: 1,
+                itemsPerPage: 10
+            };
+            
+            // --- DATA SEEDING & LOCAL STORAGE ---
+            const Seed = {
+                seedData: function() {
+                    if (localStorage.getItem('nwph_data_seeded')) {
+                        STATE.seedData = JSON.parse(localStorage.getItem('nwph_data_seeded'));
+                        return;
+                    }
+                    
+                    const data = {
+                        // General KPIs
+                        kpis: {
+                            onTimePercentage: 92.5,
+                            communitiesServed: 14,
+                            communitySavingsQtr: 750000, // $750k
+                            communitySavingsHistory: [
+                                { qtr: 'Q1-24', savings: 500000 },
+                                { qtr: 'Q2-24', savings: 550000 },
+                                { qtr: 'Q3-24', savings: 650000 },
+                                { qtr: 'Q4-24', savings: 750000 }
+                            ]
+                        },
+                        
+                        // Airlines
+                        airlines: {
+                            baseFareIqaluitQik: 750,
+                            baseFareQikPan: 300,
+                            taxesFees: 75,
+                            fareDiscounts: { nuna: 0.30, inuuk: 0.50 }, // 30% and 50%
+                            mileageRates: { express: 1, connect: 1.5, altitude: 2 },
+                            fleet: [
+                                { type: 'Express', aircraft: 'Caravan / Twin Otter', capacity: 9, typicalLeg: 'Qik-Pan', mileage: 1 },
+                                { type: 'Connect', aircraft: 'ATR 42/72', capacity: 48, typicalLeg: 'Iqaluit-Qik', mileage: 1.5 },
+                                { type: 'Altitude', aircraft: 'E175 / A220', capacity: 100, typicalLeg: 'Future Southern Routes', mileage: 2 }
+                            ],
+                            routes: [
+                                { route: 'Iqaluit ↔ Qikiqtarjuaq', basePrice: 750, aircraft: 'Connect', distance: 200, avgTime: '1h 15m' },
+                                { route: 'Qikiqtarjuaq ↔ Pangnirtung', basePrice: 300, aircraft: 'Express', distance: 80, avgTime: '45m' },
+                                { route: 'Iqaluit ↔ Clyde River', basePrice: 950, aircraft: 'Connect', distance: 400, avgTime: '1h 50m' }
+                            ],
+                            cargoTariffs: {
+                                standard: 1.50, // per kg
+                                communityPartner: 0.75, // per kg
+                                benchmarkRetail: 2.00 // Non-NWPH benchmark
+                            }
+                        },
+
+                        // Cruises
+                        cruises: [
+                            { name: 'Heart of Baffin Expedition', duration: '10 Days', capacity: 150, price: 9500, highlights: ['Auyuittuq NP', 'Zodiac Landings', 'Community Excursions'] },
+                            { name: 'Fjord Explorer', duration: '7 Days', capacity: 100, price: 6500, highlights: ['Cumberland Sound', 'Wildlife Viewing', 'Glacier Labs Tour'] }
+                        ],
+                        
+                        // Sealift
+                        sealift: {
+                            ports: ['Qikiqtarjuaq', 'Pangnirtung', 'Clyde River', 'Arctic Bay'],
+                            seasonalWindow: 'July 15 - October 15',
+                            bookingPlaceholders: 150
+                        },
+
+                        // Science (GlacierLabs)
+                        glacierLabs: {
+                            stations: [
+                                { id: 'QIK-PFR-001', location: 'Qikiqtarjuaq Permafrost Sentinel', status: 'Active', dataType: 'Temperature' },
+                                { id: 'BAT-AWS-005', location: 'Baffin Bay Automated Weather Station', status: 'Active', dataType: 'Weather/Wind' }
+                            ],
+                            permafrostData: [ // 30 days time series (degrees C)
+                                { day: 1, temp: -5.1 }, { day: 5, temp: -5.0 }, { day: 10, temp: -4.8 }, 
+                                { day: 15, temp: -4.5 }, { day: 20, temp: -4.2 }, { day: 25, temp: -4.0 }, { day: 30, temp: -3.8 }
+                            ]
+                        },
+                        
+                        // Governance Documents
+                        docs: {
+                            'Nuna Fare Policy': 'This policy outlines the 30% discount for Nunavut residents. Verification requires a valid NunaNet ID or municipal confirmation code. This program is funded directly by NWPH revenue to promote essential travel.',
+                            'Inuuk Fare Verification': 'A 50% discount for verified Inuit beneficiaries. Requires consent through the land claims organization and annual re-verification. This ensures our mandate of community benefit is directly met.',
+                            'Community Partnership Agreement (CPA)': 'A framework for revenue sharing, employment priority, and joint decision-making with local municipalities. This agreement is the core of our community governance model and is updated biennially.',
+                            'Airport Use & Infrastructure Agreement (AUIA)': 'Details NWPH\'s responsibilities for local airport maintenance, terminal operations, and infrastructure upgrades beyond baseline public investment. This ensures reliable service year-round.',
+                            'Emergency Charter Addendum (ECRA)': 'Guarantees immediate availability of North Winds aircraft for medical, SAR, or disaster response charters at a standardized, capped community rate.',
+                        },
+
+                        // Cargo Tracking Events (Mock)
+                        cargoEvents: {
+                            'NWP-101': [
+                                { time: '2025-10-10 09:00', location: 'Iqaluit Terminal', status: 'Received at Terminal' },
+                                { time: '2025-10-10 11:30', location: 'Iqaluit Terminal', status: 'Awaiting Flight 8W-202' },
+                                { time: '2025-10-10 13:45', location: 'In Flight (Connect)', status: 'In Transit' },
+                                { time: '2025-10-10 15:00', location: 'Qikiqtarjuaq Express Hangar', status: 'Ready for Pickup' }
+                            ],
+                            'NWP-102': [
+                                { time: '2025-10-09 18:00', location: 'Ottawa Depot', status: 'Processing' },
+                                { time: '2025-10-12 07:00', location: 'Iqaluit Terminal', status: 'Delayed: Weather' }
+                            ]
+                        },
+                        
+                        // Retail/Points (Simulated user data)
+                        user: {
+                            nunaMilesBalance: 12500,
+                        },
+                        retail: {
+                            cafeItem: { name: "Ulu & Brew Coffee", price: 5.50, pointsRate: 2 }, // 2 points per dollar
+                            product: { name: "Expedition Parka", price: 1200, pointsRate: 1.5 } // 1.5 points per dollar
+                        },
+                        
+                        // Real Estate
+                        realestate: [
+                            { id: 1, type: 'Staff Housing', location: 'Qikiqtarjuaq East', units: 8, occupied: 6, nightlyCrewRate: 150 },
+                            { id: 2, type: 'Terminal Module', location: 'Pangnirtung', units: 1, occupied: 1, nightlyCrewRate: 0 }
+                        ],
+                        
+                        // Other lists
+                        investorRFPs: [],
+                        contactInquiries: [],
+                    };
+                    
+                    localStorage.setItem('nwph_data_seeded', JSON.stringify(data));
+                    STATE.seedData = data;
+                },
+                
+                reset: function() {
+                    localStorage.removeItem('nwph_data_seeded');
+                    localStorage.removeItem('nwph_lang');
+                    localStorage.removeItem('nwph_dark');
+                    localStorage.removeItem('nwph_nuna_verified');
+                    localStorage.removeItem('nwph_inuuk_verified');
+                    Seed.seedData();
+                    location.reload();
+                }
+            };
+            
+            // --- UI/UX & COMPONENTS ---
+            const UI = {
+                appContent: get('app-content'),
+                navBar: get('main-nav'),
+                sidebarNav: get('sidebar-nav'),
+                toastContainer: get('toast-container'),
+
+                init: function() {
+                    document.getElementById('current-year').textContent = new Date().getFullYear();
+                    Seed.seedData();
+                    
+                    // Initial setup
+                    UI.setLanguage(STATE.language, false);
+                    UI.setDarkMode(STATE.dark_mode, false);
+                    
+                    // Attach listeners
+                    get('dark-mode-toggle').addEventListener('click', () => UI.setDarkMode(!STATE.dark_mode));
+                    get('lang-toggle').addEventListener('click', () => UI.setLanguage(STATE.language === 'en' ? 'iu' : 'en'));
+                    
+                    get('nav-toggle-btn').addEventListener('click', () => UI.toggleSidebar(true));
+                    get('sidebar-close-btn').addEventListener('click', () => UI.toggleSidebar(false));
+
+                    // Global modal close on ESC key
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') UI.closeAllModals();
+                    });
+
+                    // Init routing
+                    window.addEventListener('hashchange', Router.handleHashChange);
+                    Router.handleHashChange();
+                    
+                    // Developer Button
+                    if (window.location.host.includes('localhost') || window.location.hash === '#/dev') {
+                        get('reset-button').classList.remove('hidden');
+                    }
+                },
+                
+                setDarkMode: function(isDark, save = true) {
+                    STATE.dark_mode = isDark;
+                    document.body.classList.toggle('dark', isDark);
+                    get('dark-mode-icon').textContent = isDark ? '💡' : '🌙';
+                    if (save) localStorage.setItem('nwph_dark', isDark);
+                    // Rerender charts on dark mode change to update canvas color scheme
+                    if (STATE.currentRoute && STATE.currentRoute.path !== '#/home') Router.handleHashChange();
+                },
+
+                setLanguage: function(lang, save = true) {
+                    STATE.language = lang;
+                    document.body.setAttribute('lang', lang);
+                    get('lang-toggle').textContent = lang === 'en' ? TRANSLATIONS.NAV_HOME.iu : 'English';
+                    
+                    // Update all bilingual elements
+                    document.querySelectorAll('[data-lang-key]').forEach(el => {
+                        const key = el.dataset.langKey;
+                        if (TRANSLATIONS[key]) {
+                            el.textContent = TRANSLATIONS[key][lang];
+                        }
+                    });
+                    document.querySelectorAll('.action-label').forEach(el => {
+                        el.textContent = el.dataset[lang === 'en' ? 'en' : 'iu'];
+                    });
+                    
+                    Router.renderNav();
+                    if (save) localStorage.setItem('nwph_lang', lang);
+                    // Force re-render of current view to update complex text/tables
+                    Router.handleHashChange();
+                },
+                
+                toggleSidebar: function(open) {
+                    UI.sidebarNav.classList.toggle('open', open);
+                    UI.sidebarNav.setAttribute('aria-hidden', !open);
+                    if (open) UI.sidebarNav.focus();
+                },
+
+                showToast: function(message, isSuccess) {
+                    const toast = document.createElement('div');
+                    toast.className = `toast ${isSuccess ? 'toast-success' : 'toast-error'}`;
+                    toast.textContent = message;
+                    toast.setAttribute('role', 'alert');
+                    
+                    UI.toastContainer.appendChild(toast);
+                    
+                    // Show animation
+                    setTimeout(() => toast.classList.add('show'), 10);
+                    
+                    // Hide animation and cleanup
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 3000);
+                },
+
+                showModal: function(id) {
+                    const modal = get(id);
+                    if (modal) {
+                        modal.style.display = 'flex';
+                        modal.setAttribute('aria-hidden', 'false');
+                        // Set focus to the modal content for keyboard trap
+                        const content = modal.querySelector('.modal-content');
+                        if (content) content.focus();
+                    }
+                },
+                
+                hideModal: function(id) {
+                    const modal = get(id);
+                    if (modal) {
+                        modal.style.display = 'none';
+                        modal.setAttribute('aria-hidden', 'true');
+                    }
+                },
+                
+                closeAllModals: function() {
+                    document.querySelectorAll('.modal-overlay').forEach(m => UI.hideModal(m.id));
+                },
+                
+                // Generates downloadable text/PDF-like Blob URL
+                generateDocumentBlob: function(title, content) {
+                    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const docModal = get('doc-modal');
+                    get('doc-title').textContent = title;
+                    get('doc-content').innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word;">${content}</pre>`;
+                    
+                    const downloadBtn = get('doc-download-btn');
+                    downloadBtn.onclick = function() {
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${title.replace(/[^a-z0-9]/gi, '_')}.txt`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        UI.showToast(`Downloading: ${title}`, true);
+                        URL.revokeObjectURL(url);
+                    };
+                    
+                    UI.showModal('doc-modal');
+                }
+            };
+            
+            // --- ROUTER ---
+            const Router = {
+                handleHashChange: function() {
+                    let hash = window.location.hash || '#/home';
+                    const routePath = hash.split('?')[0]; 
+                    
+                    const route = STATE.routes.find(r => r.path === routePath) || STATE.routes.find(r => r.path === '#/404');
+                    STATE.currentRoute = route;
+
+                    UI.closeAllModals(); // Close modals on route change
+                    Router.updateMeta(route);
+                    Router.updateNav(routePath);
+                    Router.renderRoute(routePath);
+                },
+
+                updateMeta: function(route) {
+                    document.title = `${route.title} | NWPH`;
+                    select('meta[name="description"]').setAttribute('content', route.description);
+                    select('meta[property="og:title"]').setAttribute('content', route.title);
+                },
+                
+                renderNav: function() {
+                    const navHTML = STATE.routes
+                        .filter(r => r.path !== '#/404')
+                        .map(r => {
+                            const key = r.path.substring(2).toUpperCase().replace(/-/g, '_');
+                            const label = TRANSLATIONS[`NAV_${key}`] ? TRANSLATIONS[`NAV_${key}`][STATE.language] : r.title;
+                            return `<a href="${r.path}" data-key="${key}" role="menuitem">${label}</a>`;
+                        }).join('');
+                    
+                    UI.navBar.innerHTML = navHTML;
+                    UI.sidebarNav.innerHTML = `<button class="modal-close-btn" id="sidebar-close-btn" onclick="NWPH.UI.toggleSidebar(false)" aria-label="Close navigation menu">&times;</button><h3 class="card-header">Menu</h3>` + navHTML;
+                },
+
+                updateNav: function(currentPath) {
+                    document.querySelectorAll('#main-nav a, #sidebar-nav a').forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === currentPath);
+                    });
+                },
+
+                renderRoute: function(routePath) {
+                    const contentDiv = UI.appContent;
+                    contentDiv.innerHTML = '';
+                    window.scrollTo(0, 0); 
+                    UI.toggleSidebar(false);
+
+                    switch (routePath) {
+                        case '#/home': Views.renderHome(contentDiv); break;
+                        case '#/airlines': Views.renderAirlines(contentDiv); break;
+                        case '#/cruises': Views.renderCruises(contentDiv); break;
+                        case '#/ferry': Views.renderFerry(contentDiv); break;
+                        case '#/retail': Views.renderRetail(contentDiv); break;
+                        case '#/tech': Views.renderTech(contentDiv); break;
+                        case '#/realestate': Views.renderRealEstate(contentDiv); break;
+                        case '#/science': Views.renderScience(contentDiv); break;
+                        case '#/sealift': Views.renderSealift(contentDiv); break;
+                        case '#/governance': Views.renderGovernance(contentDiv); break;
+                        case '#/investors': Views.renderInvestors(contentDiv); break;
+                        case '#/contact': Views.renderContact(contentDiv); break;
+                        case '#/404': Views.render404(contentDiv); break;
+                        default: Views.render404(contentDiv);
+                    }
+                }
+            };
+            
+            // --- CHARTS (Canvas) ---
+            const Chart = {
+                drawBarChart: function(canvasId, dataPoints, labels, title, color) {
+                    const canvas = get(canvasId);
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    
+                    const values = dataPoints.map(d => d.savings);
+                    const maxVal = Math.max(...values);
+                    const barWidth = 40;
+                    const padding = 30;
+                    const chartWidth = canvas.width - 2 * padding;
+                    const chartHeight = canvas.height - 2 * padding;
+                    const barSpacing = (chartWidth - values.length * barWidth) / (values.length - 1);
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = STATE.dark_mode ? 'white' : 'black';
+                    ctx.font = '12px var(--font-family)';
+                    ctx.textAlign = 'center';
+
+                    // Draw Title
+                    ctx.fillText(title, canvas.width / 2, padding / 2);
+
+                    values.forEach((val, i) => {
+                        const barHeight = (val / maxVal) * chartHeight;
+                        const x = padding + i * (barWidth + barSpacing);
+                        const y = canvas.height - padding - barHeight;
+                        
+                        // Draw Bar
+                        ctx.fillStyle = color;
+                        ctx.fillRect(x, y, barWidth, barHeight);
+                        
+                        // Draw Label
+                        ctx.fillStyle = STATE.dark_mode ? 'white' : 'black';
+                        ctx.fillText(labels[i], x + barWidth / 2, canvas.height - padding + 15);
+                        
+                        // Draw Value
+                        ctx.fillText(`$${(val / 1000).toFixed(0)}K`, x + barWidth / 2, y - 5);
+                    });
+                    
+                    // Draw X-axis line
+                    ctx.beginPath();
+                    ctx.strokeStyle = STATE.dark_mode ? 'white' : 'black';
+                    ctx.moveTo(padding, canvas.height - padding);
+                    ctx.lineTo(canvas.width - padding, canvas.height - padding);
+                    ctx.stroke();
+                },
+                
+                drawLineChart: function(canvasId, dataPoints, title, color) {
+                    const canvas = get(canvasId);
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    
+                    const values = dataPoints.map(d => d.temp);
+                    const days = dataPoints.map(d => d.day);
+                    const minVal = Math.min(...values) - 0.5;
+                    const maxVal = Math.max(...values) + 0.5;
+                    
+                    const padding = 30;
+                    const chartWidth = canvas.width - 2 * padding;
+                    const chartHeight = canvas.height - 2 * padding;
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = STATE.dark_mode ? 'white' : 'black';
+                    ctx.font = '12px var(--font-family)';
+                    ctx.textAlign = 'center';
+
+                    // Draw Title
+                    ctx.fillText(title, canvas.width / 2, padding / 2);
+                    
+                    // Draw Y-axis (Temperature)
+                    ctx.textAlign = 'right';
+                    for (let t = Math.ceil(minVal); t <= Math.floor(maxVal); t += 1) {
+                        const y = padding + chartHeight - (t - minVal) / (maxVal - minVal) * chartHeight;
+                        ctx.fillText(`${t}°C`, padding - 5, y + 4);
+                    }
+                    
+                    // Draw Line
+                    ctx.beginPath();
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 3;
+                    
+                    values.forEach((val, i) => {
+                        const x = padding + (i / (values.length - 1)) * chartWidth;
+                        const y = padding + chartHeight - (val - minVal) / (maxVal - minVal) * chartHeight;
+
+                        if (i === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                        
+                        // Draw Point
+                        ctx.fillStyle = color;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        // Draw Day Label
+                        ctx.fillStyle = STATE.dark_mode ? 'white' : 'black';
+                        ctx.textAlign = 'center';
+                        if (i % 5 === 0 || i === values.length - 1) { // Only label some days
+                           ctx.fillText(`Day ${days[i]}`, x, canvas.height - padding + 15);
+                        }
+                    });
+                    
+                    ctx.stroke();
+
+                    // Draw X-axis line
+                    ctx.beginPath();
+                    ctx.strokeStyle = STATE.dark_mode ? 'white' : 'black';
+                    ctx.moveTo(padding, canvas.height - padding);
+                    ctx.lineTo(canvas.width - padding, canvas.height - padding);
+                    ctx.stroke();
+                }
+            };
+            
+            // --- CALCULATORS ---
+            const Logic = {
+                calculateFare: function(origin, destination, pax, fareType) {
+                    const data = STATE.seedData.airlines;
+                    const route = data.routes.find(r => r.route.includes(origin) && r.route.includes(destination));
+                    const baseFare = route ? route.basePrice : data.baseFareIqaluitQik; 
+                    const aircraftType = route ? route.aircraft.toLowerCase() : 'connect';
+                    
+                    let discountRate = 0;
+                    if (fareType === 'Nuna Fare' && STATE.isNunaFareEligible) discountRate = data.fareDiscounts.nuna;
+                    if (fareType === 'Inuuk Fare' && STATE.isInuukFareEligible) discountRate = data.fareDiscounts.inuuk;
+                    
+                    const discountedFare = baseFare * (1 - discountRate);
+                    const totalFare = (discountedFare + data.taxesFees) * pax;
+                    
+                    const milesRate = data.mileageRates[aircraftType] || 1;
+                    const milesEarned = Math.floor(discountedFare * milesRate * pax);
+                    
+                    return { totalFare: totalFare.toFixed(2), milesEarned: milesEarned, discountApplied: discountRate > 0 };
+                },
+
+                calculateCargoCost: function(weightKg, isPartner) {
+                    const tariffs = STATE.seedData.airlines.cargoTariffs;
+                    const rate = isPartner ? tariffs.communityPartner : tariffs.standard;
+                    const cost = weightKg * rate;
+                    const retailCost = weightKg * tariffs.benchmarkRetail;
+                    const savings = retailCost - cost;
+                    const savingsPercent = (savings / retailCost) * 100;
+                    
+                    return { cost: cost.toFixed(2), savings: savings.toFixed(2), savingsPercent: savingsPercent.toFixed(1) };
+                },
+                
+                // Calculates points needed for a free inter-community flight (e.g., Qik-Pan, 300 base fare)
+                estimatePointsNeeded: function(basePrice) {
+                    // Assume 1 point = 1 cent value towards a flight redemption
+                    const pointsNeeded = basePrice * 100;
+                    return pointsNeeded;
+                }
+            };
+            
+            // --- VIEWS ---
+            const Views = {
+                renderHome: function(contentDiv) {
+                    const kpis = STATE.seedData.kpis;
+                    contentDiv.innerHTML = `
+                        <section class="p-md">
+                            <h1 class="text-center my-lg" style="color: var(--color-primary);">North West Passage Holdings. <br/> Inuit-Owned. Northern-Driven.</h1>
+                            <p class="text-center" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 3rem;">We are a northern company focused on essential services, fair pricing, and community governance across Nunavut. Our work is driven by a mandate of transparency and data sovereignty.</p>
+                            
+                            <div class="card-grid text-center my-lg">
+                                <div class="card">
+                                    <h3 class="card-header" style="color: var(--color-success);">${kpis.onTimePercentage}%</h3>
+                                    <p>On-Time Performance</p>
+                                </div>
+                                <div class="card">
+                                    <h3 class="card-header" style="color: var(--color-secondary);">${kpis.communitiesServed}</h3>
+                                    <p>Communities Served</p>
+                                </div>
+                                <div class="card">
+                                    <h3 class="card-header" style="color: var(--color-accent);">C$${(kpis.communitySavingsQtr / 1000).toFixed(0)}K</h3>
+                                    <p>Community Savings This Quarter</p>
+                                </div>
+                            </div>
+
+                            <div class="card my-lg p-md chart-container">
+                                <h2>Fair Skies Initiative - Community Savings Bar Chart</h2>
+                                <p>Demonstrating the direct financial benefit realized by our Community Partnership Agreements (CPAs) and discounted fare programs over the last year.</p>
+                                <canvas id="community-savings-chart" width="400" height="250" style="width:100%; height:auto;"></canvas>
+                            </div>
+                        </section>
+                    `;
+                    // Render the chart immediately after DOM update
+                    const chartData = kpis.communitySavingsHistory;
+                    Chart.drawBarChart(
+                        'community-savings-chart',
+                        chartData,
+                        chartData.map(d => d.qtr),
+                        'Quarterly Community Savings (C$)',
+                        '#0077B6'
+                    );
+                },
+
+                renderAirlines: function(contentDiv) {
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>North Winds Airlines Ltd. <span data-lang-key="NAV_AIRLINES"></span></h2>
+                            <div class="tabs-nav" id="airline-tabs" role="tablist">
+                                <button role="tab" aria-controls="tab-routes" id="tab-routes-btn" data-tab="routes">Routes</button>
+                                <button role="tab" aria-controls="tab-fares" id="tab-fares-btn" data-tab="fares">Fares</button>
+                                <button role="tab" aria-controls="tab-fleet" id="tab-fleet-btn" data-tab="fleet">Fleet</button>
+                                <button role="tab" aria-controls="tab-programs" id="tab-programs-btn" data-tab="programs">Programs</button>
+                                <button role="tab" aria-controls="tab-freight" id="tab-freight-btn" data-tab="freight">Postal & Freight</button>
+                            </div>
+
+                            <div id="airline-content"></div>
+                        </section>
+                    `;
+                    
+                    const tabContainer = get('airline-content');
+                    
+                    const renderTabContent = (tab) => {
+                        STATE.activeAirlineTab = tab;
+                        
+                        document.querySelectorAll('#airline-tabs button').forEach(btn => {
+                            const isActive = btn.dataset.tab === tab;
+                            btn.classList.toggle('active', isActive);
+                            btn.setAttribute('aria-selected', isActive);
+                        });
+                        
+                        tabContainer.innerHTML = '';
+
+                        if (tab === 'routes') {
+                            tabContainer.innerHTML = Components.renderRouteTable();
+                        } else if (tab === 'fares') {
+                            tabContainer.innerHTML = Components.renderFarePrograms();
+                            // Attach calculator logic
+                            setTimeout(() => Logic.initFareCalculator(), 100);
+                        } else if (tab === 'fleet') {
+                            tabContainer.innerHTML = Components.renderFleetCards();
+                        } else if (tab === 'programs') {
+                            tabContainer.innerHTML = Components.renderProgramCards();
+                        } else if (tab === 'freight') {
+                            tabContainer.innerHTML = Components.renderFreightSection();
+                        }
+                    };
+
+                    document.querySelectorAll('#airline-tabs button').forEach(btn => {
+                        btn.addEventListener('click', (e) => renderTabContent(e.target.dataset.tab));
+                    });
+
+                    renderTabContent(STATE.activeAirlineTab);
+                },
+
+                renderCruises: function(contentDiv) {
+                     const cruises = STATE.seedData.cruises;
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Baffin Adventure Cruises Ltd. <span data-lang-key="NAV_CRUISES"></span></h2>
+                            <p>Premium expedition tourism with a focus on sustainable practices and direct revenue-sharing with Inuit communities hosting excursions. Experience the Heart of Baffin Island with expert Northern guides.</p>
+                            
+                            <div class="card-grid my-lg">
+                                ${cruises.map(c => `
+                                    <div class="card">
+                                        <h3 class="card-header">${c.name}</h3>
+                                        <p><strong>Duration:</strong> ${c.duration}</p>
+                                        <p><strong>Price (Starting):</strong> C$${c.price.toLocaleString()}</p>
+                                        <p><strong>Capacity:</strong> ${c.capacity} Guests</p>
+                                        <ul style="padding-left: 1.5rem; font-size: 0.9rem;">
+                                            ${c.highlights.map(h => `<li>${h}</li>`).join('')}
+                                        </ul>
+                                        <button class="btn btn-primary mt-auto" onclick="NWPH.UI.showToast('Cabin request submitted. Thank you!', true)">Request Cabin</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    `;
+                },
+                
+                renderFerry: function(contentDiv) {
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Baffin Ferry <span data-lang-key="NAV_FERRY"></span></h2>
+                            <p>Seasonal passenger and cargo service, providing a cost-effective transport link between key Baffin communities. Essential for local businesses and public travel.</p>
+                            
+                            <div class="card my-lg p-md">
+                                <h3 class="card-header">2026 Seasonal Schedule (Mock)</h3>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Route</th>
+                                            <th>Departure</th>
+                                            <th>Arrival</th>
+                                            <th>Fares (Starting)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Iqaluit ↔ Kimmirut</td><td>June 20</td><td>June 22</td><td>C$150</td></tr>
+                                        <tr><td>Pangnirtung ↔ Qikiqtarjuaq</td><td>July 5</td><td>July 6</td><td>C$100</td></tr>
+                                        <tr><td>Iqaluit ↔ Clyde River</td><td>Aug 1</td><td>Aug 5</td><td>C$250</td></tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-primary mt-4" onclick="NWPH.UI.showToast('Ferry booking is currently offline for system upgrade.', false)">Book Now (Placeholder)</button>
+                            </div>
+                        </section>
+                    `;
+                },
+                
+                renderRetail: function(contentDiv) {
+                    const retail = STATE.seedData.retail;
+                    const balance = STATE.seedData.user.nunaMilesBalance;
+                    const freeFlightPoints = Logic.estimatePointsNeeded(STATE.seedData.airlines.baseFareQikPan);
+                    
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Polar Express Stores & Ulu & Brew <span data-lang-key="NAV_RETAIL"></span></h2>
+                            <p>Providing essential retail goods and fresh-brewed coffee in community hubs. Earn NunaMiles on every purchase.</p>
+
+                            <div class="card-grid my-lg">
+                                <div class="card">
+                                    <h3 class="card-header">Current NunaMiles Balance</h3>
+                                    <p style="font-size: 3rem; font-weight: 800; color: var(--color-accent);">${balance.toLocaleString()}</p>
+                                    <p>Points currently held.</p>
+                                    <button class="btn btn-secondary mt-auto" onclick="NWPH.UI.showModal('login-modal')">View Loyalty Status</button>
+                                </div>
+                                <div class="card">
+                                    <h3 class="card-header">Ulu & Brew Café</h3>
+                                    <p>Earn <strong>${retail.cafeItem.pointsRate} NunaMiles</strong> per dollar spent on a C$${retail.cafeItem.price.toFixed(2)} item.</p>
+                                    <p>A typical receipt would earn ~${Math.floor(retail.cafeItem.price * retail.cafeItem.pointsRate)} NunaMiles.</p>
+                                    <button class="btn btn-primary mt-auto" onclick="NWPH.UI.showToast('50 NunaMiles added to your demo balance!', true); STATE.seedData.user.nunaMilesBalance += 50; Router.handleHashChange();">Redeem Coffee (Demo)</button>
+                                </div>
+                            </div>
+                            
+                            <div class="card my-lg p-md">
+                                <h3 class="card-header">NunaMiles Redemption Estimator</h3>
+                                <p>Points needed for a free inter-community flight (e.g., Qik ↔ Pan, C$300 base fare): <strong style="color: var(--color-secondary);">${freeFlightPoints.toLocaleString()} NunaMiles</strong></p>
+                                <p>You are currently <strong style="color: var(--color-success);">${Math.floor(balance / freeFlightPoints * 100)}%</strong> of the way there!</p>
+                            </div>
+                        </section>
+                    `;
+                },
+                
+                renderTech: function(contentDiv) {
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Polar Beacons Technologies (NunaNet) <span data-lang-key="NAV_TECH"></span></h2>
+                            <p>Developing essential IoT and secure booking/verification backbone systems for the North. Focused on data sovereignty and reliability in extreme climates.</p>
+                            
+                            <div class="card my-lg p-md">
+                                <h3 class="card-header">NunaNet IoT Coverage (Mock Map)</h3>
+                                <div style="height: 300px; background-color: ${STATE.dark_mode ? '#0A1B2C' : '#E0F7FA'}; border-radius: var(--radius-default); position: relative;">
+                                    <p style="text-align: center; color: ${STATE.dark_mode ? '#B9D9F8' : '#0A1B2C'}; padding-top: 1rem;">Map of Current and Planned Sensor Nodes (SVG dots are placeholders)</p>
+                                    <!-- Mock SVG Map - Simple dots -->
+                                    <svg width="100%" height="300" viewBox="0 0 400 300" style="position: absolute; top: 0; left: 0;">
+                                        <circle cx="50" cy="50" r="5" fill="#0077B6" />
+                                        <circle cx="150" cy="150" r="5" fill="#6C5CE7" />
+                                        <circle cx="300" cy="200" r="5" fill="#28A745" />
+                                        <text x="55" y="45" font-size="10" fill="${STATE.dark_mode ? 'white' : 'black'}">Qikiqtarjuaq HQ</text>
+                                        <text x="155" y="145" font-size="10" fill="${STATE.dark_mode ? 'white' : 'black'}">Iqaluit Gateway</text>
+                                        <text x="305" y="195" font-size="10" fill="${STATE.dark_mode ? 'white' : 'black'}">Clyde River Node</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <h3 class="card-header">Cargo Tracking</h3>
+                            <button class="btn btn-primary" onclick="NWPH.UI.showModal('cargo-tracking-modal')">Track a Shipment</button>
+                        </section>
+                    `;
+                },
+                
+                renderRealEstate: function(contentDiv) {
+                    const estate = STATE.seedData.realestate;
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Illuvigaq Real Estate <span data-lang-key="NAV_REALESTATE"></span></h2>
+                            <p>Managing essential staff housing, modular infrastructure (terminals, offices), and property development to support northern operations and staff well-being.</p>
+                            
+                            <div class="card-grid my-lg">
+                                ${estate.map(u => `
+                                    <div class="card">
+                                        <h3 class="card-header">${u.type} - ${u.location}</h3>
+                                        <p><strong>Units Available:</strong> ${u.units - u.occupied} / ${u.units}</p>
+                                        <p><strong>Crew Nightly Rate:</strong> C$${u.nightlyCrewRate}</p>
+                                        <p>Focus: Modular, low-impact, high-efficiency northern builds.</p>
+                                        <button class="btn btn-secondary mt-auto" onclick="NWPH.UI.showToast('Request for booking/site development submitted.', true)">Request Booking</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    `;
+                },
+
+                renderScience: function(contentDiv) {
+                    const labs = STATE.seedData.glacierLabs;
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>GlacierLabs - Environmental Monitoring <span data-lang-key="NAV_SCIENCE"></span></h2>
+                            <p>Independent research unit focused on climate change monitoring, including permafrost sentinel networks and automated weather data collection, contributing to Northern data sovereignty.</p>
+                            
+                            <div class="card my-lg p-md chart-container">
+                                <h2>Permafrost Sentinel Network - Last 30 Days</h2>
+                                <p>Station: QIK-PFR-001 (Qikiqtarjuaq). Data shows near-surface ground temperature variance.</p>
+                                <canvas id="permafrost-chart" width="400" height="250" style="width:100%; height:auto;"></canvas>
+                            </div>
+                            
+                            <h3 class="card-header">Active Stations</h3>
+                            <div class="card-grid">
+                                ${labs.stations.map(s => `
+                                    <div class="card">
+                                        <h3 style="margin-top:0;">${s.id}</h3>
+                                        <p><strong>Location:</strong> ${s.location}</p>
+                                        <p><strong>Data Type:</strong> ${s.dataType}</p>
+                                        <p><strong>Status:</strong> <span style="color: ${s.status === 'Active' ? 'var(--color-success)' : 'var(--color-warning)'}">${s.status}</span></p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <button class="btn btn-primary mt-4" onclick="NWPH.UI.showToast('Proposal portal opening soon for research partners.', false)">Propose Station</button>
+                        </section>
+                    `;
+                    // Render the chart immediately after DOM update
+                    Chart.drawLineChart(
+                        'permafrost-chart',
+                        labs.permafrostData,
+                        'Ground Temperature (°C) - QIK-PFR-001',
+                        '#6C5CE7'
+                    );
+                },
+
+                renderSealift: function(contentDiv) {
+                    const sealift = STATE.seedData.sealift;
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Imavik Sealift Solutions <span data-lang-key="NAV_SEALIFT"></span></h2>
+                            <p>Seasonal deep-sea logistics for bulk cargo delivery to Baffin communities. Reliable and essential transportation for annual community resupply.</p>
+                            
+                            <div class="card-grid my-lg">
+                                <div class="card">
+                                    <h3 class="card-header">Seasonal Window</h3>
+                                    <p style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">${sealift.seasonalWindow}</p>
+                                    <p>Bookings typically open in February.</p>
+                                </div>
+                                <div class="card">
+                                    <h3 class="card-header">Service Ports</h3>
+                                    <ul style="padding-left: 1.5rem;">
+                                        ${sealift.ports.map(p => `<li>${p}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <h3 class="card-header">Request a Quote</h3>
+                            <form id="sealift-quote-form" class="card p-md">
+                                <div class="form-group"><label for="cargo-type">Cargo Type</label><input type="text" id="cargo-type" placeholder="e.g., Vehicle, Container, Bulk Goods" required></div>
+                                <div class="form-group"><label for="port-destination">Destination Port</label><select id="port-destination" required>${sealift.ports.map(p => `<option>${p}</option>`).join('')}</select></div>
+                                <button type="submit" class="btn btn-primary">Submit Quote Request</button>
+                            </form>
+                        </section>
+                    `;
+                    get('sealift-quote-form').addEventListener('submit', (e) => {
+                         e.preventDefault();
+                         UI.showToast('Sealift quote request received. An agent will contact you.', true);
+                         e.target.reset();
+                    });
+                },
+
+                renderGovernance: function(contentDiv) {
+                    const docs = STATE.seedData.docs;
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Governance & Accountability <span data-lang-key="NAV_GOVERNANCE"></span></h2>
+                            <p>Commitment to transparency and community-driven governance, ensuring NWPH operates in service to the North.</p>
+                            
+                            <h3 class="card-header">Key Policy & Agreement Downloads</h3>
+                            <div class="card-grid my-lg">
+                                ${Object.keys(docs).map(docName => `
+                                    <div class="card">
+                                        <h3 style="margin-top:0;">${docName}</h3>
+                                        <p style="font-size: 0.9rem;">${docs[docName].substring(0, 80)}...</p>
+                                        <button class="btn btn-secondary mt-auto" onclick="NWPH.UI.generateDocumentBlob('${docName}', '${docs[docName].replace(/'/g, "\\'")}')">View / Download</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <h3 class="card-header">Community Benefit Reporting</h3>
+                            <div class="card p-md">
+                                <p>Quarterly reports on community savings realized through our fare and cargo programs.</p>
+                                ${Components.renderReportTable()}
+                                <button class="btn btn-primary mt-4" onclick="NWPH.Views.generateMetricsReport()">Generate Full Metrics Report (.txt)</button>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                generateMetricsReport: function() {
+                    const kpis = STATE.seedData.kpis;
+                    const contactInquiries = JSON.parse(localStorage.getItem('nwph_contact_inquiries')) || [];
+                    const investorRFPs = JSON.parse(localStorage.getItem('nwph_investor_rfps')) || [];
+
+                    let report = `NWPH Community Metrics Snapshot - ${new Date().toISOString().substring(0, 10)}\n`;
+                    report += "=================================================================\n\n";
+                    
+                    report += "KEY PERFORMANCE INDICATORS\n";
+                    report += `On-Time Performance: ${kpis.onTimePercentage}%\n`;
+                    report += `Communities Served: ${kpis.communitiesServed}\n`;
+                    report += `Community Savings (Last Qtr): C$${kpis.communitySavingsQtr.toLocaleString()}\n`;
+                    report += `Total Historical Savings: \n${kpis.communitySavingsHistory.map(d => `  - ${d.qtr}: C$${d.savings.toLocaleString()}`).join('\n')}\n\n`;
+
+                    report += "ENGAGEMENT SNAPSHOT (Demo Data)\n";
+                    report += `Contact Inquiries (Total): ${contactInquiries.length}\n`;
+                    report += `Investor RFPs (Total): ${investorRFPs.length}\n`;
+                    report += "=================================================================\n";
+                    
+                    UI.generateDocumentBlob('NWPH_Metrics_Report', report);
+                },
+
+                renderInvestors: function(contentDiv) {
+                    const kpis = STATE.seedData.kpis;
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Investor Relations <span data-lang-key="NAV_INVESTORS"></span></h2>
+                            <p>NWPH represents a unique investment opportunity combining essential northern infrastructure with strong community governance, ensuring stable, mandated growth.</p>
+                            
+                            <h3 class="card-header">Investment Thesis</h3>
+                            <div class="card p-md">
+                                <ul>
+                                    <li><strong>Essential Monopoly:</strong> Dominance in core logistics (air, sealift) necessary for community survival.</li>
+                                    <li><strong>Community Mandate:</strong> Governance model provides stability and unparalleled local partnership.</li>
+                                    <li><strong>Northern Expertise:</strong> Operational know-how in extreme environments (GlacierLabs, Polar Beacons).</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="card-grid my-lg">
+                                <div class="card">
+                                    <h3 class="card-header">5-Year Roadmap Milestones</h3>
+                                    <ul style="padding-left: 1.5rem; font-size: 0.9rem;">
+                                        <li>Phase 1: ATR Connect fleet expansion.</li>
+                                        <li>Phase 2: Full NunaNet IoT rollout.</li>
+                                        <li>Phase 3: Launch of Baffin Ferry public route.</li>
+                                        <li>Phase 4: Acquisition of jet-class aircraft ('Altitude').</li>
+                                        <li>Phase 5: Feasibility of NunaBank (Issuer of NunaMiles Visa).</li>
+                                    </ul>
+                                </div>
+                                <div class="card">
+                                    <h3 class="card-header">Download Investor Snapshot</h3>
+                                    <p>Key financials and operational highlights (Q4-24 data).</p>
+                                    <p class="mb-4">Community Savings This Quarter: <strong>C$${(kpis.communitySavingsQtr / 1000).toFixed(0)}K</strong></p>
+                                    <button class="btn btn-primary mt-auto" onclick="NWPH.Views.generateInvestorSnapshot()">Download PDF Snapshot</button>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-secondary" onclick="NWPH.UI.showModal('investor-rfp-modal')">Submit Request for Proposal (RFP)</button>
+                        </section>
+                    `;
+                },
+                
+                generateInvestorSnapshot: function() {
+                    const kpis = STATE.seedData.kpis;
+                    const content = `
+                        <h1>NWPH Investor Snapshot (Q4 2024)</h1>
+                        <p><strong>Date:</strong> ${new Date().toISOString().substring(0, 10)}</p>
+                        <hr/>
+                        <h2>Operational Highlights</h2>
+                        <ul>
+                            <li>On-Time Performance: ${kpis.onTimePercentage}%</li>
+                            <li>Communities Served: ${kpis.communitiesServed}</li>
+                        </ul>
+                        <h2>Community Benefit (Mandate Focus)</h2>
+                        <p>Total Community Savings (Q4-24): <strong>C$${kpis.communitySavingsQtr.toLocaleString()}</strong></p>
+                        <p>This is achieved through the Nuna Fare and Inuuk Fare programs, and Community Partnership Cargo Tariffs.</p>
+                        <hr/>
+                        <p>Investment thesis: Stability through essential services and deep Northern ties. Projected 5-year CAGR: 7.5%</p>
+                    `;
+                    // Generate HTML Blob for download
+                    const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'NWPH_Investor_Snapshot.html';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    UI.showToast(`Downloading: Investor Snapshot`, true);
+                    URL.revokeObjectURL(url);
+                },
+
+                renderContact: function(contentDiv) {
+                    contentDiv.innerHTML = `
+                        <section class="container py-lg">
+                            <h2>Contact NWPH Head Office <span data-lang-key="NAV_CONTACT"></span></h2>
+                            <p>NWPH Head Office: Qikiqtarjuaq, Nunavut.</p>
+                            
+                            <div class="card-grid my-lg">
+                                <div class="card">
+                                    <h3 class="card-header">Submit an Inquiry</h3>
+                                    <form id="contact-form">
+                                        <div class="form-group"><label for="contact-name">Name</label><input type="text" id="contact-name" required></div>
+                                        <div class="form-group"><label for="contact-email">Email</label><input type="email" id="contact-email" required></div>
+                                        <div class="form-group"><label for="contact-topic">Topic</label><select id="contact-topic" required><option>Aviation Inquiry</option><option>Cargo & Freight</option><option>Governance/Media</option><option>Other</option></select></div>
+                                        <div class="form-group"><label for="contact-message">Message</label><textarea id="contact-message" rows="4" required></textarea></div>
+                                        <button type="submit" class="btn btn-primary">Send Message</button>
+                                    </form>
+                                </div>
+                                <div class="card">
+                                    <h3 class="card-header">Head Office Coordinates</h3>
+                                    <p><strong>Location:</strong> Qikiqtarjuaq, Nunavut, CA</p>
+                                    <p><strong>General Line:</strong> +1-867-555-NWPH</p>
+                                    <p><strong>Email:</strong> contact@nwph.co</p>
+                                    <div style="height: 200px; background-color: #eee; border-radius: var(--radius-default); margin-top: var(--spacing-sm);">
+                                        <p class="text-center" style="color: #666; padding-top: 50px;">Map Placeholder</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                    get('contact-form').addEventListener('submit', Logic.handleContactSubmit);
+                },
+
+                render404: function(contentDiv) {
+                    contentDiv.innerHTML = `
+                        <section class="container text-center py-lg">
+                            <h1 style="font-size: 4rem; color: var(--color-accent);">404</h1>
+                            <h2>Page Not Found</h2>
+                            <p class="text-lg">The Arctic trail you followed led to an empty waypoint. Please check the main navigation.</p>
+                            <a href="#/home" class="btn btn-primary">Return Home</a>
+                        </section>
+                    `;
+                }
+            };
+            
+            // --- COMPLEX COMPONENT RENDERING & LOGIC ---
+            const Components = {
+                // Renders the route table with sort/paginate logic
+                renderRouteTable: function() {
+                    const routes = STATE.seedData.airlines.routes;
+                    const sort = STATE.tableSort;
+                    
+                    // Simple sort implementation
+                    const sortedRoutes = [...routes].sort((a, b) => {
+                        let valA = a[sort.key] || '';
+                        let valB = b[sort.key] || '';
+
+                        if (typeof valA === 'number') return sort.dir === 'asc' ? valA - valB : valB - valA;
+                        return sort.dir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                    });
+                    
+                    const totalPages = Math.ceil(sortedRoutes.length / STATE.itemsPerPage);
+                    const start = (STATE.tablePage - 1) * STATE.itemsPerPage;
+                    const end = start + STATE.itemsPerPage;
+                    const paginatedRoutes = sortedRoutes.slice(start, end);
+
+                    const headerMap = {
+                        route: 'Route',
+                        basePrice: 'Base Price (C$)',
+                        aircraft: 'Aircraft Type',
+                        avgTime: 'Avg Time'
+                    };
+                    
+                    let tableHTML = `
+                        <div class="flex justify-between items-center my-4">
+                            <p>Showing ${start + 1} to ${Math.min(end, sortedRoutes.length)} of ${sortedRoutes.length} Routes</p>
+                            <div>
+                                <label for="items-per-page">Per Page:</label>
+                                <select id="items-per-page" onchange="NWPH.Components.updateTablePageSize(this.value)">
+                                    <option value="5" ${STATE.itemsPerPage === 5 ? 'selected' : ''}>5</option>
+                                    <option value="10" ${STATE.itemsPerPage === 10 ? 'selected' : ''}>10</option>
+                                    <option value="20" ${STATE.itemsPerPage === 20 ? 'selected' : ''}>20</option>
+                                </select>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    ${Object.keys(headerMap).map(key => `
+                                        <th onclick="NWPH.Components.sortRoutes('${key}')" aria-sort="${sort.key === key ? (sort.dir === 'asc' ? 'ascending' : 'descending') : 'none'}">
+                                            ${headerMap[key]} ${sort.key === key ? (sort.dir === 'asc' ? '&#x25B2;' : '&#x25BC;') : ''}
+                                        </th>
+                                    `).join('')}
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${paginatedRoutes.map(r => `
+                                    <tr>
+                                        <td>${r.route}</td>
+                                        <td>C$${r.basePrice.toFixed(2)}</td>
+                                        <td>${r.aircraft}</td>
+                                        <td>${r.avgTime}</td>
+                                        <td><button class="btn btn-primary" style="min-width: 80px; padding: 0.5rem;" onclick="NWPH.Components.prefillBooking('${r.route}')">Book</button></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        <div class="flex justify-between items-center my-4">
+                            <button class="btn btn-secondary" ${STATE.tablePage === 1 ? 'disabled' : ''} onclick="NWPH.Components.changeTablePage(-1)">Previous</button>
+                            <span>Page ${STATE.tablePage} of ${totalPages}</span>
+                            <button class="btn btn-secondary" ${STATE.tablePage === totalPages ? 'disabled' : ''} onclick="NWPH.Components.changeTablePage(1)">Next</button>
+                        </div>
+                    `;
+                    
+                    return tableHTML;
+                },
+                
+                sortRoutes: function(key) {
+                    const newDir = STATE.tableSort.key === key && STATE.tableSort.dir === 'asc' ? 'desc' : 'asc';
+                    STATE.tableSort = { key, dir: newDir };
+                    STATE.tablePage = 1; // Reset page on sort
+                    Views.renderAirlines(UI.appContent);
+                },
+                
+                changeTablePage: function(direction) {
+                    STATE.tablePage = Math.max(1, STATE.tablePage + direction);
+                    Views.renderAirlines(UI.appContent);
+                },
+
+                updateTablePageSize: function(size) {
+                    STATE.itemsPerPage = parseInt(size);
+                    STATE.tablePage = 1; // Reset page on size change
+                    Views.renderAirlines(UI.appContent);
+                },
+
+                prefillBooking: function(route) {
+                    const [origin, destination] = route.split(' ↔ ').map(s => s.trim());
+                    UI.showModal('book-flight-modal');
+                    
+                    // Attach event listener to populate modal form
+                    setTimeout(() => {
+                        const form = get('book-flight-form');
+                        if (form) {
+                            form.querySelector('#flight-origin').value = origin;
+                            form.querySelector('#flight-destination').value = destination;
+                            form.dispatchEvent(new Event('change')); // Trigger fare recalculation logic
+                        }
+                    }, 50);
+                },
+                
+                renderFarePrograms: function() {
+                    const data = STATE.seedData.airlines;
+                    const routes = STATE.seedData.airlines.routes;
+                    
+                    return `
+                        <div class="card-grid my-lg">
+                            <div class="card" style="border-left: 5px solid var(--color-secondary);">
+                                <h3 class="card-header">Standard Fare</h3>
+                                <p>Open to all travelers. Earn base NunaMiles. Supports essential services.</p>
+                                <p><strong>Base Discount:</strong> 0%</p>
+                            </div>
+                            <div class="card" style="border-left: 5px solid var(--color-success);">
+                                <h3 class="card-header">Nuna Fare (Nunavut Resident)</h3>
+                                <p>For verified residents of Nunavut. Supports local movement.</p>
+                                <p><strong>Base Discount:</strong> ${(data.fareDiscounts.nuna * 100).toFixed(0)}%</p>
+                                <p class="mt-auto">Status: <strong>${STATE.isNunaFareEligible ? 'VERIFIED' : 'UNVERIFIED'}</strong> <button class="btn btn-secondary text-sm" style="min-width: auto; padding: 0.5rem;" onclick="NWPH.Logic.initVerification('Nuna Fare')">Verify Status</button></p>
+                            </div>
+                            <div class="card" style="border-left: 5px solid var(--color-accent);">
+                                <h3 class="card-header">Inuuk Fare (Beneficiary)</h3>
+                                <p>For verified beneficiaries. Our highest level of community subsidy.</p>
+                                <p><strong>Base Discount:</strong> ${(data.fareDiscounts.inuuk * 100).toFixed(0)}%</p>
+                                <p class="mt-auto">Status: <strong>${STATE.isInuukFareEligible ? 'VERIFIED' : 'UNVERIFIED'}</strong> <button class="btn btn-secondary text-sm" style="min-width: auto; padding: 0.5rem;" onclick="NWPH.Logic.initVerification('Inuuk Fare')">Verify Status</button></p>
+                            </div>
+                        </div>
+                        
+                        <div class="card p-md my-lg">
+                            <h3 class="card-header">Fare & Points Calculator</h3>
+                            <p>Estimate your trip cost and NunaMiles earnings.</p>
+                            <form id="fare-calc-form">
+                                <div class="grid-3" style="grid-template-columns: repeat(3, 1fr); gap: var(--spacing-sm);">
+                                    <div class="form-group">
+                                        <label for="calc-origin">Origin</label>
+                                        <select id="calc-origin" required onchange="NWPH.Logic.updateFareCalculation()">
+                                            ${routes.map(r => r.route.split(' ↔ ')[0]).filter((v, i, a) => a.indexOf(v) === i).map(o => `<option>${o}</option>`).join('')}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="calc-destination">Destination</label>
+                                        <select id="calc-destination" required onchange="NWPH.Logic.updateFareCalculation()">
+                                            ${routes.map(r => r.route.split(' ↔ ')[1]).filter((v, i, a) => a.indexOf(v) === i).map(o => `<option>${o}</option>`).join('')}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="calc-pax">Passengers</label>
+                                        <input type="number" id="calc-pax" value="1" min="1" required onchange="NWPH.Logic.updateFareCalculation()">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="calc-fare-type">Fare Type</label>
+                                    <select id="calc-fare-type" required onchange="NWPH.Logic.updateFareCalculation()">
+                                        <option value="Standard">Standard Fare</option>
+                                        <option value="Nuna Fare">Nuna Fare (30%)</option>
+                                        <option value="Inuuk Fare">Inuuk Fare (50%)</option>
+                                    </select>
+                                </div>
+                                <div id="fare-calc-output" class="card p-md mt-4" style="border: 2px solid var(--color-secondary);">
+                                    <p><strong>Estimated Total:</strong> <span id="calc-final-fare">C$0.00</span></p>
+                                    <p><strong>Estimated NunaMiles Earned:</strong> <span id="calc-final-miles">0</span></p>
+                                </div>
+                            </form>
+                        </div>
+                    `;
+                },
+                
+                renderFleetCards: function() {
+                    const fleet = STATE.seedData.airlines.fleet;
+                    return `
+                        <p>Our fleet is optimized for Northern operations, reliability, and cargo capacity. We operate three distinct classes of service.</p>
+                        <div class="card-grid my-lg">
+                            ${fleet.map(f => `
+                                <div class="card" style="border-left: 5px solid var(--color-secondary);">
+                                    <h3 class="card-header">${f.type} Service</h3>
+                                    <p><strong>Aircraft:</strong> ${f.aircraft}</p>
+                                    <p><strong>Capacity:</strong> ${f.capacity} Passengers</p>
+                                    <p><strong>Typical Leg:</strong> ${f.typicalLeg}</p>
+                                    <p><strong>NunaMiles Rate:</strong> ${f.mileage}x</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                },
+                
+                renderProgramCards: function() {
+                    return `
+                        <div class="card-grid my-lg">
+                            <div class="card" style="border-left: 5px solid var(--color-accent);">
+                                <h3 class="card-header">NunaMiles Loyalty</h3>
+                                <p>Earn points on every flight and with our retail partners. Redeem for flights and merchandise.</p>
+                                <p>Current Balance: <strong>${STATE.seedData.user.nunaMilesBalance.toLocaleString()}</strong></p>
+                                <button class="btn btn-primary mt-auto" onclick="window.location.hash = '#/retail'">Redeem Points</button>
+                            </div>
+                            <div class="card" style="border-left: 5px solid var(--color-secondary);">
+                                <h3 class="card-header">NunaMiles Visa Card</h3>
+                                <p>The only card that directly supports northern infrastructure with every purchase. Highest earning rates on NWPH services.</p>
+                                <button class="btn btn-secondary mt-auto" onclick="NWPH.Logic.initVisaApplication()">Apply Now</button>
+                            </div>
+                            <div class="card" style="border-left: 5px solid var(--color-success);">
+                                <h3 class="card-header">Nuna Fare Verification</h3>
+                                <p>Verify your Nunavut residency or beneficiary status for essential travel discounts.</p>
+                                <button class="btn btn-secondary mt-auto" onclick="NWPH.Logic.initVerification('Nuna Fare')">Verify/Re-verify</button>
+                            </div>
+                        </div>
+                    `;
+                },
+                
+                renderFreightSection: function() {
+                    return `
+                        <h3 class="card-header">Postal & Freight Services</h3>
+                        <p>Daily freight services connect communities, ensuring timely delivery of essential goods, medical supplies, and mailbags. We offer tiered rates for Community Partner Agreements (CCAs).</p>
+                        
+                        <div class="card p-md my-lg">
+                            <h3 class="card-header">Cargo Cost Calculator</h3>
+                            <form id="cargo-calc-form">
+                                <div class="form-group">
+                                    <label for="cargo-weight">Weight (kg)</label>
+                                    <input type="number" id="cargo-weight" value="10" min="1" required onchange="NWPH.Logic.updateCargoCalculation()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cargo-tariff">Tariff Type</label>
+                                    <select id="cargo-tariff" required onchange="NWPH.Logic.updateCargoCalculation()">
+                                        <option value="standard">Standard Tariff (C$${STATE.seedData.airlines.cargoTariffs.standard.toFixed(2)}/kg)</option>
+                                        <option value="partner">CCA Partner Rate (C$${STATE.seedData.airlines.cargoTariffs.communityPartner.toFixed(2)}/kg)</option>
+                                    </select>
+                                </div>
+                                <div id="cargo-calc-output" class="card p-md mt-4" style="border: 2px solid var(--color-secondary);">
+                                    <p><strong>Total Cargo Cost:</strong> <span id="calc-cargo-total">C$0.00</span></p>
+                                    <p><strong>Retail Cost Savings:</strong> <span id="calc-cargo-savings">C$0.00</span> (<span id="calc-cargo-percent">0%</span>)</p>
+                                </div>
+                            </form>
+                        </div>
+                        <button class="btn btn-primary" onclick="NWPH.UI.showModal('cargo-tracking-modal')">Track a Shipment</button>
+                    `;
+                },
+                
+                renderReportTable: function() {
+                    const data = STATE.seedData.kpis.communitySavingsHistory;
+                    return `
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Quarter</th>
+                                    <th>Savings Realized</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.map(d => `
+                                    <tr>
+                                        <td>${d.qtr}</td>
+                                        <td>C$${d.savings.toLocaleString()}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                }
+            };
+
+            // --- FORM & APPLICATION LOGIC ---
+            Logic.initFareCalculator = function() {
+                const form = get('fare-calc-form');
+                if (form) {
+                    Logic.updateFareCalculation();
+                }
+            };
+            
+            Logic.updateFareCalculation = function() {
+                const origin = get('calc-origin')?.value || '';
+                const destination = get('calc-destination')?.value || '';
+                const pax = parseInt(get('calc-pax')?.value || 1);
+                const fareType = get('calc-fare-type')?.value || 'Standard';
+
+                if (origin && destination && pax > 0) {
+                    const result = Logic.calculateFare(origin, destination, pax, fareType);
+                    get('calc-final-fare').textContent = `C$${result.totalFare}`;
+                    get('calc-final-miles').textContent = result.milesEarned.toLocaleString();
+                }
+            };
+            
+            Logic.updateCargoCalculation = function() {
+                const weightKg = parseFloat(get('cargo-weight')?.value || 1);
+                const isPartner = get('cargo-tariff')?.value === 'partner';
+                
+                if (weightKg > 0) {
+                    const result = Logic.calculateCargoCost(weightKg, isPartner);
+                    get('calc-cargo-total').textContent = `C$${result.cost}`;
+                    get('calc-cargo-savings').textContent = `C$${result.savings}`;
+                    get('calc-cargo-percent').textContent = `${result.savingsPercent}%`;
+                }
+            };
+            
+            Logic.handleContactSubmit = function(e) {
+                e.preventDefault();
+                const form = e.target;
+                let isValid = true;
+                
+                form.querySelectorAll('input[required], textarea[required]').forEach(input => {
+                    if (!input.value.trim() || (input.type === 'email' && !input.value.includes('@'))) {
+                        input.setAttribute('aria-invalid', 'true');
+                        isValid = false;
+                    } else {
+                        input.setAttribute('aria-invalid', 'false');
+                    }
+                });
+
+                if (isValid) {
+                    const formData = {
+                        name: get('contact-name').value,
+                        email: get('contact-email').value,
+                        topic: get('contact-topic').value,
+                        message: get('contact-message').value,
+                        ticketId: `NWPH-${Math.floor(Math.random() * 9000) + 1000}`,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    let inquiries = JSON.parse(localStorage.getItem('nwph_contact_inquiries')) || [];
+                    inquiries.push(formData);
+                    localStorage.setItem('nwph_contact_inquiries', JSON.stringify(inquiries));
+                    
+                    form.reset();
+                    UI.showToast(`Inquiry sent! Ticket ID: ${formData.ticketId}`, true);
+                }
+            };
+            
+            Logic.handleRfpSubmit = function(e) {
+                e.preventDefault();
+                const form = e.target;
+                let isValid = true;
+                
+                form.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+                    if (!input.value.trim() || (input.type === 'email' && !input.value.includes('@'))) {
+                        input.setAttribute('aria-invalid', 'true');
+                        isValid = false;
+                    } else {
+                        input.setAttribute('aria-invalid', 'false');
+                    }
+                });
+
+                if (isValid) {
+                    const formData = {
+                        name: get('rfp-name').value,
+                        email: get('rfp-email').value,
+                        interest: get('rfp-interest').value,
+                        topic: get('rfp-topic').value,
+                        ticketId: `RFP-${Math.floor(Math.random() * 900) + 100}`,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    let rfps = JSON.parse(localStorage.getItem('nwph_investor_rfps')) || [];
+                    rfps.push(formData);
+                    localStorage.setItem('nwph_investor_rfps', JSON.stringify(rfps));
+                    
+                    UI.hideModal('investor-rfp-modal');
+                    form.reset();
+                    UI.showToast(`RFP submitted! Reference: ${formData.ticketId}`, true);
+                }
+            };
+
+            Logic.handleCargoTrack = function(e) {
+                e.preventDefault();
+                const trackingId = get('tracking-id').value.toUpperCase();
+                const events = STATE.seedData.cargoEvents[trackingId];
+                const resultsDiv = get('cargo-timeline-results');
+                const timelineUl = get('cargo-timeline');
+                
+                get('error-tracking-id').textContent = '';
+                
+                if (events) {
+                    resultsDiv.classList.remove('hidden');
+                    timelineUl.innerHTML = events.map(event => `
+                        <li style="border-left: 2px solid var(--color-secondary); padding-left: 1rem; margin-bottom: 1rem;">
+                            <strong style="color: var(--color-accent);">${event.status}</strong><br/>
+                            <span style="font-size: 0.9rem;">${event.time} - ${event.location}</span>
+                        </li>
+                    `).join('');
+                } else {
+                    resultsDiv.classList.add('hidden');
+                    get('error-tracking-id').textContent = 'Tracking ID not found. Check format (e.g., NWP-101).';
+                }
+            };
+            
+            Logic.initVisaApplication = function() {
+                const message = "NunaMiles Visa application initiated. Pre-approval successful for demonstration. Card issued digitally.";
+                UI.showToast(message, true);
+            };
+
+            Logic.initVerification = function(fareType) {
+                get('verify-type').textContent = fareType;
+                const form = get('verification-form');
+                
+                const isNuna = fareType === 'Nuna Fare';
+                const verificationCodeLabel = isNuna ? 'Municipality Code (e.g., QIK-2025-1234)' : 'Beneficiary ID (Consent Required)';
+                const buttonText = isNuna ? 'Verify Residency' : 'Consent & Verify';
+                const currentStatus = isNuna ? STATE.isNunaFareEligible : STATE.isInuukFareEligible;
+
+                form.innerHTML = `
+                    <p>Current Status: <strong style="color: ${currentStatus ? 'var(--color-success)' : 'var(--color-accent)'}">${currentStatus ? 'VERIFIED' : 'UNVERIFIED'}</strong></p>
+                    <div class="form-group">
+                        <label for="verify-code">${verificationCodeLabel}</label>
+                        <input type="text" id="verify-code" required>
+                        <p class="error-message" id="error-verify-code"></p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">${buttonText}</button>
+                `;
+                get('verification-status').textContent = '';
+                
+                form.onsubmit = (e) => Logic.handleVerificationSubmit(e, isNuna);
+                UI.showModal('verification-modal');
+            };
+            
+            Logic.handleVerificationSubmit = function(e, isNuna) {
+                e.preventDefault();
+                const code = get('verify-code').value.trim();
+                const statusP = get('verification-status');
+                
+                if (code.length < 5) {
+                    get('error-verify-code').textContent = 'Please enter a valid code/ID.';
+                    return;
+                }
+                get('error-verify-code').textContent = '';
+
+                // Simulate successful verification
+                if (isNuna) {
+                    STATE.isNunaFareEligible = true;
+                    localStorage.setItem('nwph_nuna_verified', 'true');
+                    statusP.innerHTML = `<strong style="color: var(--color-success);">Success!</strong> Nuna Fare eligibility confirmed. You can now use your discount.`;
+                } else {
+                    STATE.isInuukFareEligible = true;
+                    localStorage.setItem('nwph_inuuk_verified', 'true');
+                    statusP.innerHTML = `<strong style="color: var(--color-success);">Success!</strong> Inuuk Fare eligibility confirmed.`;
+                }
+                
+                UI.showToast(`${isNuna ? 'Nuna' : 'Inuuk'} Fare Verified.`, true);
+                Router.handleHashChange(); // Re-render airlines tab to update status
+            };
+
+            // Attach listeners to modal forms
+            document.addEventListener('DOMContentLoaded', () => {
+                const rfpForm = get('investor-rfp-form');
+                if (rfpForm) rfpForm.addEventListener('submit', Logic.handleRfpSubmit);
+                
+                const flightForm = get('book-flight-form');
+                if (flightForm) {
+                    // Injecting dynamic route selection fields and attaching the update logic
+                    const routes = STATE.seedData.airlines.routes;
+                    const routeOptions = routes.map(r => r.route.split(' ↔ ')).flat().filter((v, i, a) => a.indexOf(v) === i);
+                    
+                    flightForm.innerHTML = `
+                        <div class="grid-3" style="grid-template-columns: repeat(3, 1fr); gap: var(--spacing-sm);">
+                            <div class="form-group">
+                                <label for="flight-origin">Origin</label>
+                                <select id="flight-origin" required>${routeOptions.map(o => `<option>${o}</option>`).join('')}</select>
+                            </div>
+                            <div class="form-group">
+                                <label for="flight-destination">Destination</label>
+                                <select id="flight-destination" required>${routeOptions.map(o => `<option>${o}</option>`).join('')}</select>
+                            </div>
+                            <div class="form-group">
+                                <label for="flight-pax">Passengers</label>
+                                <input type="number" id="flight-pax" value="1" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="flight-date">Date</label>
+                            <input type="date" id="flight-date" required value="${new Date().toISOString().substring(0, 10)}">
+                        </div>
+                        <div class="form-group">
+                            <label for="flight-fare-type">Fare Type</label>
+                            <select id="flight-fare-type" required>
+                                <option value="Standard">Standard Fare</option>
+                                <option value="Nuna Fare">Nuna Fare (${STATE.isNunaFareEligible ? 'Verified' : 'Unverified'})</option>
+                                <option value="Inuuk Fare">Inuuk Fare (${STATE.isInuukFareEligible ? 'Verified' : 'Unverified'})</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-secondary w-full" id="calc-fare-btn">Calculate Fare</button>
+                    `;
+                    
+                    const calcBtn = get('calc-fare-btn');
+                    const resultsDiv = get('fare-calc-results');
+                    
+                    const calculateAndShow = () => {
+                         const origin = get('flight-origin').value;
+                         const destination = get('flight-destination').value;
+                         const pax = parseInt(get('flight-pax').value || 1);
+                         const fareType = get('flight-fare-type').value;
+
+                         if (origin !== destination && pax > 0) {
+                            const result = Logic.calculateFare(origin, destination, pax, fareType);
+                            get('calc-fare-total').textContent = `C$${result.totalFare}`;
+                            get('calc-miles-earned').textContent = result.milesEarned.toLocaleString();
+                            resultsDiv.classList.remove('hidden');
+                         } else {
+                             UI.showToast('Select valid origin/destination and passengers.', false);
+                         }
+                    };
+                    calcBtn.addEventListener('click', calculateAndShow);
+                }
+
+                const cargoForm = get('cargo-tracking-form');
+                if (cargoForm) cargoForm.addEventListener('submit', Logic.handleCargoTrack);
+                
+                // Initialize the logic for the cargo calculator section on the Airlines page
+                Logic.updateCargoCalculation();
+
+            });
+            
+            // Public Interface
+            return {
+                STATE: STATE,
+                CONFIG: TRANSLATIONS,
+                UI: UI,
+                Router: Router,
+                Views: Views,
+                Seed: Seed,
+                Logic: Logic,
+                Components: Components
+            };
+        })();
+
+        // Start the application
+        window.onload = NWPH.UI.init;
+    </script>
+</body>
+</html>
