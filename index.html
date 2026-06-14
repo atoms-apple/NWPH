@@ -1,1147 +1,1297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>North West Passage Holdings Corporation | NWPH</title>
-    <style>
-        /* ========== CSS VARIABLES ========== */
-        :root {
-            --ice-blue: #E5F6FF;
-            --aurora-green: #00A693;
-            --navy: #002B45;
-            --white: #ffffff;
-            --gold: #FFD480;
-            --bg-primary: #ffffff;
-            --bg-secondary: #E5F6FF;
-            --text-primary: #002B45;
-            --text-secondary: #333;
-            --shadow: rgba(0, 43, 69, 0.1);
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #1a1a2e;
-            --bg-secondary: #16213e;
-            --text-primary: #E5F6FF;
-            --text-secondary: #d4d4d4;
-            --shadow: rgba(0, 0, 0, 0.3);
-        }
-
-        /* ========== RESET & BASE ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        /* ========== NAVIGATION ========== */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--navy);
-            color: var(--white);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px var(--shadow);
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--gold);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--gold);
-        }
-
-        .toggle-btn {
-            background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-
-        .toggle-btn:hover {
-            background: var(--gold);
-            color: var(--navy);
-        }
-
-        /* ========== MAIN CONTENT ========== */
-        main {
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
-        }
-
-        section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ========== HOME SECTION ========== */
-        .hero {
-            background: linear-gradient(135deg, var(--aurora-green), var(--navy));
-            color: var(--white);
-            text-align: center;
-            padding: 6rem 2rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero .tagline {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--gold);
-            color: var(--navy);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 212, 128, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            border: 2px solid var(--white);
-        }
-
-        .btn-secondary:hover {
-            background: var(--white);
-            color: var(--navy);
-        }
-
-        /* ========== CARDS & GRID ========== */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .card {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px var(--shadow);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px var(--shadow);
-        }
-
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .card h3 {
-            color: var(--aurora-green);
-            margin-bottom: 1rem;
-        }
-
-        /* ========== MODAL ========== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-primary);
-            padding: 2rem;
-            border-radius: 16px;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-primary);
-            background: none;
-            border: none;
-        }
-
-        /* ========== FORMS ========== */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid var(--ice-blue);
-            border-radius: 8px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 1rem;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        /* ========== TOAST ========== */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--aurora-green);
-            color: var(--white);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 3000;
-            animation: slideIn 0.3s ease-out;
-            display: none;
-        }
-
-        .toast.active {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(400px); }
-            to { transform: translateX(0); }
-        }
-
-        /* ========== FOOTER ========== */
-        footer {
-            background: var(--navy);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        footer a {
-            color: var(--gold);
-            text-decoration: none;
-            margin: 0 1rem;
-        }
-
-        /* ========== CALCULATOR ========== */
-        .calculator {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 16px;
-            margin-top: 2rem;
-        }
-
-        .calculator-result {
-            font-size: 2rem;
-            color: var(--aurora-green);
-            margin-top: 1rem;
-            font-weight: bold;
-        }
-
-        /* ========== CHART ========== */
-        canvas {
-            max-width: 100%;
-            margin: 2rem auto;
-            display: block;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 1rem;
-        }
-
-        /* ========== SENSOR DEMO ========== */
-        .sensor-display {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 16px;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .sensor-value {
-            font-size: 3rem;
-            color: var(--aurora-green);
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        /* ========== TABLES ========== */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--ice-blue);
-        }
-
-        th {
-            background: var(--aurora-green);
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            section {
-                padding: 2rem 1rem;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ========== UTILITY CLASSES ========== */
-        .hidden {
-            display: none;
-        }
-
-        h2 {
-            color: var(--aurora-green);
-            margin-bottom: 1.5rem;
-            font-size: 2.5rem;
-        }
-
-        h3 {
-            margin-bottom: 1rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .subsection {
-            margin: 3rem 0;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>North West Passage Holdings Corporation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --night:    #0A1628;
+      --deep:     #0F1E38;
+      --mid:      #1A2E50;
+      --steel:    #2A4A7F;
+      --frost:    #4A6FA5;
+      --glacier:  #E8EFF7;
+      --white:    #FFFFFF;
+      --gold:     #C9A84C;
+      --gold-lt:  #E8C96A;
+      --red:      #B03020;
+      --muted:    #6B89A8;
+      --border:   rgba(74,111,165,0.25);
+ 
+      --display:  'Playfair Display', Georgia, serif;
+      --body:     'Inter', system-ui, sans-serif;
+ 
+      --max:      1200px;
+      --r:        6px;
+    }
+ 
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--body);
+      background: var(--night);
+      color: var(--glacier);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+ 
+    /* ─── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .nav-logo .mark {
+      width: 36px;
+      height: 36px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-logo .mark svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--night);
+    }
+    .nav-logo .wordmark {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo .wordmark span {
+      color: var(--gold);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem;
+      border: 1.5px solid var(--gold);
+      border-radius: var(--r);
+      color: var(--gold);
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--night);
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--glacier);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+ 
+    /* ─── MOBILE NAV ──────────────────────────────────────────── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--deep);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+ 
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 100px 2rem 80px;
+    }
+ 
+    /* Aurora canvas */
+    #aurora {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+ 
+    /* Star field */
+    .stars {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+ 
+    /* Syllabics watermark */
+    .syllabics-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 3%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .syllabics-bg span {
+      font-size: clamp(8rem, 22vw, 20rem);
+      color: rgba(201,168,76,0.06);
+      font-family: var(--display);
+      letter-spacing: -0.05em;
+      user-select: none;
+      line-height: 1;
+    }
+ 
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1.5px;
+      background: var(--gold);
+    }
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(2.6rem, 6vw, 5.2rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      max-width: 820px;
+      margin-bottom: 1.5rem;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      color: var(--night);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: var(--r);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: var(--gold-lt);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border: 1.5px solid var(--border);
+      color: var(--glacier);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: var(--r);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat-item .num {
+      font-family: var(--display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-item .lbl {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+ 
+    /* ─── SECTION BASE ────────────────────────────────────────── */
+    section {
+      padding: 6rem 2rem;
+    }
+    .inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--gold);
+    }
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    h2 em { font-style: normal; color: var(--gold); }
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.75;
+      margin-bottom: 3.5rem;
+    }
+ 
+    /* ─── MISSION STRIP ───────────────────────────────────────── */
+    .mission {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem;
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .mission-left h2 {
+      margin-bottom: 1.5rem;
+    }
+    .mission-left p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .mission-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .pillar {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    .pillar-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--r);
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pillar-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .pillar h4 {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .pillar p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+ 
+    /* ─── SUBSIDIARIES ────────────────────────────────────────── */
+    .subsidiaries {
+      background: var(--night);
+    }
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .sub-card {
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--r) * 2);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .sub-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .sub-card:hover {
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-3px);
+    }
+    .sub-card:hover::before {
+      transform: scaleX(1);
+    }
+    .sub-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .sub-card h3 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .sub-abbr {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .sub-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .sub-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .sub-status .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+    .sub-status.active .dot { background: #3EBA7A; }
+    .sub-status.active { color: #3EBA7A; }
+    .sub-status.forming .dot { background: var(--gold); }
+    .sub-status.forming { color: var(--gold); }
+ 
+    /* ─── YOUTH PROGRAM ───────────────────────────────────────── */
+    .youth {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .youth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .youth-right h2 { margin-bottom: 1rem; }
+    .youth-right p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .youth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.2rem;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .youth-visual {
+      position: relative;
+    }
+    .youth-card-big {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+    }
+    .youth-card-big .program-name {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .youth-card-big .program-name span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-family: var(--body);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .youth-card-big p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .youth-numbers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .yn {
+      background: var(--deep);
+      border-radius: var(--r);
+      padding: 1rem;
+    }
+    .yn .n {
+      font-family: var(--display);
+      font-size: 1.8rem;
+      color: var(--gold);
+    }
+    .yn .l {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+ 
+    /* ─── LEADERSHIP ──────────────────────────────────────────── */
+    .leadership {
+      background: var(--night);
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+    .team-card {
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--r) * 2);
+      padding: 2rem;
+      text-align: center;
+    }
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--mid);
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-size: 1.6rem;
+      color: var(--gold);
+      border: 2px solid rgba(201,168,76,0.3);
+    }
+    .team-card h4 {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .team-card .title {
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .team-card p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+ 
+    /* ─── CONTACT ─────────────────────────────────────────────── */
+    .contact {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-left h2 { margin-bottom: 1rem; }
+    .contact-left p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .contact-row .ci-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--r);
+      background: rgba(201,168,76,0.08);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-row .ci-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .contact-row .ci-text .ci-lbl {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .contact-row .ci-text .ci-val {
+      font-size: 0.92rem;
+      color: var(--glacier);
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .field label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field input, .field textarea, .field select {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 0.7rem 0.9rem;
+      font-family: var(--body);
+      font-size: 0.9rem;
+      color: var(--glacier);
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .field textarea { resize: vertical; min-height: 110px; }
+    .field select { appearance: none; cursor: pointer; }
+    .field input::placeholder, .field textarea::placeholder {
+      color: var(--steel);
+    }
+ 
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      background: var(--night);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--glacier);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+ 
+    /* ─── AURORA ANIMATION ────────────────────────────────────── */
+    @keyframes aurora-drift {
+      0%   { transform: translateX(0) scaleY(1); }
+      50%  { transform: translateX(40px) scaleY(1.15); }
+      100% { transform: translateX(0) scaleY(1); }
+    }
+ 
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mission-grid,
+      .youth-grid,
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .youth-visual { order: -1; }
+      section { padding: 4rem 1.25rem; }
+    }
+    @media (max-width: 600px) {
+      .hero-stats { gap: 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+ 
+    /* ─── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+ 
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; }
+      * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
 </head>
 <body>
-    <!-- ========== NAVIGATION ========== -->
-    <nav>
-        <div class="nav-brand">NWPH</div>
-        <div class="nav-links">
-            <a href="#/home" class="nav-link active" data-lang-en="Home" data-lang-iu="ᐊᖏᕐᕋᖅ">Home</a>
-            <a href="#/about" class="nav-link" data-lang-en="About" data-lang-iu="ᐱᔾᔪᑎᖓ">About</a>
-            <a href="#/subsidiaries" class="nav-link" data-lang-en="Subsidiaries" data-lang-iu="ᑲᑎᒪᔨᓄᑦ">Subsidiaries</a>
-            <a href="#/investors" class="nav-link" data-lang-en="Investors" data-lang-iu="ᐊᑭᓕᖅᑐᐃᔩᑦ">Investors</a>
-            <a href="#/contact" class="nav-link" data-lang-en="Contact" data-lang-iu="ᐅᖃᐅᓯᖃᖅ">Contact</a>
-            <button class="toggle-btn" id="langToggle" onclick="toggleLanguage()">ᐃᓄᒃᑎᑐᑦ</button>
-            <button class="toggle-btn" id="darkToggle" onclick="toggleDarkMode()">🌙</button>
-        </div>
-    </nav>
-
-    <!-- ========== MAIN CONTENT ========== -->
-    <main id="mainContent"></main>
-
-    <!-- ========== MODAL ========== -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <div id="modalBody"></div>
-        </div>
+ 
+<!-- ── NAV ───────────────────────────────────────────────────── -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="mark">
+      <!-- Compass rose SVG -->
+      <svg viewBox="0 0 24 24"><path d="M12 2L14.5 9.5H22L16 14L18 22L12 17.5L6 22L8 14L2 9.5H9.5L12 2Z"/></svg>
     </div>
-
-    <!-- ========== TOAST ========== -->
-    <div class="toast" id="toast"></div>
-
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <p>&copy; 2025 North West Passage Holdings Corporation</p>
-        <div>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+    <span class="wordmark">NW<span>PH</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#subsidiaries">Subsidiaries</a></li>
+    <li><a href="#youth">Youth Program</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact</a>
+  <div class="hamburger" id="ham" aria-label="Menu" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#subsidiaries" onclick="closeMobile()">Subsidiaries</a>
+  <a href="#youth" onclick="closeMobile()">Youth Program</a>
+  <a href="#leadership" onclick="closeMobile()">Leadership</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+ 
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <canvas id="aurora"></canvas>
+  <div class="stars" id="stars"></div>
+  <div class="syllabics-bg"><span>ᓄᓇᕗᑦ</span></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal">Inuit-Led · Nunavut-Built · Future-Focused</div>
+    <h1 class="reveal">Building the <em>Arctic</em><br>economic future</h1>
+    <p class="hero-sub reveal">North West Passage Holdings Corporation is a multi-subsidiary Inuit-led holding company rooted in Qikiqtarjuaq, Nunavut — developing sovereign enterprises across tourism, technology, logistics, finance, aviation, and beyond.</p>
+    <div class="hero-actions reveal">
+      <a href="#subsidiaries" class="btn-primary">Explore Our Ventures ↓</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+    <div class="hero-stats reveal">
+      <div class="stat-item">
+        <div class="num">7</div>
+        <div class="lbl">Planned Subsidiaries</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">18–25</div>
+        <div class="lbl">Youth Employment Focus</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">100%</div>
+        <div class="lbl">Inuit Owned</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">ᓄᓇᕗᑦ</div>
+        <div class="lbl">Nunavut Beneficiary</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ── MISSION ────────────────────────────────────────────────── -->
+<section class="mission" id="about">
+  <div class="inner">
+    <div class="mission-grid">
+      <div class="mission-left reveal">
+        <div class="section-label">Our Mission</div>
+        <h2>Inuit economic <em>sovereignty</em> — built from the land up</h2>
+        <p>North West Passage Holdings Corporation was founded on a simple belief: that Nunavummiut should own, lead, and benefit from the economic development happening in their homeland.</p>
+        <p>From Qikiqtarjuaq to the wider Qikiqtani region, NWPH is developing a portfolio of enterprises that create real, lasting employment and wealth for Inuit communities — without asking permission to participate in our own economy.</p>
+        <p style="margin-top:0.5rem;">Founded by Adam Aliqatuqtuq, a Nunavut beneficiary with roots across the territory, NWPH draws on deep knowledge of Arctic operations, Inuit governance, and northern logistics to build something that will outlast any single generation.</p>
+      </div>
+      <div class="mission-right reveal">
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <h4>Community-Rooted</h4>
+            <p>Every subsidiary is designed to employ, empower, and enrich Nunavummiut — particularly youth aged 18 to 25.</p>
+          </div>
         </div>
-    </footer>
-
-    <script>
-        // ========== DATA STRUCTURE ==========
-        const subsidiaries = [
-            {
-                id: 'northwinds',
-                name: 'North Winds Airlines Ltd.',
-                icon: '✈️',
-                short: 'Community airline with Express, Connect, and Altitude fleets. Features discounted Nuna Fare, Inuuk Fare, and NunaMiles loyalty.',
-                long: 'North Winds Airlines connects northern communities with safe, reliable air service. Our three-tier fleet system serves diverse needs: Express for quick hops, Connect for regional routes, and Altitude for long-haul connections. We offer Nuna Fare discounts for residents, Inuuk Fare for elders, and NunaMiles rewards that integrate across all NWPH services. Every flight strengthens community bonds and keeps families connected.',
-                hasCalculator: true
-            },
-            {
-                id: 'polarbeacons',
-                name: 'Polar Beacons Technologies Ltd.',
-                icon: '📡',
-                short: 'Arctic IoT weather and logistics network, powering real-time data for aviation and cargo.',
-                long: 'Polar Beacons deploys ruggedized IoT sensors across the Arctic, providing real-time weather data, ice conditions, and logistics tracking. Our network powers safer aviation operations, more efficient cargo routing, and environmental monitoring. This is Phase 1 of NWPH—the foundation that enables all other operations. Data feeds directly to North Winds flight planning and Imavik sealift scheduling.',
-                hasSensor: true
-            },
-            {
-                id: 'arctrek',
-                name: 'ArcTrek Expeditions Ltd.',
-                icon: '🏔️',
-                short: 'Inuit-guided adventure tourism company training youth and running expeditions through national parks.',
-                long: 'ArcTrek brings authentic Inuit-led tourism to Auyuittuq, Sirmilik, and Quttinirpaaq National Parks. We train northern youth as guides, ensuring cultural knowledge passes forward while creating employment. Visitors experience traditional knowledge, wildlife viewing, and wilderness skills taught by those who know the land best. Revenue stays local and supports conservation efforts.'
-            },
-            {
-                id: 'polarexpress',
-                name: 'Polar Express Stores & Ulu & Brew Café',
-                icon: '🏪',
-                short: 'Northern retail and café network with local products and NunaMiles integration.',
-                long: 'Polar Express provides community retail with fair pricing and local products. Ulu & Brew Café offers gathering spaces with coffee, traditional foods, and cultural events. Both accept NunaMiles and stock items from northern suppliers. Profits fund community programs and youth employment training. Every purchase supports the local economy twice—once at sale, again through reinvestment.'
-            },
-            {
-                id: 'illuvigaq',
-                name: 'Illuvigaq Real Estate Ltd.',
-                icon: '🏠',
-                short: 'Modular housing and terminal accommodation for workers and families.',
-                long: 'Illuvigaq addresses northern housing shortages with modular, energy-efficient designs adapted for Arctic conditions. We provide workforce housing near airports and communities, as well as family units. All buildings use local labor for assembly and maintenance, creating construction jobs while solving critical infrastructure gaps.'
-            },
-            {
-                id: 'glacierlabs',
-                name: 'GlacierLabs Ltd.',
-                icon: '🔬',
-                short: 'Environmental research division tracking permafrost and Arctic change.',
-                long: 'GlacierLabs monitors Arctic environmental change through partnerships with universities and Inuit knowledge holders. We track permafrost stability, wildlife patterns, and ice conditions—data essential for safe infrastructure and hunting. Research is co-produced with communities and published openly. Findings inform NWPH operations and regional planning.'
-            },
-            {
-                id: 'imavik',
-                name: 'Imavik Sealift Solutions Ltd.',
-                icon: '🚢',
-                short: 'Community-run sealift logistics and marine freight service.',
-                long: 'Imavik coordinates annual sealift deliveries with transparent pricing and community input on cargo priorities. We leverage Polar Beacons ice data to optimize routes and timing. By managing sealift locally, we reduce costs and ensure essential goods arrive reliably. Community councils have input on scheduling and allocation.'
-            },
-            {
-                id: 'baffincruises',
-                name: 'Baffin Adventure Cruises Ltd.',
-                icon: '⛴️',
-                short: 'Sustainable Arctic tourism by sea, led by local guides.',
-                long: 'Small-ship Arctic cruises led by Inuit guides, showcasing glaciers, wildlife, and coastal communities. We prioritize low-impact tourism, employ local crew, and share revenue with visited communities. Passengers learn traditional navigation, land skills, and environmental stewardship. Every voyage includes cultural programming developed with elders.'
-            },
-            {
-                id: 'baffinferry',
-                name: 'Baffin Ferry Ltd.',
-                icon: '⛴️',
-                short: 'Affordable inter-community ferry routes for travel and cargo.',
-                long: 'Baffin Ferry provides seasonal water routes between coastal communities, offering an affordable alternative to air travel. We carry passengers, cargo, and vehicles. Service runs during ice-free months and integrates with North Winds schedules. Fares are set with community affordability in mind, and NunaMiles can offset costs.'
-            },
-            {
-                id: 'nunabank',
-                name: 'NunaBank (Future)',
-                icon: '🏦',
-                short: 'Digital banking subsidiary for northern financial inclusion and NunaMiles Visa issuance.',
-                long: 'NunaBank will offer accessible digital banking designed for northern needs: no-fee accounts, remote deposit, and NunaMiles integration. Planned services include microloans for small businesses, savings programs for youth, and a co-branded Visa card. Financial products will be developed with community input to ensure they serve real needs, not extractive profit.'
-            }
-        ];
-
-        const routes = {
-            'Qikiqtarjuaq-Clyde River': { standard: 180, nuna: 135, inuuk: 90 },
-            'Pangnirtung-Iqaluit': { standard: 220, nuna: 165, inuuk: 110 },
-            'Iqaluit-Pond Inlet': { standard: 380, nuna: 285, inuuk: 190 },
-            'Clyde River-Arctic Bay': { standard: 280, nuna: 210, inuuk: 140 }
-        };
-
-        // ========== STATE MANAGEMENT ==========
-        let currentLang = localStorage.getItem('nwph_lang') || 'en';
-        let darkMode = localStorage.getItem('nwph_dark') === 'true';
-        let contactSubmissions = JSON.parse(localStorage.getItem('nwph_contacts') || '[]');
-
-        // ========== INITIALIZATION ==========
-        function init() {
-            if (darkMode) {
-                document.body.setAttribute('data-theme', 'dark');
-                document.getElementById('darkToggle').textContent = '☀️';
-            }
-            updateLanguage();
-            handleRoute();
-            window.addEventListener('hashchange', handleRoute);
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+            <h4>Arctic-First</h4>
+            <p>We build for northern realities — remote logistics, extreme climate, sovereignty, and the unique landscape of the Qikiqtani Region.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4>Diversified &amp; Resilient</h4>
+            <p>Seven subsidiaries spanning tourism, tech, retail, sealift, finance, aviation, and real estate — so Inuit prosperity doesn't depend on a single sector.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4>Inuit Leadership</h4>
+            <p>Led by Nunavut beneficiaries, with co-founders, advisors, and staff drawn from across Nunavut's communities and professional networks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ── SUBSIDIARIES ───────────────────────────────────────────── -->
+<section class="subsidiaries" id="subsidiaries">
+  <div class="inner">
+    <div class="section-label reveal">Our Ventures</div>
+    <h2 class="reveal">Seven enterprises,<br><em>one vision</em></h2>
+    <p class="section-intro reveal">Each subsidiary addresses a critical gap in northern economic infrastructure — from the moment a visitor arrives to the financial systems that keep communities running.</p>
+    <div class="sub-grid">
+ 
+      <div class="sub-card reveal">
+        <div class="sub-tag">Tourism &amp; Expeditions</div>
+        <h3>ArcTrek Expeditions</h3>
+        <div class="sub-abbr">ArcTrek Expeditions Ltd.</div>
+        <p>Inuit-guided Arctic adventure tourism delivering authentic land-based experiences across Nunavut. Co-founded with Eva Natsiapik of Baker Lake, ArcTrek connects visitors directly to Inuit knowledge, landscapes, and culture.</p>
+        <div class="sub-status active"><span class="dot"></span> Active Development</div>
+      </div>
+ 
+      <div class="sub-card reveal">
+        <div class="sub-tag">Technology &amp; Communications</div>
+        <h3>Polar Beacons Technologies</h3>
+        <div class="sub-abbr">Polar Beacons Technologies Ltd.</div>
+        <p>Northern-focused technology and connectivity solutions designed for the unique challenges of Arctic infrastructure — remote monitoring, communications, and climate-resilient tech for Nunavut communities and industry.</p>
+        <div class="sub-status forming"><span class="dot"></span> Formation Stage</div>
+      </div>
+ 
+      <div class="sub-card reveal">
+        <div class="sub-tag">Retail &amp; Supply</div>
+        <h3>Polar Express Stores</h3>
+        <div class="sub-abbr">Polar Express Stores Ltd.</div>
+        <p>Community-focused retail operations supplying everyday essentials, Inuit art, and northern goods to residents and visitors — closing the gap in northern retail access while keeping dollars in the community.</p>
+        <div class="sub-status forming"><span class="dot"></span> Formation Stage</div>
+      </div>
+ 
+      <div class="sub-card reveal">
+        <div class="sub-tag">Logistics &amp; Sealift</div>
+        <h3>Ima Sealift Solutions</h3>
+        <div class="sub-abbr">Ima Sealift Solutions Ltd.</div>
+        <p>Inuit-owned marine cargo and sealift logistics for Nunavut communities. Reducing dependence on southern-controlled supply chains by bringing Arctic marine logistics back under northern ownership and control.</p>
+        <div class="sub-status forming"><span class="dot"></span> Formation Stage</div>
+      </div>
+ 
+      <div class="sub-card reveal">
+        <div class="sub-tag">Financial Services</div>
+        <h3>NunaBank</h3>
+        <div class="sub-abbr">NunaBank Financial Services Ltd.</div>
+        <p>A northern financial services institution designed for Inuit and Nunavummiut — offering accessible banking, micro-lending, and financial literacy built around northern economic realities rather than southern banking models.</p>
+        <div class="sub-status forming"><span class="dot"></span> Formation Stage</div>
+      </div>
+ 
+      <div class="sub-card reveal">
+        <div class="sub-tag">Aviation</div>
+        <h3>North Winds Airlines</h3>
+        <div class="sub-abbr">North Winds Airlines Ltd.</div>
+        <p>Inuit-owned regional air transport connecting Nunavut's communities — where aviation isn't a luxury but a lifeline. Focused on affordable inter-community travel and charter services across the Qikiqtani Region.</p>
+        <div class="sub-status forming"><span class="dot"></span> Formation Stage</div>
+      </div>
+ 
+      <div class="sub-card reveal">
+        <div class="sub-tag">Real Estate</div>
+        <h3>Illuvigaq Real Estate</h3>
+        <div class="sub-abbr">Illuvigaq Real Estate Ltd.</div>
+        <p>Northern real estate development and property management addressing the critical housing shortage in Nunavut — Inuit-built, Inuit-owned, and designed for northern climate and community needs.</p>
+        <div class="sub-status forming"><span class="dot"></span> Formation Stage</div>
+      </div>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- ── YOUTH PROGRAM ─────────────────────────────────────────── -->
+<section class="youth" id="youth">
+  <div class="inner">
+    <div class="youth-grid">
+      <div class="youth-visual reveal">
+        <div class="youth-card-big">
+          <div class="program-name">
+            <span>ᓄᓇᒥ ᐃᓕᓐᓂᐊᕐᓂ</span>
+            Nunami Ilinniarni
+          </div>
+          <p>Learning on the Land — NWPH's flagship youth employment and mentorship program, embedded across all seven subsidiaries, giving Nunavummiut aged 18–25 real careers in the industries shaping Nunavut's future.</p>
+          <div class="youth-numbers">
+            <div class="yn">
+              <div class="n">18–25</div>
+              <div class="l">Target Age</div>
+            </div>
+            <div class="yn">
+              <div class="n">7</div>
+              <div class="l">Sectors</div>
+            </div>
+            <div class="yn">
+              <div class="n">ᓄᓇᕗᑦ</div>
+              <div class="l">Nunavut-Wide</div>
+            </div>
+            <div class="yn">
+              <div class="n">∞</div>
+              <div class="l">Potential</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="youth-right reveal">
+        <div class="section-label">Youth &amp; Community</div>
+        <h2>Careers on the land, <em>not just a job</em></h2>
+        <p>The Nunami Ilinniarni program — "Learning on the Land" — is the soul of NWPH's community commitment. Every subsidiary is designed with a youth employment pathway built in, giving young Nunavummiut not just work experience, but ownership stakes in their own territory's economy.</p>
+        <p>From ArcTrek guides to Polar Beacons technicians, North Winds crew to NunaBank staff — we're building the next generation of Inuit economic leadership from the ground up.</p>
+        <div class="youth-badge">ᐃᓄᒃᑎᑐᑦ · Inuktitut · English</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ── LEADERSHIP ─────────────────────────────────────────────── -->
+<section class="leadership" id="leadership">
+  <div class="inner">
+    <div class="section-label reveal">Our People</div>
+    <h2 class="reveal">Led by <em>Nunavummiut</em></h2>
+    <p class="section-intro reveal">NWPH is built on deep roots across Nunavut — in field operations, community service, finance, aviation, and Inuit governance.</p>
+    <div class="team-grid">
+ 
+      <div class="team-card reveal">
+        <div class="avatar">A</div>
+        <h4>Adam Aliqatuqtuq</h4>
+        <div class="title">Founder &amp; CEO</div>
+        <p>Nunavut beneficiary and entrepreneur from Qikiqtarjuaq. Background spanning Parks Canada, North Warning System, Canadian North Airlines, Qikiqtani Inuit Association, and Government of Nunavut finance and administration.</p>
+      </div>
+ 
+      <div class="team-card reveal">
+        <div class="avatar">E</div>
+        <h4>Eva Natsiapik</h4>
+        <div class="title">Co-Founder · ArcTrek</div>
+        <p>Baker Lake-based co-founder of ArcTrek Expeditions Ltd. Bringing community connections, Inuit knowledge, and operational expertise to NWPH's flagship tourism and expedition subsidiary.</p>
+      </div>
+ 
+      <div class="team-card reveal">
+        <div class="avatar">L</div>
+        <h4>Leah Aliqatuqtuq</h4>
+        <div class="title">Founding Member</div>
+        <p>Founding family member of NWPH with deep community roots in Qikiqtarjuaq, contributing local knowledge, network, and the kind of institutional memory that only comes from living Nunavut's history firsthand.</p>
+      </div>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- ── CONTACT ────────────────────────────────────────────────── -->
+<section class="contact" id="contact">
+  <div class="inner">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <div class="section-label">Get In Touch</div>
+        <h2>Let's build <em>something</em> together</h2>
+        <p>Whether you're a potential investor, community partner, future employee, or just curious about what we're building — we want to hear from you. NWPH is an open door for anyone who believes in Inuit economic sovereignty.</p>
+        <div class="contact-info">
+          <div class="contact-row">
+            <div class="ci-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="ci-text">
+              <div class="ci-lbl">Headquarters</div>
+              <div class="ci-val">Qikiqtarjuaq, Nunavut, Canada</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="ci-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="ci-text">
+              <div class="ci-lbl">Email</div>
+              <div class="ci-val">info@nwph.ca</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="ci-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="ci-text">
+              <div class="ci-lbl">Registered</div>
+              <div class="ci-val">Nunavut, Canada</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <div class="form-row">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" placeholder="Siku" />
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Aqiaruq" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label>Inquiry Type</label>
+          <select>
+            <option value="">Select one...</option>
+            <option>Investment &amp; Funding</option>
+            <option>Partnership</option>
+            <option>Employment</option>
+            <option>Media &amp; Press</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea placeholder="Tell us what you're thinking..."></textarea>
+        </div>
+        <button class="btn-primary" type="button" style="width:100%;justify-content:center;" onclick="handleSubmit(this)">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">NW<span>PH</span> · North West Passage Holdings Corporation</div>
+    <div class="footer-copy">© 2025 North West Passage Holdings Corporation · Qikiqtarjuaq, Nunavut</div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#subsidiaries">Subsidiaries</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+ 
+<!-- ── SCRIPTS ─────────────────────────────────────────────────── -->
+<script>
+  /* ── Aurora canvas animation ── */
+  (function() {
+    const canvas = document.getElementById('aurora');
+    const ctx = canvas.getContext('2d');
+    let W, H, bands;
+ 
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      initBands();
+    }
+ 
+    function initBands() {
+      bands = [
+        { y: H * 0.28, vy: 0.12, amp: 38, speed: 0.00045, phase: 0,    color: [0, 180, 120],  alpha: 0.13 },
+        { y: H * 0.38, vy: 0.09, amp: 28, speed: 0.00035, phase: 1.5,  color: [0, 120, 200],  alpha: 0.10 },
+        { y: H * 0.50, vy: 0.15, amp: 50, speed: 0.00055, phase: 3.0,  color: [80, 0, 200],   alpha: 0.07 },
+        { y: H * 0.60, vy: 0.08, amp: 22, speed: 0.00025, phase: 4.5,  color: [0, 200, 180],  alpha: 0.09 },
+      ];
+    }
+ 
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+ 
+      // Night sky gradient
+      const sky = ctx.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0,   '#050D1A');
+      sky.addColorStop(0.5, '#0A1628');
+      sky.addColorStop(1,   '#0F1E38');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, W, H);
+ 
+      // Aurora bands
+      bands.forEach(b => {
+        const cy = b.y + Math.sin(t * b.speed * 6000 + b.phase) * b.amp;
+        const grad = ctx.createLinearGradient(0, cy - 90, 0, cy + 90);
+        const [r,g,bl] = b.color;
+        grad.addColorStop(0,   `rgba(${r},${g},${bl},0)`);
+        grad.addColorStop(0.4, `rgba(${r},${g},${bl},${b.alpha})`);
+        grad.addColorStop(0.5, `rgba(${r},${g},${bl},${b.alpha * 1.6})`);
+        grad.addColorStop(0.6, `rgba(${r},${g},${bl},${b.alpha})`);
+        grad.addColorStop(1,   `rgba(${r},${g},${bl},0)`);
+ 
+        ctx.beginPath();
+        ctx.moveTo(0, cy);
+        for (let x = 0; x <= W; x += 8) {
+          const wave = Math.sin((x / W) * Math.PI * 3 + t * b.speed * 8000 + b.phase) * (b.amp * 0.4);
+          ctx.lineTo(x, cy + wave);
         }
-
-        // ========== ROUTER ==========
-        function handleRoute() {
-            const hash = window.location.hash || '#/home';
-            const page = hash.replace('#/', '');
-            
-            // Update active nav link
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === hash) {
-                    link.classList.add('active');
-                }
-            });
-
-            // Render page
-            const content = document.getElementById('mainContent');
-            content.innerHTML = '';
-            
-            switch(page) {
-                case 'home':
-                    renderHome(content);
-                    break;
-                case 'about':
-                    renderAbout(content);
-                    break;
-                case 'subsidiaries':
-                    renderSubsidiaries(content);
-                    break;
-                case 'investors':
-                    renderInvestors(content);
-                    break;
-                case 'contact':
-                    renderContact(content);
-                    break;
-                default:
-                    renderHome(content);
-            }
-        }
-
-        // ========== PAGE RENDERERS ==========
-        function renderHome(container) {
-            container.innerHTML = `
-                <section>
-                    <div class="hero">
-                        <h1>North West Passage Holdings Corporation</h1>
-                        <p class="tagline">Inuit-Owned. Northern-Driven. Future-Focused.</p>
-                        <div class="hero-buttons">
-                            <a href="#/about" class="btn btn-primary">Learn More</a>
-                            <a href="#/subsidiaries" class="btn btn-secondary">Explore Subsidiaries</a>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Building Northern Communities Together</h2>
-                        <p>North West Passage Holdings Corporation is an Inuit-owned multi-sector holding company based in Qikiqtarjuaq, Nunavut. We believe the North's future belongs in northern hands.</p>
-                        <p>Through our integrated network of subsidiaries—spanning aviation, technology, retail, housing, tourism, and logistics—we create jobs, circulate wealth within communities, and reinvest profits where they matter most. Every dollar earned flows back into the people and places that make the Arctic home.</p>
-                        <p>From connecting families through affordable air travel to monitoring permafrost with cutting-edge sensors, from training youth as wilderness guides to providing essential retail services, NWPH operates with a simple principle: northern solutions for northern challenges, led by northern people.</p>
-                        <p>Our work isn't extractive—it's generative. We build capacity, develop talent, and ensure that economic development strengthens rather than displaces Inuit culture and community bonds. This is self-determination in action.</p>
-                    </div>
-                </section>
-            `;
-        }
-
-        function renderAbout(container) {
-            container.innerHTML = `
-                <section>
-                    <h2>About NWPH</h2>
-                    
-                    <div class="subsection">
-                        <h3>Mission & Vision</h3>
-                        <p>Our mission is to build a sustainable northern economy through community-based innovation and Inuit leadership. We envision a North where economic opportunity strengthens cultural identity, where profits reinvest in people, and where communities control their own development.</p>
-                        <p>NWPH operates on principles of transparency, accountability, and shared prosperity. We measure success not just in revenue, but in jobs created, youth trained, families connected, and communities empowered.</p>
-                    </div>
-
-                    <div class="subsection">
-                        <h3>Founder's Message</h3>
-                        <p>I grew up watching southern companies extract value from our land while leaving little behind. I saw families separated by impossible travel costs, young people forced south for opportunity, and communities treated as afterthoughts in their own homeland.</p>
-                        <p>NWPH exists because I believe we can do better. We can build airlines that serve community needs, not just profit margins. We can deploy technology that solves our problems, designed with our input. We can create businesses that employ our youth and respect our values.</p>
-                        <p>This isn't charity—it's smart business built on the understanding that strong communities create strong economies. Every subsidiary connects to the others, creating a network where success multiplies. When North Winds flies, Polar Beacons data makes it safer. When ArcTrek trains guides, they work in our parks. When Polar Express opens, it stocks local products. The whole is greater than the sum.</p>
-                        <p>I'm proud of what we're building, but this is just the beginning. Join us.</p>
-                        <p><em>— NWPH Leadership Team</em></p>
-                    </div>
-
-                    <div class="subsection">
-                        <h3>Corporate Governance</h3>
-                        <p>NWPH maintains rigorous governance standards with full transparency in our operations. Our board includes community representatives, business leaders, and elders who provide cultural guidance.</p>
-                        <p>We operate under Fair Skies and Fair North policies—commitments to equitable pricing, local hiring, and community consultation on major decisions. Annual reports detail financial performance and community impact. Profits are reinvested according to community priorities identified through regular consultation.</p>
-                        <p>We're accountable to the North first, shareholders second. That's how we ensure long-term success for everyone.</p>
-                        <button class="btn btn-primary" onclick="downloadCharter()">Download NWPH Charter</button>
-                    </div>
-                </section>
-            `;
-        }
-
-        function renderSubsidiaries(container) {
-            const html = `
-                <section>
-                    <h2>Our Subsidiaries</h2>
-                    <p>NWPH operates a diverse portfolio of northern businesses, each designed to support community needs while generating sustainable returns. Click any subsidiary to learn more.</p>
-                    <div class="grid">
-                        ${subsidiaries.map(sub => `
-                            <div class="card" onclick="showSubsidiaryDetail('${sub.id}')">
-                                <div class="card-icon">${sub.icon}</div>
-                                <h3>${sub.name}</h3>
-                                <p>${sub.short}</p>
-                                <button class="btn btn-primary">Learn More</button>
-                            </div>
-                        `).join('')}
-                    </div>
-                </section>
-            `;
-            container.innerHTML = html;
-        }
-
-        function renderInvestors(container) {
-            container.innerHTML = `
-                <section>
-                    <h2>Investment Opportunity</h2>
-                    
-                    <div class="subsection">
-                        <h3>Why Invest in NWPH?</h3>
-                        <p>NWPH represents a unique investment opportunity: a vertically integrated northern holding company with proven community support, innovative technology, and multiple revenue streams. Our ecosystem approach creates resilience—diversified operations that support each other through economic cycles.</p>
-                        <p>The Arctic is changing. Climate shifts, resource development, and increased maritime activity create enormous opportunity. NWPH is positioned to capitalize on these trends while ensuring benefits flow to northern communities.</p>
-                    </div>
-
-                    <div class="subsection">
-                        <h3>Development Phases</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Phase</th>
-                                    <th>Subsidiary</th>
-                                    <th>Status</th>
-                                    <th>Timeline</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Phase 1</td>
-                                    <td>Polar Beacons Technologies</td>
-                                    <td>Launch Ready</td>
-                                    <td>Q1 2025</td>
-                                </tr>
-                                <tr>
-                                    <td>Phase 2</td>
-                                    <td>ArcTrek Expeditions</td>
-                                    <td>Pilot Programs</td>
-                                    <td>Q2 2025</td>
-                                </tr>
-                                <tr>
-                                    <td>Phase 3</td>
-                                    <td>Polar Express / Ulu & Brew</td>
-                                    <td>Site Development</td>
-                                    <td>Q3 2025</td>
-                                </tr>
-                                <tr>
-                                    <td>Phase 4</td>
-                                    <td>North Winds Airlines</td>
-                                    <td>Fleet Acquisition</td>
-                                    <td>Q4 2025</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="subsection">
-                        <h3>Financial Projections: Polar Beacons Technologies</h3>
-                        <p><strong>Startup Capital Required:</strong> $2.4M CAD</p>
-                        <p><strong>Revenue Model:</strong> Sensor network subscriptions + data licensing</p>
-                        <p><strong>Year 1 Revenue Target:</strong> $850K</p>
-                        <p><strong>Year 3 Revenue Target:</strong> $3.2M</p>
-                        <p><strong>Projected ROI:</strong> 18% annually over 5 years</p>
-                        <p><strong>Break-even:</strong> Month 18</p>
-                        
-                        <canvas id="investorChart" width="600" height="300"></canvas>
-                    </div>
-
-                    <button class="btn btn-primary" onclick="downloadInvestorSnapshot()">Download Investor Snapshot</button>
-                </section>
-            `;
-            setTimeout(drawInvestorChart, 100);
-        }
-
-        function renderContact(container) {
-            container.innerHTML = `
-                <section>
-                    <h2>Contact Us</h2>
-                    
-                    <div class="grid">
-                        <div>
-                            <h3>Get in Touch</h3>
-                            <p>We welcome inquiries from community members, potential partners, and investors. Our team is here to answer your questions about NWPH operations, subsidiary services, or investment opportunities.</p>
-                            
-                            <div style="margin-top: 2rem;">
-                                <p><strong>North West Passage Holdings Corporation</strong></p>
-                                <p>Qikiqtarjuaq, Nunavut, Canada</p>
-                                <p>Email: <a href="mailto:info@nwph.ca" style="color: var(--aurora-green);">info@nwph.ca</a></p>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3>Send a Message</h3>
-                            <form id="contactForm" onsubmit="handleContactSubmit(event)">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" id="name" name="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" id="email" name="email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="message">Message</label>
-                                    <textarea id="message" name="message" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                </section>
-            `;
-        }
-
-        // ========== SUBSIDIARY DETAIL MODAL ==========
-        function showSubsidiaryDetail(id) {
-            const sub = subsidiaries.find(s => s.id === id);
-            if (!sub) return;
-
-            let extraContent = '';
-            
-            if (sub.hasCalculator) {
-                extraContent = `
-                    <div class="calculator">
-                        <h3>Fare Calculator</h3>
-                        <div class="form-group">
-                            <label for="routeSelect">Select Route</label>
-                            <select id="routeSelect">
-                                <option value="Qikiqtarjuaq-Clyde River">Qikiqtarjuaq → Clyde River</option>
-                                <option value="Pangnirtung-Iqaluit">Pangnirtung → Iqaluit</option>
-                                <option value="Iqaluit-Pond Inlet">Iqaluit → Pond Inlet</option>
-                                <option value="Clyde River-Arctic Bay">Clyde River → Arctic Bay</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="fareType">Fare Type</label>
-                            <select id="fareType">
-                                <option value="standard">Standard Fare</option>
-                                <option value="nuna">Nuna Fare (Resident - 25% off)</option>
-                                <option value="inuuk">Inuuk Fare (Elder - 50% off)</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" onclick="calculateFare()">Calculate</button>
-                        <div class="calculator-result" id="fareResult"></div>
-                    </div>
-                `;
-            }
-
-            if (sub.hasSensor) {
-                extraContent = `
-                    <div class="sensor-display">
-                        <h3>Live Sensor Demo</h3>
-                        <p>Simulated Arctic weather station data</p>
-                        <div class="sensor-value" id="sensorTemp">-12.3°C</div>
-                        <p style="color: var(--text-secondary);">Wind: 23 km/h NW | Pressure: 1013 hPa</p>
-                        <p style="font-size: 0.9rem; opacity: 0.7;">Updates every 3 seconds</p>
-                    </div>
-                `;
-                setTimeout(startSensorUpdates, 500);
-            }
-
-            document.getElementById('modalBody').innerHTML = `
-                <h2>${sub.icon} ${sub.name}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.8;">${sub.long}</p>
-                ${extraContent}
-            `;
-            
-            document.getElementById('modal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-            stopSensorUpdates();
-        }
-
-        // ========== FARE CALCULATOR ==========
-        function calculateFare() {
-            const route = document.getElementById('routeSelect').value;
-            const fareType = document.getElementById('fareType').value;
-            const price = routes[route][fareType];
-            
-            document.getElementById('fareResult').textContent = `${price} CAD`;
-            showToast(`Fare calculated: ${price} CAD`);
-        }
-
-        // ========== SENSOR SIMULATOR ==========
-        let sensorInterval;
-        function startSensorUpdates() {
-            stopSensorUpdates();
-            sensorInterval = setInterval(() => {
-                const temp = (-25 + Math.random() * 20).toFixed(1);
-                const el = document.getElementById('sensorTemp');
-                if (el) {
-                    el.textContent = `${temp}°C`;
-                }
-            }, 3000);
-        }
-
-        function stopSensorUpdates() {
-            if (sensorInterval) {
-                clearInterval(sensorInterval);
-                sensorInterval = null;
-            }
-        }
-
-        // ========== CONTACT FORM ==========
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                message: document.getElementById('message').value,
-                timestamp: new Date().toISOString()
-            };
-            
-            contactSubmissions.push(formData);
-            localStorage.setItem('nwph_contacts', JSON.stringify(contactSubmissions));
-            
-            document.getElementById('contactForm').reset();
-            showToast('Message sent successfully! We will respond within 24 hours.');
-        }
-
-        // ========== DOWNLOADS ==========
-        function downloadCharter() {
-            const content = `NORTH WEST PASSAGE HOLDINGS CORPORATION
-CORPORATE CHARTER
-
-Adopted: January 2025
-
-ARTICLE I: PURPOSE
-NWPH exists to build sustainable economic prosperity in Nunavut through Inuit-led business development, community reinvestment, and integrated service delivery.
-
-ARTICLE II: GOVERNANCE PRINCIPLES
-1. Community First: Profits reinvest in northern communities
-2. Transparency: Annual public reporting of finances and impact
-3. Local Employment: Preference for northern hiring and training
-4. Cultural Respect: Operations align with Inuit values and knowledge
-5. Environmental Stewardship: Sustainable practices in all operations
-
-ARTICLE III: FAIR SKIES POLICY
-- Affordable resident fares (Nuna Fare: 25% discount)
-- Elder and youth discounts (Inuuk Fare: 50% discount)
-- No surge pricing during medical or family emergencies
-- Community input on route planning and scheduling
-
-ARTICLE IV: FAIR NORTH POLICY
-- Local procurement prioritized when available
-- Revenue sharing with community councils
-- Youth employment and training programs
-- Support for cultural events and language preservation
-
-ARTICLE V: SUBSIDIARIES
-Each NWPH subsidiary operates with autonomy while adhering to core principles. Subsidiary boards include community representation.
-
-ARTICLE VI: FINANCIAL STRUCTURE
-- Minimum 30% of profits reinvested in communities
-- Maximum 15% executive compensation relative to front-line wages
-- Public disclosure of major expenditures
-- Community grant programs funded annually
-
-This charter may be amended through community consultation and board approval.`;
-            
-            downloadTextFile('NWPH_Charter_2025.txt', content);
-            showToast('Charter downloaded successfully');
-        }
-
-        function downloadInvestorSnapshot() {
-            const content = `NORTH WEST PASSAGE HOLDINGS CORPORATION
-INVESTOR SNAPSHOT - 2025
-
-EXECUTIVE SUMMARY
-NWPH is an Inuit-owned holding company building integrated northern infrastructure through aviation, technology, retail, tourism, and logistics subsidiaries.
-
-INVESTMENT HIGHLIGHTS
-✓ First-mover advantage in Arctic IoT and integrated services
-✓ Diversified revenue streams across 10 subsidiaries
-✓ Strong community support and government relationships
-✓ Experienced leadership team with northern expertise
-✓ Scalable technology platform (Polar Beacons)
-
-PHASE 1: POLAR BEACONS TECHNOLOGIES
-Capital Required: $2.4M CAD
-Use of Funds:
-- Sensor hardware deployment: $1.2M
-- Software platform development: $600K
-- Operations (Year 1): $400K
-- Marketing and partnerships: $200K
-
-Revenue Model:
-- Network subscription: $500-2000/month per client
-- Data licensing: $50K-200K per contract
-- Integration services: $25K-100K per project
-
-Financial Projections:
-Year 1: $850K revenue, -$320K net
-Year 2: $1.8M revenue, $240K net
-Year 3: $3.2M revenue, $890K net
-
-Target Customers:
-- Airlines (North Winds + competitors)
-- Sealift operators
-- Mining and resource companies
-- Climate researchers
-- Government agencies
-
-MARKET OPPORTUNITY
-Arctic aviation market: $2.8B annually
-Arctic logistics: $4.1B annually
-Climate monitoring: $850M annually
-NWPH addressable market: $120M over 5 years
-
-COMPETITIVE ADVANTAGES
-- Only Inuit-owned integrated Arctic services company
-- Community relationships provide operational access
-- Data network creates barriers to entry
-- Cross-selling across subsidiary ecosystem
-- Government procurement preference for Indigenous businesses
-
-RISK FACTORS
-- Capital intensive infrastructure
-- Weather-dependent operations
-- Small population base
-- Regulatory complexity
-- Competition from southern firms
-
-MANAGEMENT TEAM
-Leadership combines northern operational experience, business development expertise, and community relationships. Advisory board includes elders and subject matter experts.
-
-CONTACT
-For detailed financial models and business plans:
-info@nwph.ca`;
-            
-            downloadTextFile('NWPH_Investor_Snapshot_2025.txt', content);
-            showToast('Investor snapshot downloaded');
-        }
-
-        function downloadTextFile(filename, content) {
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // ========== CHART DRAWING ==========
-        function drawInvestorChart() {
-            const canvas = document.getElementById('investorChart');
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            // Clear canvas
-            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg-secondary');
-            ctx.fillRect(0, 0, width, height);
-            
-            // Data
-            const data = [0.85, 1.8, 3.2];
-            const labels = ['Year 1', 'Year 2', 'Year 3'];
-            const max = 3.5;
-            
-            // Chart dimensions
-            const padding = 60;
-            const chartWidth = width - padding * 2;
-            const chartHeight = height - padding * 2;
-            
-            // Draw axes
-            ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--text-primary');
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(padding, padding);
-            ctx.lineTo(padding, height - padding);
-            ctx.lineTo(width - padding, height - padding);
-            ctx.stroke();
-            
-            // Draw labels
-            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-primary');
-            ctx.font = '14px sans-serif';
-            ctx.textAlign = 'center';
-            
-            // Y-axis label
-            ctx.save();
-            ctx.translate(20, height / 2);
-            ctx.rotate(-Math.PI / 2);
-            ctx.fillText('Revenue ($M CAD)', 0, 0);
-            ctx.restore();
-            
-            // X-axis label
-            ctx.fillText('Timeline', width / 2, height - 20);
-            
-            // Draw bars
-            const barWidth = chartWidth / data.length / 1.5;
-            const barSpacing = chartWidth / data.length;
-            
-            data.forEach((value, i) => {
-                const barHeight = (value / max) * chartHeight;
-                const x = padding + barSpacing * i + barSpacing / 2 - barWidth / 2;
-                const y = height - padding - barHeight;
-                
-                // Draw bar
-                ctx.fillStyle = '#00A693';
-                ctx.fillRect(x, y, barWidth, barHeight);
-                
-                // Draw value
-                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-primary');
-                ctx.fillText(`${value}M`, x + barWidth / 2, y - 10);
-                
-                // Draw label
-                ctx.fillText(labels[i], x + barWidth / 2, height - padding + 20);
-            });
-        }
-
-        // ========== DARK MODE ==========
-        function toggleDarkMode() {
-            darkMode = !darkMode;
-            if (darkMode) {
-                document.body.setAttribute('data-theme', 'dark');
-                document.getElementById('darkToggle').textContent = '☀️';
-            } else {
-                document.body.removeAttribute('data-theme');
-                document.getElementById('darkToggle').textContent = '🌙';
-            }
-            localStorage.setItem('nwph_dark', darkMode);
-            
-            // Redraw chart if on investors page
-            setTimeout(() => {
-                if (document.getElementById('investorChart')) {
-                    drawInvestorChart();
-                }
-            }, 100);
-        }
-
-        // ========== LANGUAGE TOGGLE ==========
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'iu' : 'en';
-            localStorage.setItem('nwph_lang', currentLang);
-            updateLanguage();
-            showToast(currentLang === 'en' ? 'Language: English' : 'ᐅᖃᐅᓯᖅ: ᐃᓄᒃᑎᑐᑦ');
-        }
-
-        function updateLanguage() {
-            document.querySelectorAll('[data-lang-en]').forEach(el => {
-                const text = currentLang === 'en' ? el.getAttribute('data-lang-en') : el.getAttribute('data-lang-iu');
-                el.textContent = text;
-            });
-            
-            document.getElementById('langToggle').textContent = currentLang === 'en' ? 'ᐃᓄᒃᑎᑐᑦ' : 'English';
-        }
-
-        // ========== TOAST NOTIFICATIONS ==========
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('active');
-            
-            setTimeout(() => {
-                toast.classList.remove('active');
-            }, 3000);
-        }
-
-        // ========== MODAL KEYBOARD ACCESSIBILITY ==========
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        // ========== INITIALIZE ON LOAD ==========
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
+        ctx.lineTo(W, cy + 90);
+        ctx.lineTo(0, cy + 90);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+      });
+ 
+      t++;
+      requestAnimationFrame(draw);
+    }
+ 
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+  })();
+ 
+  /* ── Star field ── */
+  (function() {
+    const container = document.getElementById('stars');
+    const count = 120;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('div');
+      const size = Math.random() * 2 + 0.5;
+      const x = Math.random() * 100;
+      const y = Math.random() * 65;
+      const delay = Math.random() * 4;
+      s.style.cssText = `
+        position:absolute;
+        width:${size}px;
+        height:${size}px;
+        left:${x}%;
+        top:${y}%;
+        background:#fff;
+        border-radius:50%;
+        opacity:${Math.random() * 0.6 + 0.2};
+        animation: twinkle ${2 + Math.random() * 3}s ease-in-out ${delay}s infinite alternate;
+      `;
+      container.appendChild(s);
+    }
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        from { opacity: 0.1; }
+        to   { opacity: 0.8; }
+      }
+    `;
+    document.head.appendChild(style);
+  })();
+ 
+  /* ── Scroll reveal ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+ 
+  /* ── Mobile menu ── */
+  const ham = document.getElementById('ham');
+  const mobileMenu = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+  }
+ 
+  /* ── Contact form feedback ── */
+  function handleSubmit(btn) {
+    btn.textContent = 'Sent ✓';
+    btn.style.background = '#3EBA7A';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+    }, 3000);
+  }
+</script>
 </body>
 </html>
