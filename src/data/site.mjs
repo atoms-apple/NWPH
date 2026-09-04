@@ -6,12 +6,13 @@
 export const site = {
   name: 'North West Passage Holdings Corporation',
   shortName: 'NWPH',
-  // Update to the production origin before launch — used for canonical URLs,
-  // Open Graph tags and the sitemap.
-  origin: 'https://nwph.ca',
-  // GitHub Pages project sites are served from a subpath. Leave as '' for a
-  // custom domain or a user/organisation site.
-  base: '',
+  // Used for canonical URLs, Open Graph tags and the sitemap.
+  // Moving to the nwph.ca custom domain later means setting origin to
+  // 'https://nwph.ca', base to '', and adding a public/CNAME file.
+  origin: 'https://atoms-apple.github.io',
+  // GitHub Pages serves this repository from a subpath. Every link and asset is
+  // prefixed with it — an empty value here 404s the whole site on a project URL.
+  base: '/NWPH',
   locale: 'en-CA',
   description:
     'North West Passage Holdings Corporation is an Inuit-owned holding company building and operating companies in sectors where Nunavummiut have no locally-owned alternative.',

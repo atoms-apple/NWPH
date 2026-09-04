@@ -4,6 +4,7 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { site } from '../src/data/site.mjs';
 
 const dist = path.join(path.dirname(path.dirname(fileURLToPath(import.meta.url))), 'dist');
 const port = Number(process.env.PORT || 4321);
@@ -15,7 +16,9 @@ const TYPES = {
 };
 
 createServer(async (req, res) => {
-  const url = decodeURIComponent(req.url.split('?')[0]);
+  let url = decodeURIComponent(req.url.split('?')[0]);
+  // Mirror the deployment base prefix so local preview matches production.
+  if (site.base && url.startsWith(site.base)) url = url.slice(site.base.length) || '/';
   const candidates = url.endsWith('/') ? [path.join(dist, url, 'index.html')] : [path.join(dist, url), path.join(dist, url, 'index.html')];
   for (const file of candidates) {
     if (!path.resolve(file).startsWith(path.resolve(dist))) break;

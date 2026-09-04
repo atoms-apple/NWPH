@@ -113,15 +113,21 @@ Pushes to `main` build and deploy to GitHub Pages via
 `node tools/check.mjs`, so a content or accessibility regression blocks the
 deploy. Pull requests build and verify without deploying.
 
-Set the production origin in `src/data/site.mjs`:
+The site is currently configured for the Pages project URL
+**https://atoms-apple.github.io/NWPH/** (`src/data/site.mjs`):
 
 ```js
-origin: 'https://nwph.ca',
-base: '',   // '/repo-name' for a GitHub project site; '' for a custom domain
+origin: 'https://atoms-apple.github.io',
+base: '/NWPH',
 ```
 
-`base` matters: on a project site served from `owner.github.io/NWPH/`, set it to
-`/NWPH` or every link and asset will 404.
+`base` is load-bearing: it prefixes every link, asset and canonical URL. On a
+project subpath an empty `base` 404s the entire site.
+
+**To move to the nwph.ca custom domain**, three changes: set `origin` to
+`https://nwph.ca`, set `base` to `''`, and add `public/CNAME` containing
+`nwph.ca`. Then point the domain's DNS at GitHub Pages and set the custom domain
+in the repository's Pages settings.
 
 ---
 

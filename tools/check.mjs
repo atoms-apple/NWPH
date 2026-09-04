@@ -9,6 +9,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { site } from '../src/data/site.mjs';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const dist = path.join(root, 'dist');
@@ -203,9 +204,16 @@ async function checkHtml() {
   for (const file of files) {
     const html = await readFile(file, 'utf8');
     for (const link of matchAll(html, /href="(\/[^"#?]*)/g)) {
-      const target = link[1].endsWith('/') ? link[1] : link[1] + '/';
-      const isAsset = /\.(css|js|svg|xml|txt|woff2?|png|jpg)\/?$/.test(link[1]);
-      if (isAsset || known.has(target) || known.has(link[1])) continue;
+      // Links carry the deployment base prefix; dist/ paths do not.
+      if (site.base && !link[1].startsWith(site.base)) {
+        fail(`${path.relative(dist, file)}: link ${link[1]} is missing the base prefix ${site.base}`);
+        broken++;
+        continue;
+      }
+      const stripped = site.base ? link[1].slice(site.base.length) || '/' : link[1];
+      const target = stripped.endsWith('/') ? stripped : stripped + '/';
+      const isAsset = /\.(css|js|svg|xml|txt|woff2?|png|jpg)\/?$/.test(stripped);
+      if (isAsset || known.has(target) || known.has(stripped)) continue;
       fail(`${path.relative(dist, file)}: broken internal link ${link[1]}`);
       broken++;
     }

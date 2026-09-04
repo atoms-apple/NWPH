@@ -113,14 +113,17 @@ The brief lists eight sectors; there are seven subsidiaries. **Environmental
 monitoring** is listed on the home page as in-scope but has no company behind it.
 Either add one (at `concept`, presumably) or remove the sector from the list.
 
-## 9. Configuration that must change before launch
+## 9. Configuration
+
+`origin` and `base` are set for the current Pages URL
+(https://atoms-apple.github.io/NWPH/). The rest still needs attention.
 
 In `src/data/site.mjs`:
 
 | Setting | Current | Action |
 |---|---|---|
-| `origin` | `https://nwph.ca` | Confirm — used for canonical URLs, Open Graph and the sitemap |
-| `base` | `''` | Set to `/NWPH` if serving from a GitHub project subpath, otherwise leave |
+| `origin` | `https://atoms-apple.github.io` | Set for the Pages project URL. Change with `base` if moving to nwph.ca |
+| `base` | `'/NWPH'` | Set for the Pages project subpath. Becomes `''` on a custom domain |
 | `email` | `info@nwph.ca` | Confirm this mailbox exists and is monitored |
 | `formEndpoint` | `null` | Forms show an email fallback until this is set |
 | `founded` | `'2025'` | Currently unused by any template — confirm or delete |

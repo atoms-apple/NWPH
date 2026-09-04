@@ -50,7 +50,8 @@ async function buildStyles() {
   for (const file of CSS_FILES) {
     parts.push(await readFile(path.join(root, 'src/styles', file), 'utf8'));
   }
-  const css = minifyCss(parts.join('\n'));
+  const printHost = site.origin.replace(/^https?:\/\//, '');
+  const css = minifyCss(parts.join('\n')).replaceAll('__PRINT_HOST__', printHost);
   await writeFile(path.join(dist, 'assets/site.css'), css);
   return css.length;
 }
