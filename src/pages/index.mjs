@@ -11,7 +11,7 @@ export default function homePage({ subsidiaries, stats, base }) {
     current: '/',
     title: 'Home',
     description:
-      'North West Passage Holdings Corporation is an Inuit-owned holding company in Iqaluit, Nunavut. Pre-incorporation: none of its subsidiaries are operating yet.',
+      'North West Passage Holdings Corporation is an Inuit-owned holding company in Iqaluit, Nunavut. Pre-incorporation: none of its ventures are operating.',
     body: html`
       <section class="hero">
         <div class="wrap">
@@ -26,14 +26,14 @@ export default function homePage({ subsidiaries, stats, base }) {
             <p class="status-notice__head">${stats.operating} of ${stats.total} ventures are currently operating.</p>
             <p>
               NWPH is <strong>pre-incorporation</strong>. Nothing on this site is trading, taking
-              bookings, hiring, or accepting customers. The first subsidiary,
+              bookings, hiring, or accepting customers. The first venture,
               ArcTrek Expeditions Ltd., targets summer 2027.
             </p>
           </div>
 
           <p class="hero__actions">
             <a class="btn btn--primary" href="${base}/subsidiaries/">See the portfolio</a>
-            <a class="btn btn--ghost" href="${base}/about/">What we are building</a>
+            <a class="btn btn--ghost" href="${base}/about/">Read the mission</a>
           </p>
 
           ${StatStrip([

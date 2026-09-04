@@ -16,6 +16,7 @@ import { loadCollection, loadDrafts } from './src/lib/collections.mjs';
 import { operatingCount, STATUS_VALUES } from './src/data/status.mjs';
 import { ValidationError } from './src/lib/schema.mjs';
 import { BaseLayout } from './src/layouts/base.mjs';
+import { faviconSvg } from './src/components/logo.mjs';
 
 import homePage from './src/pages/index.mjs';
 import aboutPage from './src/pages/about.mjs';
@@ -107,9 +108,8 @@ function sitemap(paths) {
 const robots = () =>
   `User-agent: *\nAllow: /\nDisallow: /thank-you/\n\nSitemap: ${site.origin}${base}/sitemap.xml\n`;
 
-/** Wordmark favicon — inline SVG, no binary asset, no extra request weight. */
-const favicon = () =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#1B3A5C"/><text x="32" y="43" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#E3CDA6" text-anchor="middle">N</text></svg>\n`;
+/** Favicon — the same mark the header and footer use. */
+const favicon = faviconSvg;
 
 /* ── Build ───────────────────────────────────────────────────────────────── */
 
@@ -127,6 +127,7 @@ async function build() {
 
   // 2. Derived statistics. Never authored by hand — see src/data/status.mjs.
   const stats = {
+    headquarters: site.headquarters,
     total: subsidiaries.length,
     operating: operatingCount(subsidiaries),
     byStatus: Object.fromEntries(

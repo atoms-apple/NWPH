@@ -32,18 +32,19 @@ sentimental ones.
 
 - **The capability already exists.** The gap is a company, not a skill. Guiding
   Nunavut's land is not something that has to be taught from nothing.
-- **The barrier to entry is the lowest in the portfolio.** Aviation, banking and
-  marine freight each carry a licensing and capital burden that a first venture
-  cannot absorb. Outfitting does not.
+- **The regulatory and capital barriers are the lowest in the portfolio.**
+  Aviation, financial services and marine freight each carry licensing and capital
+  requirements a first venture cannot absorb. Outfitting does not.
 - **The capital requirement is equipment and training**, not aircraft, vessels
   or a branch network.
 - **It is seasonal.** A first season can be run, costed and learned from without
   carrying year-round overhead into a second year.
-- **It fails cheaply.** If the model is wrong, the loss is one season's
-  equipment and wages — recoverable, and instructive for everything after it.
+- **The cost of being wrong is bounded.** If the model does not work, the loss
+  is one season of equipment and wages — recoverable, and informative for every
+  venture that follows.
 
 ## What this is not
 
-ArcTrek is not taking bookings, holding dates, accepting deposits, or
-publishing itineraries or prices. There is nothing to buy. When that changes it
-will be stated plainly here, and not before.
+ArcTrek is not taking bookings, holding dates, accepting deposits, or publishing
+itineraries or prices. No service is available for purchase. That will be stated
+here when it changes, and not before.

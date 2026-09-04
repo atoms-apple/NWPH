@@ -15,8 +15,8 @@ export default function procurementPage({ tiers, faq, base }) {
           <p class="section__label">Suppliers</p>
           <h1>Procurement</h1>
           <p class="section__intro">
-            NWPH is not currently buying anything. Registering now means you are on the list
-            when it starts.
+            NWPH is not currently procuring goods or services. Registration records your
+            details in advance of that changing.
           </p>
           <div class="status-notice">
             <p class="status-notice__head">No contracts are being issued.</p>
@@ -60,7 +60,7 @@ export default function procurementPage({ tiers, faq, base }) {
           <h2>Supplier registration</h2>
           <p class="section__intro">
             Open to any supplier. Inuit firms and Nunavut-based businesses are of particular
-            interest, but registration is not restricted.
+            interest; registration is not restricted on that basis.
           </p>
           <div style="margin-top: var(--space-xl)">${SupplierForm()}</div>
         </div>

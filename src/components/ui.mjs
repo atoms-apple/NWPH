@@ -49,6 +49,26 @@ export const MilestoneList = (milestones) => html`
       </li>`)}
   </ol>`;
 
+/** A definition-list of corporate facts, for readers doing due diligence. */
+export const Facts = (rows, { label } = {}) => html`
+  <dl class="facts"${label ? raw(` aria-label="${label}"`) : raw('')}>
+    ${rows.map(([term, value]) => html`
+      <div class="facts__row">
+        <dt class="facts__term">${term}</dt>
+        <dd class="facts__value">${value}</dd>
+      </div>`)}
+  </dl>`;
+
+/** The founding principal, presented at full width rather than as one card. */
+export const Founder = (person) => html`
+  <div class="founder">
+    <div class="founder__identity">
+      <h3 class="founder__name">${person.name}</h3>
+      <p class="founder__role">${person.role}</p>
+    </div>
+    <div class="founder__bio">${raw(person.body)}</div>
+  </div>`;
+
 export const PersonCard = (person) => html`
   <li class="person">
     <h3 class="person__name">${person.name}</h3>

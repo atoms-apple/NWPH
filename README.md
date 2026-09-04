@@ -264,4 +264,3 @@ always "shows everything", never "shows nothing".
 - [`docs/STACK.md`](docs/STACK.md) — why this stack
 - [`docs/ACCESSIBILITY.md`](docs/ACCESSIBILITY.md) — audit, fixes, what is outstanding
 - [`docs/CONTENT-GAPS.md`](docs/CONTENT-GAPS.md) — **decisions needed before launch**
-- [`reference/original-mockup.html`](reference/original-mockup.html) — the superseded single-file mockup

@@ -31,7 +31,7 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
 
       <section class="section">
         <div class="wrap">
-          <h2 class="visually-hidden">Browse subsidiaries</h2>
+          <h2 class="visually-hidden">Browse the portfolio</h2>
           <div class="table-scroll" tabindex="0" role="region" aria-label="What each stage means">
             <table>
               <caption>What each stage label means. None of them means operating.</caption>
@@ -138,7 +138,7 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
         <div class="wrap">
           <div style="margin-top: 0">
             ${CTABlock({
-              title: 'Working with this subsidiary',
+              title: 'Working with this venture',
               body: 'No contracts, bookings or applications are being accepted. Suppliers and partners can register now to be contacted when that changes.',
               actions: [
                 { href: `${base}/procurement/`, label: 'Register as a supplier', primary: true },

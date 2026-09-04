@@ -49,7 +49,19 @@ the site states plainly on that page that it is not incorporated. Presenting an
 unincorporated venture under a limited-company name is still worth legal advice.
 Options: drop the suffix until incorporation, or label it "proposed name".
 
-## 4. No privacy notice, and the forms collect sensitive data
+## 4. A footer disclaimer now appears site-wide — check the wording
+
+Every page now carries: *"North West Passage Holdings Corporation is not yet
+incorporated. Nothing on this site constitutes an offer of securities, a
+solicitation of investment, an offer to sell goods or services, or an offer of
+employment."*
+
+I wrote that as a sensible default for a pre-incorporation company with a
+funder-facing site. **It is legal wording and I am not your lawyer** — have it
+reviewed, particularly the securities language, which is the part most likely to
+matter if you approach investors.
+
+## 5. No privacy notice, and the forms collect sensitive data
 
 The career expression-of-interest form asks whether someone is a **Nunavut Inuit
 beneficiary**. That is personal information collected for a stated purpose
@@ -63,7 +75,7 @@ Given the audience — government funders and Inuit organisations — this is li
 to be asked about. A `/privacy/` page is needed before the forms go live. I did
 not write one because it is a legal document, not copy.
 
-## 5. Status assignments need per-company sign-off
+## 6. Status assignments need per-venture sign-off
 
 The existing site had two states, "Active Development" and "Formation Stage". I
 mapped them conservatively onto your three-value enum:
@@ -79,17 +91,26 @@ mix. If some of the six are really only concepts, downgrade them: it is the
 safer direction, and it makes the portfolio read as more credible rather than
 less.
 
-## 6. John Jay Evic has no copy
+## 7. Adam Aliqatuqtuq is the only named individual
 
-Named in the brief as one of two reviewed individuals, but no biography was
-supplied. Held at `src/content/people/john-jay-evic.md` with `draft: true`, so
-he does not publish. Add the reviewed copy and set `draft: false`.
+**Eva Natsiapik and Miali Aliqatuqtuq were removed** at your request — from the
+site, and from the archived mockup, which carried their biographies and sat in a
+public repository. Both files are recoverable from git history if that was not
+the intent. Note that you asked for "Mary Aliqatuqtuq"; the entry was for
+**Miali** Aliqatuqtuq, and that is who was removed.
 
-Conversely, **Eva Natsiapik and Miali Aliqatuqtuq** appear on the current live
-site but not in your brief. They are published here. Confirm that is right — the
-brief's "two named individuals" suggests it may not be.
+**John Jay Evic** is named in the original brief as one of two reviewed
+individuals, but no biography was ever supplied. He is held at
+`src/content/people/john-jay-evic.md` with `draft: true`, so he does not
+publish. Add the reviewed copy and set `draft: false`.
 
-## 7. Empty collections
+That leaves Adam Aliqatuqtuq as the only published individual, and the page now
+presents him as sole founder rather than as one card in a grid. His biography is
+unchanged from the reviewed copy. The section states plainly that there is no
+board and that directors will be named at incorporation — **worth confirming**,
+since a one-person leadership page is a question funders will ask about.
+
+## 8. Empty collections
 
 These render honestly when empty, so nothing is broken — but each is a hole:
 
@@ -103,7 +124,7 @@ These render honestly when empty, so nothing is broken — but each is a hole:
 The procurement and FAQ sections are the two worth filling first: they are what
 a procurement officer actually came for, and the page is thin without them.
 
-## 8. Environmental monitoring is no longer mentioned
+## 9. Environmental monitoring is no longer mentioned
 
 Your brief listed eight sectors. The portfolio has seven ventures, and since
 sectors are now derived from the ventures themselves, **environmental
@@ -113,7 +134,7 @@ If it belongs in the mandate, add a venture file for it — most likely at
 `concept`, which would also give the Concept filter something to show, since it
 currently renders disabled at zero.
 
-## 9. Configuration
+## 10. Configuration
 
 `origin` and `base` are set for the current Pages URL
 (https://atoms-apple.github.io/NWPH/). The rest still needs attention.
@@ -131,7 +152,7 @@ In `src/data/site.mjs`:
 Also: `npm run fetch-fonts` has not been run, so no webfonts are committed and
 the site renders on fallbacks.
 
-## 10. Copy I authored that needs your sign-off
+## 11. Copy I authored that needs your sign-off
 
 Expanding the mission and the ArcTrek page meant writing prose that did not
 exist anywhere. None of it asserts a metric, a partnership or a credential, but
@@ -169,13 +190,15 @@ statements about conduct. The site now argues against itself if any is broken.
 launched together, funded by earlier trading companies. A strategic commitment,
 stated as settled.
 
-## 11. Smaller items
+## 12. Smaller items
 
 - **No Open Graph image.** Link previews will be text-only. A 1200×630 image
   would help, but only if it does not imply operations that do not exist — a
   wordmark on navy would be safest.
-- **Favicon is a placeholder** — a generated "N" wordmark on navy
-  (`build.mjs` → `favicon()`). Replace with real brand artwork.
+- **The mark is mine, not a brand asset.** A north chevron above the line of the
+  passage, drawn as inline SVG in `src/components/logo.mjs` and reused for the
+  header, footer and favicon. Replace it with real brand artwork when you have
+  it — one file, three places update.
 - **Subsidiary detail pages are thin.** Each has only the card summary plus a
   facts table. That is honest for pre-operational companies, but ArcTrek at
   least could carry more, since it is furthest along.

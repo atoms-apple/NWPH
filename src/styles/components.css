@@ -387,3 +387,50 @@ tbody tr:last-child td { border-bottom: none; }
 .section--dark .commitment:first-child { border-top-color: var(--line-dark); }
 .section--dark .commitment strong { color: var(--white); }
 .section--dark .commitment span { color: var(--on-dark-muted); }
+
+/* ── FOUNDER ────────────────────────────────────────────────────────────
+   One person, presented as one person. A three-column people grid holding a
+   single card reads as a gap where colleagues should be. */
+
+.founder { display: grid; gap: var(--space-l); }
+@media (min-width: 52em) { .founder { grid-template-columns: minmax(0, 20rem) 1fr; align-items: start; } }
+.founder__identity { border-top: 2px solid var(--gold); padding-top: var(--space-s); }
+.founder__name { font-size: var(--step-2); }
+.founder__role {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin-top: var(--space-3xs);
+}
+.founder__bio { color: var(--ink-muted); }
+.founder__bio p + p { margin-top: var(--space-s); }
+
+/* Figures should align in columns wherever they are compared. */
+.stats__value, table td, table th { font-variant-numeric: tabular-nums; }
+
+/* ── CORPORATE SUMMARY ──────────────────────────────────────────────────
+   A facts block for readers doing due diligence rather than reading prose. */
+
+.facts { border-top: 2px solid var(--navy); }
+.facts__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xs);
+  padding: var(--space-xs) 0;
+  border-bottom: var(--hairline) solid var(--line);
+}
+@media (min-width: 40em) { .facts__row { grid-template-columns: 14rem 1fr; gap: var(--space-s); } }
+.facts__term {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.facts__value { color: var(--ink); }
+.section--dark .facts { border-top-color: var(--gold); }
+.section--dark .facts__row { border-bottom-color: var(--line-dark); }
+.section--dark .facts__term { color: var(--on-dark-muted); }
+.section--dark .facts__value { color: var(--white); }

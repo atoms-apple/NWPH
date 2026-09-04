@@ -12,16 +12,17 @@ export default function careersPage({ roles, base }) {
       <section class="section section--dark">
         <div class="wrap">
           <p class="section__label">Careers</p>
-          <h1>There are no jobs here yet</h1>
+          <h1>No positions are open</h1>
           <p class="section__intro">
-            Saying otherwise would waste your time. Here is what is actually true.
+            NWPH is not hiring, and will not be for some time. The detail below sets out when
+            that is expected to change.
           </p>
           <div class="status-notice">
             <p class="status-notice__head">${roles.length} open positions.</p>
             <p>
               NWPH has <strong>no employees</strong> and no operating subsidiaries. Hiring cannot
-              begin before the first subsidiary incorporates and is financed — currently targeted
-              at summer 2027 for ArcTrek Expeditions Ltd.
+              begin before the first venture is incorporated and financed — currently targeted at
+              summer 2027 for ArcTrek Expeditions Ltd.
             </p>
           </div>
         </div>
@@ -60,8 +61,8 @@ export default function careersPage({ roles, base }) {
           <p class="section__label">Expression of interest</p>
           <h2>Register for when hiring starts</h2>
           <p class="section__intro">
-            This is not an application, and there is nothing to apply for. It records your
-            interest so you can be contacted directly when positions open.
+            This is not an application, and there is no position to apply for. It records your
+            interest so that you can be contacted directly when recruitment begins.
           </p>
           <div style="margin-top: var(--space-xl)">${InterestForm()}</div>
         </div>

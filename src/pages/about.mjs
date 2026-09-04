@@ -1,5 +1,5 @@
 import { html, raw } from '../lib/html.mjs';
-import { PersonCard, Tabs } from '../components/ui.mjs';
+import { PersonCard, Founder, Facts, Tabs } from '../components/ui.mjs';
 
 const COMMITMENTS = [
   ['No company is announced before it is incorporated.',
@@ -37,6 +37,21 @@ export default function aboutPage({ people, stats, base }) {
               revenue, and no employees. Everything below describes what is being built and why.
               None of it describes something that exists.
             </p>
+          </div>
+
+          <div style="margin-top: var(--space-2xl)">
+            <h2 class="visually-hidden">Corporate summary</h2>
+            ${Facts([
+              ['Legal name', 'North West Passage Holdings Corporation'],
+              ['Incorporation status', 'Not yet incorporated'],
+              ['Jurisdiction', 'Nunavut, Canada'],
+              ['Head office', stats.headquarters],
+              ['Ownership', 'Inuit-owned; structure not yet settled'],
+              ['Ventures in portfolio', `${stats.total} — ${stats.operating} operating`],
+              ['First venture', 'ArcTrek Expeditions Ltd., targeting summer 2027'],
+              ['Employees', 'None'],
+              ['Revenue', 'None'],
+            ], { label: 'Corporate summary' })}
           </div>
         </div>
       </section>
@@ -132,8 +147,9 @@ export default function aboutPage({ people, stats, base }) {
               </p>
               <p>
                 The order is deliberate. The first venture is the one with the lowest barrier to
-                entry and the cheapest failure — tourism, through ArcTrek Expeditions Ltd. If the
-                model is wrong, the cost of learning that is one season of equipment and wages.
+                entry and the most contained downside — tourism, through ArcTrek Expeditions Ltd.
+                If the model does not work, the cost of establishing that is one season of
+                equipment and wages.
               </p>
               <p>
                 Sectors with heavy licensing and capital requirements — aviation, financial
@@ -190,10 +206,10 @@ export default function aboutPage({ people, stats, base }) {
               body: `<div class="prose">
                 <p>No subsidiary is operating. ArcTrek Expeditions Ltd. is the only venture at the
                 in-development stage and targets summer 2027.</p>
-                <p>Until then the work is unglamorous: incorporation, financing, licensing, and
-                talking to the people who will supply, fund, staff and regulate these companies.</p>
-                <p>That is what the supplier registration, partnership enquiry and expression of
-                interest forms on this site are for. They record who to contact. They are not
+                <p>Until then the work is incorporation, financing and licensing, and consultation
+                with the organisations that will fund, supply, staff and regulate these companies.</p>
+                <p>The supplier registration, partnership enquiry and expression of interest forms
+                on this site exist for that purpose. They record contact details. They are not
                 applications, and nothing is being awarded.</p>
               </div>`,
             },
@@ -204,14 +220,17 @@ export default function aboutPage({ people, stats, base }) {
 
       <section class="section">
         <div class="wrap">
-          <p class="section__label">People</p>
-          <h2>Who is behind this</h2>
+          <p class="section__label">Leadership</p>
+          <h2>${people.length === 1 ? 'Founder' : 'Who is behind this'}</h2>
           <p class="section__intro">
-            NWPH has no employees. The people below are the founding group.
+            NWPH has no employees and no board. Directors will be appointed at incorporation, and
+            named here when they are.
           </p>
-          <ul class="grid grid--3" role="list" style="margin-top: var(--space-xl)">
-            ${people.map(PersonCard)}
-          </ul>
+          <div style="margin-top: var(--space-xl)">
+            ${people.length === 1
+              ? Founder(people[0])
+              : html`<ul class="grid grid--3" role="list">${people.map(PersonCard)}</ul>`}
+          </div>
         </div>
       </section>`,
   };

@@ -36,7 +36,7 @@ export const formEndpoint = null;
 
 export const nav = [
   { href: '/about/', label: 'About' },
-  { href: '/subsidiaries/', label: 'Subsidiaries' },
+  { href: '/subsidiaries/', label: 'Portfolio' },
   { href: '/procurement/', label: 'Procurement' },
   { href: '/careers/', label: 'Careers' },
   { href: '/news/', label: 'Updates' },
@@ -44,7 +44,7 @@ export const nav = [
 ];
 
 export const footerNav = [
-  { href: '/subsidiaries/', label: 'Subsidiaries' },
+  { href: '/subsidiaries/', label: 'Portfolio' },
   { href: '/procurement/', label: 'Suppliers' },
   { href: '/careers/', label: 'Careers' },
   { href: '/news/', label: 'Updates' },
