@@ -186,6 +186,7 @@ export default function aboutPage({ people, stats, base }) {
                 the functions a single small northern company cannot carry on its own.</p>
                 <p>None of this exists yet. NWPH itself is not incorporated. Share structure, board
                 composition and governance arrangements are not settled.</p>
+                <p><a href="${base}/about/governance/">The full governance framework →</a></p>
               </div>`,
             },
             {
@@ -198,6 +199,7 @@ export default function aboutPage({ people, stats, base }) {
                 is.</p>
                 <p>No claim is made here about beneficiary ownership percentages or Inuit firm
                 registry status, because neither has been established.</p>
+                <p><a href="${base}/reports/">What documentation exists →</a></p>
               </div>`,
             },
             {

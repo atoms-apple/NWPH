@@ -1,8 +1,9 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { parseFrontmatter } from './frontmatter.mjs';
-import { markdown, excerpt } from './markdown.mjs';
+import { markdown, excerpt, extractHeadings } from './markdown.mjs';
 import { ValidationError, validate } from './schema.mjs';
+import { site } from '../data/site.mjs';
 
 const CONTENT_ROOT = new URL('../content/', import.meta.url);
 
@@ -34,8 +35,9 @@ export async function loadCollection(name, schema, { sort } = {}) {
       entries.push({
         ...validated,
         slug: validated.slug || slugify(file),
-        body: markdown(body),
+        body: markdown(body, { base: site.base }),
         excerpt: excerpt(body),
+        headings: extractHeadings(body),
         _file: `src/content/${name}/${file}`,
       });
     } catch (error) {

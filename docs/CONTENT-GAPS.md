@@ -61,7 +61,24 @@ funder-facing site. **It is legal wording and I am not your lawyer** — have it
 reviewed, particularly the securities language, which is the part most likely to
 matter if you approach investors.
 
-## 5. No privacy notice, and the forms collect sensitive data
+## 5. The privacy notice is now published — check it
+
+There is now a privacy notice at `/privacy/`. It is accurate about what the site
+does: no cookies, no analytics, no third-party embeds, and only what you type
+into a form. It explains why the career form asks about beneficiary status and
+that the question is optional.
+
+Two parts still need you:
+
+- **Retention** currently says submissions "reach a mailbox and stay there",
+  because that is true and vague is better than false. Make it specific once the
+  forms are connected.
+- It has **not been reviewed by a lawyer**, and neither has the site-wide footer
+  disclaimer. Both are mine.
+
+The underlying concern stands: the career expression of interest form collects
+Nunavut Inuit beneficiary status, which is personal information about a
+protected characteristic.
 
 The career expression-of-interest form asks whether someone is a **Nunavut Inuit
 beneficiary**. That is personal information collected for a stated purpose
@@ -152,7 +169,37 @@ In `src/data/site.mjs`:
 Also: `npm run fetch-fonts` has not been run, so no webfonts are committed and
 the site renders on fallbacks.
 
-## 11. Copy I authored that needs your sign-off
+## 11. The sector assessments are mine and need checking
+
+Six sector pages now carry substantive assessments — the gap, what a venture
+there would require, why it is not first, and status. They contain **no
+statistics and no invented metrics**, but they do make factual claims about
+regulatory and operating requirements that someone should verify:
+
+| Page | Claims worth checking |
+|---|---|
+| Aviation | Air Operator Certificate from Transport Canada; operational control, maintenance and SMS requirements; gravel-strip aircraft suitability |
+| Marine freight | Lightering and barge landing at communities without deep-water port; marine crew certification; seasonal risk concentration |
+| Financial services | That **"bank" is a restricted term under federal legislation** and unavailable to a non-chartered entity; territorial lending registration; AML and consumer protection obligations |
+| Real estate | Land tenure categories — municipal lots, Inuit Owned Land, Commissioner's land — and that each has a distinct process |
+| Retail | That inventory must be bought and shipped ahead of sealift and carried until sold |
+| Technology | That the binding constraint is a resident trained workforce rather than capital |
+
+These are written as NWPH's assessment of each sector. They read as considered
+corporate positions, so an error in one is an error attributed to the
+corporation, not to a website.
+
+**Also mine:** the governance framework at `/about/governance/` — intended board
+composition, the conflict-of-interest disclose-and-recuse approach, and the
+holding company reserving only capital, senior appointments and whether a
+venture continues. Every part of it is labelled as intended rather than
+established, but it is a proposal you are publishing under your own name.
+
+**Corrected before publication:** an earlier draft of the reporting page listed a
+business plan as available on request. No one told me a business plan exists, so
+that row now reads "Not published". If one does exist, change it.
+
+## 12. Copy I authored that needs your sign-off
 
 Expanding the mission and the ArcTrek page meant writing prose that did not
 exist anywhere. None of it asserts a metric, a partnership or a credential, but
@@ -190,7 +237,7 @@ statements about conduct. The site now argues against itself if any is broken.
 launched together, funded by earlier trading companies. A strategic commitment,
 stated as settled.
 
-## 12. Smaller items
+## 13. Smaller items
 
 - **No Open Graph image.** Link previews will be text-only. A 1200×630 image
   would help, but only if it does not imply operations that do not exist — a

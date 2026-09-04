@@ -43,10 +43,37 @@ export const nav = [
   { href: '/contact/', label: 'Contact' },
 ];
 
+/** Footer directory, grouped the way a corporate site directs its readers. */
 export const footerNav = [
-  { href: '/subsidiaries/', label: 'Portfolio' },
-  { href: '/procurement/', label: 'Suppliers' },
-  { href: '/careers/', label: 'Careers' },
-  { href: '/news/', label: 'Updates' },
-  { href: '/contact/', label: 'Contact' },
+  {
+    heading: 'Corporation',
+    links: [
+      { href: '/about/', label: 'About & mission' },
+      { href: '/about/governance/', label: 'Governance' },
+      { href: '/reports/', label: 'Reporting & documents' },
+      { href: '/news/', label: 'Updates' },
+    ],
+  },
+  {
+    heading: 'Portfolio',
+    links: [
+      { href: '/subsidiaries/', label: 'All ventures' },
+      { href: '/subsidiaries/arctrek-expeditions/', label: 'ArcTrek Expeditions' },
+    ],
+  },
+  {
+    heading: 'Working with us',
+    links: [
+      { href: '/procurement/', label: 'Suppliers & procurement' },
+      { href: '/careers/', label: 'Careers' },
+      { href: '/contact/', label: 'Contact' },
+    ],
+  },
+  {
+    heading: 'Policies',
+    links: [
+      { href: '/privacy/', label: 'Privacy notice' },
+      { href: '/accessibility/', label: 'Accessibility' },
+    ],
+  },
 ];

@@ -1,5 +1,5 @@
 import { html, raw } from '../lib/html.mjs';
-import { SubsidiaryBrowser, CTABlock, MilestoneList } from '../components/ui.mjs';
+import { SubsidiaryBrowser, CTABlock, MilestoneList, Breadcrumbs, OnThisPage, Facts } from '../components/ui.mjs';
 import { STATUS, STATUS_VALUES } from '../data/status.mjs';
 
 export function subsidiariesIndex({ subsidiaries, stats, base }) {
@@ -72,22 +72,44 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
   };
 }
 
+/**
+ * Venture page.
+ *
+ * A named venture reads as a company page. An unnamed one reads as a sector
+ * assessment: the same template, but titled by sector and stating throughout
+ * that no company has been formed.
+ */
 export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
   const meta = STATUS[subsidiary.status];
+  const named = Boolean(subsidiary.name);
+  const title = named ? subsidiary.name : subsidiary.sector;
+
   return {
     path: `/subsidiaries/${subsidiary.slug}/`,
     current: '/subsidiaries/',
-    title: subsidiary.name,
-    description: `${subsidiary.legalName} — ${meta.label.toLowerCase()}. ${subsidiary.summary}`,
+    title,
+    description: named
+      ? `${subsidiary.legalName} — ${meta.label.toLowerCase()}. ${subsidiary.summary}`
+      : `${subsidiary.sector} in Nunavut: the gap, what a venture would require, and why NWPH has not yet formed a company in this sector.`,
     body: html`
       <section class="section section--dark">
         <div class="wrap">
-          <p class="section__label">${subsidiary.sector}</p>
-          <h1>${subsidiary.name}</h1>
-          <p class="section__intro">${subsidiary.legalName}</p>
+          ${Breadcrumbs([
+            { href: `${base}/`, label: 'Home' },
+            { href: `${base}/subsidiaries/`, label: 'Portfolio' },
+            { label: title },
+          ])}
+          <p class="section__label">${named ? subsidiary.sector : 'Sector assessment'}</p>
+          <h1>${title}</h1>
+          <p class="section__intro">${named ? subsidiary.legalName : subsidiary.summary}</p>
           <div class="status-notice">
             <p class="status-notice__head">${meta.label}${subsidiary.target ? ` · ${subsidiary.target}` : ''}</p>
-            <p>${meta.description} <strong>This company is not operating.</strong></p>
+            <p>
+              ${meta.description}
+              ${named
+                ? html`<strong>This company is not operating.</strong>`
+                : html`<strong>No company has been formed in this sector, and none has been named.</strong>`}
+            </p>
           </div>
         </div>
       </section>
@@ -98,20 +120,23 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
             <div class="prose">
               ${raw(subsidiary.body)}
             </div>
-            <div>
-              <div class="table-scroll" tabindex="0" role="region" aria-label="${subsidiary.name} at a glance">
-                <table>
-                  <caption>${subsidiary.name} at a glance</caption>
-                  <tbody>
-                    <tr><th scope="row">Legal name</th><td>${subsidiary.legalName}</td></tr>
-                    <tr><th scope="row">Sector</th><td>${subsidiary.sector}</td></tr>
-                    <tr><th scope="row">Stage</th><td>${meta.label}</td></tr>
-                    <tr><th scope="row">Target</th><td>${subsidiary.target || 'Not set'}</td></tr>
-                    <tr><th scope="row">Operating</th><td>No</td></tr>
-                    <tr><th scope="row">Incorporated</th><td>No</td></tr>
-                  </tbody>
-                </table>
-              </div>
+            <div class="stack-l">
+              ${OnThisPage(subsidiary.headings)}
+              ${Facts(named ? [
+                ['Legal name', subsidiary.legalName],
+                ['Sector', subsidiary.sector],
+                ['Stage', meta.label],
+                ['Target', subsidiary.target || 'Not set'],
+                ['Operating', 'No'],
+                ['Incorporated', 'No'],
+              ] : [
+                ['Sector', subsidiary.sector],
+                ['Stage', meta.label],
+                ['Company formed', 'No'],
+                ['Name published', 'No'],
+                ['Operating', 'No'],
+                ['Target', subsidiary.target || 'Not scheduled'],
+              ], { label: `${title} at a glance` })}
             </div>
           </div>
         </div>
@@ -121,7 +146,7 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
         <section class="section section--tint">
           <div class="wrap">
             <p class="section__label">Path to operating</p>
-            <h2>What has to happen before ${subsidiary.name} can trade</h2>
+            <h2>What has to happen before ${title} can trade</h2>
             <p class="section__intro">
               ${milestones.length} steps stand between the current position and a first paying
               season. They are sequential, and the target date depends on the slowest of them —
@@ -136,17 +161,16 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
 
       <section class="section">
         <div class="wrap">
-          <div style="margin-top: 0">
-            ${CTABlock({
-              title: 'Working with this venture',
-              body: 'No contracts, bookings or applications are being accepted. Suppliers and partners can register now to be contacted when that changes.',
-              actions: [
-                { href: `${base}/procurement/`, label: 'Register as a supplier', primary: true },
-                { href: `${base}/contact/`, label: 'Contact NWPH' },
-              ],
-            })}
-          </div>
-
+          ${CTABlock({
+            title: named ? 'Working with this venture' : 'Interested in this sector?',
+            body: named
+              ? 'No contracts, bookings or applications are being accepted. Suppliers and partners can register now to be contacted when that changes.'
+              : 'NWPH expects to enter this sector through partnership as readily as through a start-up. Suppliers and prospective partners can register their interest now.',
+            actions: [
+              { href: `${base}/procurement/`, label: 'Register as a supplier', primary: true },
+              { href: `${base}/contact/#partnership-form`, label: 'Partnership enquiry' },
+            ],
+          })}
           <p style="margin-top: var(--space-l)"><a href="${base}/subsidiaries/">← All ventures</a></p>
         </div>
       </section>`,

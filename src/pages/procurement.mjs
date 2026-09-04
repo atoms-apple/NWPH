@@ -79,8 +79,11 @@ export default function procurementPage({ tiers, faq, base }) {
         <div class="wrap">
           ${CTABlock({
             title: 'Need corporate documents?',
-            body: 'Funders and procurement officers can request what documentation exists. Note that NWPH is pre-incorporation: audited statements and operating history do not exist.',
-            actions: [{ href: `${base}/contact/#documents-form`, label: 'Request documents', primary: true }],
+            body: 'Funders and procurement officers can see what documentation exists, and request what is available. NWPH is pre-incorporation: audited statements and operating history do not exist.',
+            actions: [
+              { href: `${base}/reports/`, label: 'Reporting & documents', primary: true },
+              { href: `${base}/contact/#documents-form`, label: 'Request documents' },
+            ],
           })}
         </div>
       </section>`,

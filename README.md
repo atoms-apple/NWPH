@@ -61,14 +61,17 @@ All copy lives in `src/content/`. No templates need touching.
 
 ```
 src/content/
-├── subsidiaries/   one file per venture (named or sector-only)
+├── subsidiaries/   one file per venture (named company, or sector assessment)
 ├── milestones/     steps a named venture must complete before trading
 ├── people/         leadership
 ├── roles/          open positions (currently empty — this is accurate)
-├── procurement/    procurement categories (currently empty)
-├── faq/            questions shown on the procurement page
+├── procurement/    procurement categories shown on the procurement page
+├── faq/            supplier questions shown on the procurement page
 └── news/           updates
 ```
+
+Markdown bodies get heading anchors automatically, and any page with three or
+more `##` headings renders an "On this page" contents list from them.
 
 Each file is markdown with a frontmatter block:
 
@@ -230,6 +233,8 @@ src/
 ├── components/        ui.mjs, forms.mjs, chrome.mjs
 ├── layouts/base.mjs   document shell, meta, Open Graph, JSON-LD
 ├── pages/             one module per route
+│   ├── governance.mjs the governance framework
+│   └── policies.mjs   reporting, privacy, accessibility
 ├── styles/            tokens → base → layout → components → forms → print
 └── client/enhance.js  progressive enhancement only
 tools/

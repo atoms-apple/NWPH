@@ -25,6 +25,8 @@ import procurementPage from './src/pages/procurement.mjs';
 import careersPage from './src/pages/careers.mjs';
 import contactPage from './src/pages/contact.mjs';
 import { newsIndex, newsDetail } from './src/pages/news.mjs';
+import governancePage from './src/pages/governance.mjs';
+import { reportsPage, privacyPage, accessibilityPage } from './src/pages/policies.mjs';
 import { thankYouPage, notFoundPage } from './src/pages/static.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
@@ -139,21 +141,24 @@ async function build() {
   const pages = [
     homePage({ subsidiaries, stats, base }),
     aboutPage({ people, stats, base }),
+    governancePage({ stats, base }),
     subsidiariesIndex({ subsidiaries, stats, base }),
-    // Only named ventures get a detail page. An unnamed one has nothing to put
-    // on it beyond its sector and stage, both already on the index.
-    ...subsidiaries
-      .filter((subsidiary) => subsidiary.name)
-      .map((subsidiary) => subsidiaryDetail(subsidiary, {
-        stats,
-        base,
-        milestones: milestones.filter((milestone) => milestone.venture === subsidiary.name),
-      })),
+    // Every venture gets a page. A named one is a company page; an unnamed one
+    // is a sector assessment — the gap, what a venture there would need, and a
+    // statement that no company has been formed.
+    ...subsidiaries.map((subsidiary) => subsidiaryDetail(subsidiary, {
+      stats,
+      base,
+      milestones: milestones.filter((milestone) => milestone.venture === subsidiary.name),
+    })),
     procurementPage({ tiers: procurement, faq, base }),
     careersPage({ roles, base }),
     newsIndex({ news, base }),
     ...news.map((entry) => newsDetail(entry, { base })),
     contactPage({ base }),
+    reportsPage({ stats, base }),
+    privacyPage({ base }),
+    accessibilityPage({ base }),
     thankYouPage({ base }),
     notFoundPage({ base }),
   ];

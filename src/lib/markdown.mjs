@@ -8,7 +8,16 @@
 
 import { esc } from './html.mjs';
 
-function inline(text) {
+/** URL-safe id from heading text, for deep links and on-page contents. */
+export const slugifyHeading = (text) =>
+  String(text)
+    .toLowerCase()
+    .replace(/[`*_[\]()]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+
+function inline(text, base = '') {
   let out = esc(text);
   out = out.replace(/`([^`]+)`/g, '<code>$1</code>');
   // Links: [label](href) — only http(s), mailto, tel and site-relative targets.
@@ -16,14 +25,17 @@ function inline(text) {
     if (!/^(https?:\/\/|mailto:|tel:|\/|#)/.test(href)) return match;
     const external = /^https?:\/\//.test(href);
     const rel = external ? ' rel="noopener noreferrer"' : '';
-    return `<a href="${href}"${rel}>${label}</a>`;
+    // Site-relative links need the deployment base prefix, exactly as template
+    // links do — otherwise they 404 on a project subpath.
+    const target = !external && href.startsWith('/') ? base + href : href;
+    return `<a href="${target}"${rel}>${label}</a>`;
   });
   out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   out = out.replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>');
   return out;
 }
 
-export function markdown(source) {
+export function markdown(source, { base = '' } = {}) {
   if (!source || !source.trim()) return '';
 
   const lines = source.replace(/\r\n/g, '\n').split('\n');
@@ -32,7 +44,7 @@ export function markdown(source) {
 
   const flushList = (ordered, items) => {
     const tag = ordered ? 'ol' : 'ul';
-    out.push(`<${tag}>${items.map((item) => `<li>${inline(item)}</li>`).join('')}</${tag}>`);
+    out.push(`<${tag}>${items.map((item) => `<li>${inline(item, base)}</li>`).join('')}</${tag}>`);
   };
 
   while (i < lines.length) {
@@ -45,7 +57,9 @@ export function markdown(source) {
     const heading = /^(#{2,4})\s+(.*)$/.exec(line);
     if (heading) {
       const level = heading[1].length;
-      out.push(`<h${level}>${inline(heading[2].trim())}</h${level}>`);
+      const text = heading[2].trim();
+      const id = slugifyHeading(text);
+      out.push(`<h${level} id="${id}">${inline(text, base)}</h${level}>`);
       i++;
       continue;
     }
@@ -56,7 +70,7 @@ export function markdown(source) {
         quote.push(lines[i].trim().replace(/^>\s?/, ''));
         i++;
       }
-      out.push(`<blockquote><p>${inline(quote.join(' '))}</p></blockquote>`);
+      out.push(`<blockquote><p>${inline(quote.join(' '), base)}</p></blockquote>`);
       continue;
     }
 
@@ -93,10 +107,19 @@ export function markdown(source) {
       paragraph.push(lines[i].trim());
       i++;
     }
-    if (paragraph.length) out.push(`<p>${inline(paragraph.join(' '))}</p>`);
+    if (paragraph.length) out.push(`<p>${inline(paragraph.join(' '), base)}</p>`);
   }
 
   return out.join('\n');
+}
+
+/** The h2 headings of a document, for building an on-page contents list. */
+export function extractHeadings(source) {
+  return String(source || '')
+    .split('\n')
+    .map((line) => /^##\s+(.*)$/.exec(line.trim()))
+    .filter(Boolean)
+    .map((match) => ({ text: match[1].trim(), id: slugifyHeading(match[1].trim()) }));
 }
 
 /** First paragraph as plain text — used for meta descriptions. */

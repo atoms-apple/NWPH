@@ -116,6 +116,13 @@ Chromium 141, all passing:
 
 ---
 
+## Published statement
+
+The site now carries a public accessibility statement at `/accessibility/`. It
+lists what is in place, and names what has not been tested — the screen reader
+gap, the absence of an independent audit, and the English-only limitation —
+rather than implying full conformance.
+
 ## Outstanding
 
 Things a full audit would still want, listed honestly rather than claimed as done:

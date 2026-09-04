@@ -11,21 +11,21 @@ export const StatusPill = (status) => {
 /**
  * A venture card.
  *
- * Named ventures link to a detail page. Unnamed ones do not — there is nothing
- * to say about a company that does not exist yet beyond its sector and stage,
- * and a link implying otherwise would be the wrong promise.
+ * A named venture links to its company page; an unnamed one links to a sector
+ * assessment — the gap, what a venture there would require, and a statement
+ * that no company has been formed. The dashed border marks the difference.
  */
 export const SubsidiaryCard = (subsidiary, { base = '' } = {}) => {
   const named = Boolean(subsidiary.name);
   return html`
-    <li class="card ${named ? 'card--link' : 'card--unnamed'}" data-status="${subsidiary.status}">
+    <li class="card card--link ${named ? '' : 'card--unnamed'}" data-status="${subsidiary.status}">
       ${named ? html`<p class="card__sector">${subsidiary.sector}</p>` : ''}
-      <h3 class="card__title">${named
-        ? html`<a href="${base}/subsidiaries/${subsidiary.slug}/">${subsidiary.name}</a>`
-        : subsidiary.sector}</h3>
+      <h3 class="card__title">
+        <a href="${base}/subsidiaries/${subsidiary.slug}/">${named ? subsidiary.name : subsidiary.sector}</a>
+      </h3>
       ${named
         ? html`<p class="card__legal">${subsidiary.legalName}</p>`
-        : html`<p class="card__legal">Not yet named</p>`}
+        : html`<p class="card__legal">Sector assessment · no company formed</p>`}
       <p class="card__body">${subsidiary.summary}</p>
       <p class="card__foot">
         ${StatusPill(subsidiary.status)}
@@ -48,6 +48,29 @@ export const MilestoneList = (milestones) => html`
         ${milestone.state ? html`<p class="milestone__state">${milestone.state.replace('-', ' ')}</p>` : ''}
       </li>`)}
   </ol>`;
+
+/**
+ * Breadcrumb trail. A nav landmark with an ordered list, current page marked
+ * with aria-current rather than only styled differently.
+ */
+export const Breadcrumbs = (trail) => html`
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      ${trail.map((step, index) => html`
+        <li>${step.href && index < trail.length - 1
+          ? html`<a href="${step.href}">${step.label}</a>`
+          : html`<span aria-current="page">${step.label}</span>`}</li>`)}
+    </ol>
+  </nav>`;
+
+/** On-page contents for long documents. Omitted when there is little to index. */
+export const OnThisPage = (headings) => (headings.length < 3 ? '' : html`
+  <nav class="toc" aria-labelledby="toc-heading">
+    <h2 class="toc__heading" id="toc-heading">On this page</h2>
+    <ol>
+      ${headings.map((heading) => html`<li><a href="#${heading.id}">${heading.text}</a></li>`)}
+    </ol>
+  </nav>`);
 
 /** A definition-list of corporate facts, for readers doing due diligence. */
 export const Facts = (rows, { label } = {}) => html`

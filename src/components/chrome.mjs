@@ -49,10 +49,11 @@ export const SiteFooter = ({ base = '', operating = 0, total = 0 }) => html`
             taking bookings, or accepting customers. Only one venture is named.
           </p>
         </div>
-        <div>
-          <h2>Site</h2>
-          <ul>${footerNav.map((item) => html`<li><a href="${base}${item.href}">${item.label}</a></li>`)}</ul>
-        </div>
+        ${footerNav.map((group) => html`
+          <div>
+            <h2>${group.heading}</h2>
+            <ul>${group.links.map((link) => html`<li><a href="${base}${link.href}">${link.label}</a></li>`)}</ul>
+          </div>`)}
         <div>
           <h2>Contact</h2>
           <ul>

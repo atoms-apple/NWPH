@@ -223,10 +223,14 @@
 .site-footer a { color: var(--on-dark-muted); text-decoration: none; }
 .site-footer a:hover { color: var(--white); text-decoration: underline; }
 .site-footer__grid { display: grid; gap: var(--space-l); }
-@media (min-width: 48em) { .site-footer__grid { grid-template-columns: 2fr 1fr 1fr; } }
+@media (min-width: 44em) { .site-footer__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 60em) { .site-footer__grid { grid-template-columns: repeat(3, 1fr); } }
+/* Six items — brand, four link groups, contact — so six columns keeps every
+   heading on one baseline instead of wrapping the last block under the brand. */
+@media (min-width: 78em) { .site-footer__grid { grid-template-columns: 1.5fr repeat(5, 1fr); gap: var(--space-m); } }
 .site-footer__brand {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-2xs);
   font-family: var(--font-display);
   font-size: var(--step-1);
@@ -236,13 +240,15 @@
 .site-footer__mark { color: var(--gold-light); flex: none; }
 .site-footer h2 {
   font-family: var(--font-body);
-  font-size: var(--step--1);
+  font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gold-light);
   margin-bottom: var(--space-xs);
+  text-wrap: balance;
 }
+.site-footer li { line-height: 1.5; }
 .site-footer ul { list-style: none; padding: 0; }
 .site-footer li + li { margin-top: var(--space-3xs); }
 .site-footer__base {

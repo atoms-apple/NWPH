@@ -41,7 +41,9 @@ export default function contactPage({ base }) {
               <ul class="prose">
                 <li>Suppliers: <a href="${base}/procurement/">supplier registration</a></li>
                 <li>Job seekers: <a href="${base}/careers/">expression of interest</a></li>
-                <li>Portfolio detail: <a href="${base}/subsidiaries/">subsidiaries</a></li>
+                <li>Portfolio detail: <a href="${base}/subsidiaries/">all ventures</a></li>
+                <li>Funders and due diligence: <a href="${base}/reports/">reporting &amp; documents</a></li>
+                <li>Governance: <a href="${base}/about/governance/">governance framework</a></li>
               </ul>
             </div>
           </div>
