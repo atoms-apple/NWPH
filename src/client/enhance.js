@@ -117,8 +117,8 @@
         ? cards.length
         : cards.filter(function (card) { return card.getAttribute('data-status') === value; }).length;
       output.textContent = shown === cards.length
-        ? 'Showing all ' + cards.length + ' subsidiaries.'
-        : 'Showing ' + shown + ' of ' + cards.length + ' subsidiaries.';
+        ? 'Showing all ' + cards.length + ' ventures.'
+        : 'Showing ' + shown + ' of ' + cards.length + ' ventures.';
     };
 
     radios.forEach(function (radio) { radio.addEventListener('change', report); });

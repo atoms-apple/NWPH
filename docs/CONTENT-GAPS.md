@@ -37,21 +37,17 @@ will index whichever you choose.
 Adam Aliqatuqtuq's biography says he is *from* Qikiqtarjuaq, which is consistent
 with either answer. Decide the corporate address deliberately.
 
-## 3. "Ltd." on companies that are not incorporated
+## 3. "Ltd." on ArcTrek, which is not incorporated
 
-Every subsidiary carries a legal name ending in `Ltd.` — `ArcTrek Expeditions
-Ltd.`, `NunaBank Financial Services Ltd.`, and so on — but none is incorporated.
-This is inherited from the existing site's copy, not something I introduced.
+Six of the seven ventures are now published by sector only, which removed this
+problem for all of them — including NunaBank, where "bank" is a restricted term
+in Canadian financial legislation and would have needed checking before
+publication.
 
-For a site whose whole credibility rests on not overstating its position, and
-whose audience includes procurement officers, presenting an unincorporated
-venture under a limited-company name is the one place the copy works against the
-honesty everywhere else. **Worth legal advice**, and possibly the most important
-item on this list. Options: drop the suffix until incorporation, or add
-"proposed name" alongside.
-
-Related: NunaBank. "Bank" is a restricted term in Canadian financial
-legislation. Check before publishing.
+**One case remains.** ArcTrek is published as `ArcTrek Expeditions Ltd.`, and
+the site states plainly on that page that it is not incorporated. Presenting an
+unincorporated venture under a limited-company name is still worth legal advice.
+Options: drop the suffix until incorporation, or label it "proposed name".
 
 ## 4. No privacy notice, and the forms collect sensitive data
 
@@ -107,11 +103,15 @@ These render honestly when empty, so nothing is broken — but each is a hole:
 The procurement and FAQ sections are the two worth filling first: they are what
 a procurement officer actually came for, and the page is thin without them.
 
-## 8. Environmental monitoring has no company
+## 8. Environmental monitoring is no longer mentioned
 
-The brief lists eight sectors; there are seven subsidiaries. **Environmental
-monitoring** is listed on the home page as in-scope but has no company behind it.
-Either add one (at `concept`, presumably) or remove the sector from the list.
+Your brief listed eight sectors. The portfolio has seven ventures, and since
+sectors are now derived from the ventures themselves, **environmental
+monitoring has dropped off the site entirely**.
+
+If it belongs in the mandate, add a venture file for it — most likely at
+`concept`, which would also give the Concept filter something to show, since it
+currently renders disabled at zero.
 
 ## 9. Configuration
 
@@ -131,7 +131,45 @@ In `src/data/site.mjs`:
 Also: `npm run fetch-fonts` has not been run, so no webfonts are committed and
 the site renders on fallbacks.
 
-## 10. Smaller items
+## 10. Copy I authored that needs your sign-off
+
+Expanding the mission and the ArcTrek page meant writing prose that did not
+exist anywhere. None of it asserts a metric, a partnership or a credential, but
+several passages put reasoning in NWPH's mouth. Read these specifically:
+
+**"Why this one first" (ArcTrek page).** Five reasons tourism was chosen ahead of
+the others — existing capability, lowest barrier to entry, capital requirement is
+equipment rather than fleet, seasonality, and cheap failure. This is a
+reconstruction of a plausible rationale, not something you told me. If the real
+reason is different, this is the passage to rewrite.
+
+**The nine milestones.** My reconstruction of what stands between ArcTrek and a
+first paying season: incorporation, financing, licensing, insurance, guide
+certification, equipment, community consultation, route development, trial
+season. Deliberately non-specific about which statute or authority governs each
+one, because I did not want to name a licensing regime I could not verify.
+**Someone who knows Nunavut outfitting requirements should check the sequence is
+complete and correctly ordered.** Note also that no step carries a `state`, so
+the page claims no progress at all — accurate given pre-incorporation, but you
+may want to mark the ones genuinely underway.
+
+**"The premise" (About page).** That money largely flows to companies
+headquartered outside the territory, and that Nunavummiut participate as
+customers and employees rather than owners. Written as NWPH's premise rather
+than as fact, and carries no figures, precisely because I have no data to cite.
+If you want it stated as fact, it needs a source.
+
+**"What NWPH will not do" (About page).** Five commitments — no company named
+before incorporation, nothing sold that does not exist, Inuit ownership is not a
+substitute for a working business, no sector entered because funding exists for
+it, no number published that cannot be stood behind. These are binding
+statements about conduct. The site now argues against itself if any is broken.
+
+**"One at a time" (About page).** That ventures will be sequenced rather than
+launched together, funded by earlier trading companies. A strategic commitment,
+stated as settled.
+
+## 11. Smaller items
 
 - **No Open Graph image.** Link previews will be text-only. A 1200×630 image
   would help, but only if it does not imply operations that do not exist — a
@@ -141,10 +179,12 @@ the site renders on fallbacks.
 - **Subsidiary detail pages are thin.** Each has only the card summary plus a
   facts table. That is honest for pre-operational companies, but ArcTrek at
   least could carry more, since it is furthest along.
-- **The 2027 target** comes from the brief alone and appears in three places.
-  Confirm it is still right before publishing a date funders will hold you to.
-- **North Winds' summary references the Qikiqtani Region** while other copy is
-  territory-wide. Inherited from existing copy; harmonise if that is wrong.
+- **The 2027 target** comes from the brief alone and now appears in several
+  places, including alongside the statement that financing is the step most
+  likely to move it. Confirm it before publishing a date funders will hold you to.
+- **Vocabulary.** The site says "ventures" rather than "subsidiaries" in every
+  count, because nothing is incorporated and so nothing is yet a subsidiary of
+  anything. The nav label and the `/subsidiaries/` URL were left unchanged.
 - **No Inuktitut anywhere.** The previous site used syllabics decoratively. If
   Inuktitut content is wanted, it needs `lang="iu"` markup and a real
   translation, not decorative text.

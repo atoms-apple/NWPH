@@ -6,10 +6,17 @@
 import { string, number, boolean, enumOf, arrayOf, isoDate, object } from './lib/schema.mjs';
 import { STATUS_VALUES } from './data/status.mjs';
 
+/**
+ * A venture in the portfolio.
+ *
+ * `name` and `legalName` are optional on purpose. A venture that is not yet
+ * incorporated is published by sector only — naming a company before it exists
+ * invites the reader to assume it does. Only named ventures get a detail page.
+ */
 export const subsidiarySchema = object({
-  name: string({ min: 2, max: 60 }),
-  legalName: string({ min: 2, max: 90 }),
-  sector: string({ min: 2, max: 40 }),
+  name: string({ optional: true, min: 2, max: 60 }),
+  legalName: string({ optional: true, min: 2, max: 90 }),
+  sector: string({ min: 2, max: 48 }),
   // The load-bearing field. See src/data/status.mjs.
   status: enumOf(STATUS_VALUES),
   summary: string({ min: 20, max: 400 }),
@@ -54,6 +61,18 @@ export const faqSchema = object({
   draft: boolean(),
 });
 
+/** A step that must be completed before a named venture can operate. */
+export const milestoneSchema = object({
+  title: string({ min: 5, max: 120 }),
+  venture: string({ min: 2, max: 60 }),
+  // Left unset until it can be stated accurately. An unset step renders as a
+  // required step with no progress claimed, which is the honest default.
+  state: enumOf(['not-started', 'underway', 'complete'], { optional: true }),
+  order: number({ integer: true }),
+  slug: string({ optional: true }),
+  draft: boolean(),
+});
+
 export const newsSchema = object({
   title: string({ min: 5, max: 120 }),
   date: isoDate(),
@@ -62,7 +81,7 @@ export const newsSchema = object({
   draft: boolean(),
 });
 
-const byOrder = (a, b) => (a.order ?? 999) - (b.order ?? 999) || a.name?.localeCompare(b.name ?? '') || 0;
+const byOrder = (a, b) => (a.order ?? 999) - (b.order ?? 999) || (a.name ?? a.sector ?? '').localeCompare(b.name ?? b.sector ?? '');
 
 export const collections = {
   subsidiaries: { schema: subsidiarySchema, sort: byOrder },
@@ -70,5 +89,6 @@ export const collections = {
   roles: { schema: roleSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
   procurement: { schema: procurementTierSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
   faq: { schema: faqSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
+  milestones: { schema: milestoneSchema, sort: (a, b) => a.order - b.order },
   news: { schema: newsSchema, sort: (a, b) => b.date.localeCompare(a.date) },
 };

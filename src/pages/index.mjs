@@ -3,8 +3,8 @@ import { StatStrip, CTABlock, SubsidiaryCard, StatusPill } from '../components/u
 import { STATUS, STATUS_VALUES } from '../data/status.mjs';
 
 export default function homePage({ subsidiaries, stats, base }) {
-  const inDevelopment = subsidiaries.filter((s) => s.status === 'development');
-  const featured = [...inDevelopment, ...subsidiaries.filter((s) => s.status !== 'development')].slice(0, 3);
+  const named = subsidiaries.filter((s) => s.name);
+  const unnamed = subsidiaries.filter((s) => !s.name);
 
   return {
     path: '/',
@@ -23,7 +23,7 @@ export default function homePage({ subsidiaries, stats, base }) {
           </p>
 
           <div class="status-notice">
-            <p class="status-notice__head">${stats.operating} of ${stats.total} subsidiaries are currently operating.</p>
+            <p class="status-notice__head">${stats.operating} of ${stats.total} ventures are currently operating.</p>
             <p>
               NWPH is <strong>pre-incorporation</strong>. Nothing on this site is trading, taking
               bookings, hiring, or accepting customers. The first subsidiary,
@@ -37,8 +37,8 @@ export default function homePage({ subsidiaries, stats, base }) {
           </p>
 
           ${StatStrip([
-            { label: 'Subsidiaries operating', value: String(stats.operating), flag: true },
-            { label: 'Companies in the portfolio', value: String(stats.total) },
+            { label: 'Ventures operating', value: String(stats.operating), flag: true },
+            { label: 'Ventures in the portfolio', value: String(stats.total) },
             { label: 'In development', value: String(stats.byStatus.development) },
             { label: 'First operations targeted', value: '2027' },
           ], { label: 'Portfolio status at a glance' })}
@@ -50,27 +50,27 @@ export default function homePage({ subsidiaries, stats, base }) {
           <p class="section__label">The mandate</p>
           <h2>Ownership, not participation</h2>
           <p class="section__intro">
-            Nunavummiut should own, lead, and benefit from the economic development happening in
-            their homeland. NWPH builds companies in the sectors where that ownership is missing.
+            Money moves through this territory in freight, fuel, retail and tourism. Much of it is
+            earned by companies headquartered elsewhere. Nunavummiut take part as customers and
+            employees; ownership sits outside.
           </p>
-
           <div class="split" style="margin-top: var(--space-xl)">
             <div class="prose">
-              <h3>Sectors in scope</h3>
-              <ul>
-                <li>Tourism</li>
-                <li>Retail</li>
-                <li>Aviation</li>
-                <li>Marine freight</li>
-                <li>Real estate</li>
-                <li>Technology</li>
-                <li>Environmental monitoring</li>
-                <li>Financial services</li>
-              </ul>
+              <p>
+                NWPH treats that as a structural problem rather than a cultural one. The capability
+                is already here — what is missing is the capital and the corporate structure, and
+                both of those can be built.
+              </p>
+              <p>
+                A sector enters the portfolio on two conditions: Nunavummiut have no locally-owned
+                option in it today, and an Inuit-owned company could run it <em>competitively</em> —
+                not merely exist in it.
+              </p>
+              <p><a href="${base}/about/">Read the full mission and its limits →</a></p>
             </div>
             <div class="prose">
               <h3>How stage is labelled</h3>
-              <p>Every company in the portfolio carries one of three labels. None of them means trading.</p>
+              <p>Every venture carries one of three labels. None of them means trading.</p>
               <dl class="stack">
                 ${STATUS_VALUES.map((value) => html`
                   <div>
@@ -85,16 +85,30 @@ export default function homePage({ subsidiaries, stats, base }) {
 
       <section class="section section--tint">
         <div class="wrap">
-          <p class="section__label">The portfolio</p>
-          <h2>${stats.total} companies, none of them trading</h2>
+          <p class="section__label">First</p>
+          <h2>One venture is named. Six are not.</h2>
           <p class="section__intro">
-            Each addresses a sector where Nunavummiut have no locally-owned option today.
+            The order is deliberate. Seven simultaneous launches would be seven simultaneous
+            failures.
           </p>
           <ul class="grid grid--3" role="list" style="margin-top: var(--space-xl)">
-            ${featured.map((subsidiary) => SubsidiaryCard(subsidiary, { base }))}
+            ${named.map((subsidiary) => SubsidiaryCard(subsidiary, { base }))}
           </ul>
+
+          <div class="callout" style="margin-top: var(--space-xl)">
+            <p><strong>The remaining ${unnamed.length} are published by sector only.</strong></p>
+            <p>
+              ${unnamed.map((s) => s.sector).join(' · ')}
+            </p>
+            <p>
+              None is incorporated. A company name published before incorporation gets repeated and
+              indexed as though the company exists, and is then hard to take back. Names appear at
+              incorporation, not before.
+            </p>
+          </div>
+
           <p style="margin-top: var(--space-l)">
-            <a class="btn btn--ghost" href="${base}/subsidiaries/">All ${stats.total} subsidiaries</a>
+            <a class="btn btn--ghost" href="${base}/subsidiaries/">All ${stats.total} ventures</a>
           </p>
         </div>
       </section>

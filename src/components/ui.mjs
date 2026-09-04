@@ -8,17 +8,46 @@ export const StatusPill = (status) => {
     <span class="status-pill__dot" aria-hidden="true"></span>${meta.label}</span>`;
 };
 
-export const SubsidiaryCard = (subsidiary, { base = '' } = {}) => html`
-  <li class="card card--link" data-status="${subsidiary.status}">
-    <p class="card__sector">${subsidiary.sector}</p>
-    <h3 class="card__title"><a href="${base}/subsidiaries/${subsidiary.slug}/">${subsidiary.name}</a></h3>
-    <p class="card__legal">${subsidiary.legalName}</p>
-    <p class="card__body">${subsidiary.summary || subsidiary.excerpt}</p>
-    <p class="card__foot">
-      ${StatusPill(subsidiary.status)}
-      ${subsidiary.target ? html`<span class="card__target">${subsidiary.target}</span>` : ''}
-    </p>
-  </li>`;
+/**
+ * A venture card.
+ *
+ * Named ventures link to a detail page. Unnamed ones do not — there is nothing
+ * to say about a company that does not exist yet beyond its sector and stage,
+ * and a link implying otherwise would be the wrong promise.
+ */
+export const SubsidiaryCard = (subsidiary, { base = '' } = {}) => {
+  const named = Boolean(subsidiary.name);
+  return html`
+    <li class="card ${named ? 'card--link' : 'card--unnamed'}" data-status="${subsidiary.status}">
+      ${named ? html`<p class="card__sector">${subsidiary.sector}</p>` : ''}
+      <h3 class="card__title">${named
+        ? html`<a href="${base}/subsidiaries/${subsidiary.slug}/">${subsidiary.name}</a>`
+        : subsidiary.sector}</h3>
+      ${named
+        ? html`<p class="card__legal">${subsidiary.legalName}</p>`
+        : html`<p class="card__legal">Not yet named</p>`}
+      <p class="card__body">${subsidiary.summary}</p>
+      <p class="card__foot">
+        ${StatusPill(subsidiary.status)}
+        ${subsidiary.target ? html`<span class="card__target">${subsidiary.target}</span>` : ''}
+      </p>
+    </li>`;
+};
+
+/**
+ * The path a named venture has to walk before it can trade. Rendered as an
+ * ordered list because the order is the point — these are sequential, and the
+ * target date depends on the slowest of them.
+ */
+export const MilestoneList = (milestones) => html`
+  <ol class="milestones">
+    ${milestones.map((milestone) => html`
+      <li class="milestone">
+        <h3 class="milestone__title">${milestone.title}</h3>
+        <div class="milestone__body">${raw(milestone.body)}</div>
+        ${milestone.state ? html`<p class="milestone__state">${milestone.state.replace('-', ' ')}</p>` : ''}
+      </li>`)}
+  </ol>`;
 
 export const PersonCard = (person) => html`
   <li class="person">

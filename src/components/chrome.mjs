@@ -37,9 +37,9 @@ export const SiteFooter = ({ base = '', operating = 0, total = 0 }) => html`
         <div>
           <h2>North West Passage Holdings Corporation</h2>
           <p class="site-footer__status">
-            <strong>${operating} of ${total} subsidiaries are currently operating.</strong>
+            <strong>${operating} of ${total} ventures are currently operating.</strong>
             NWPH is pre-incorporation. Nothing described on this site is trading,
-            taking bookings, or accepting customers.
+            taking bookings, or accepting customers. Only one venture is named.
           </p>
         </div>
         <div>

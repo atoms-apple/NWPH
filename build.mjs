@@ -123,7 +123,7 @@ async function build() {
   for (const [name, config] of Object.entries(collections)) {
     loaded[name] = await loadCollection(name, config.schema, { sort: config.sort });
   }
-  const { subsidiaries, people, roles, procurement, faq, news } = loaded;
+  const { subsidiaries, people, roles, procurement, faq, news, milestones } = loaded;
 
   // 2. Derived statistics. Never authored by hand — see src/data/status.mjs.
   const stats = {
@@ -139,7 +139,15 @@ async function build() {
     homePage({ subsidiaries, stats, base }),
     aboutPage({ people, stats, base }),
     subsidiariesIndex({ subsidiaries, stats, base }),
-    ...subsidiaries.map((subsidiary) => subsidiaryDetail(subsidiary, { stats, base })),
+    // Only named ventures get a detail page. An unnamed one has nothing to put
+    // on it beyond its sector and stage, both already on the index.
+    ...subsidiaries
+      .filter((subsidiary) => subsidiary.name)
+      .map((subsidiary) => subsidiaryDetail(subsidiary, {
+        stats,
+        base,
+        milestones: milestones.filter((milestone) => milestone.venture === subsidiary.name),
+      })),
     procurementPage({ tiers: procurement, faq, base }),
     careersPage({ roles, base }),
     newsIndex({ news, base }),
@@ -172,7 +180,9 @@ async function build() {
   console.log(`\n  NWPH build — ${Date.now() - started}ms`);
   console.log(`  ${written.length} pages · ${(totalHtml / 1024).toFixed(1)} KB HTML`);
   console.log(`  CSS ${(cssBytes / 1024).toFixed(1)} KB · JS ${(jsBytes / 1024).toFixed(1)} KB · ${publicFiles} public file(s)`);
-  console.log(`  Portfolio: ${stats.total} subsidiaries — ${stats.operating} operating (${STATUS_VALUES.map((v) => `${stats.byStatus[v]} ${v}`).join(', ')})`);
+  const named = subsidiaries.filter((s) => s.name).length;
+  console.log(`  Portfolio: ${stats.total} ventures — ${stats.operating} operating (${STATUS_VALUES.map((v) => `${stats.byStatus[v]} ${v}`).join(', ')})`);
+  console.log(`  ${named} named, ${stats.total - named} published by sector only`);
 
   const fonts = await readdir(path.join(root, 'public/fonts')).catch(() => []);
   if (!fonts.some((file) => file.endsWith('.woff2'))) {

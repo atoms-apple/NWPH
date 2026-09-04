@@ -181,7 +181,7 @@ function checkDocument(file, html) {
   }
 
   // The honesty statement must survive on every page that carries the footer
-  if (!/subsidiaries are currently operating/.test(html)) {
+  if (!/ventures are currently operating/.test(html)) {
     problem('footer operating-count statement is missing');
   }
 

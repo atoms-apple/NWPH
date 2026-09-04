@@ -68,9 +68,21 @@ export function markdown(source) {
       const items = [];
       while (i < lines.length) {
         const match = pattern.exec(lines[i]);
-        if (!match) break;
-        items.push(match[1]);
-        i++;
+        if (match) {
+          items.push(match[1]);
+          i++;
+          continue;
+        }
+        // Lazy continuation: a wrapped line belongs to the item above it, not
+        // to a new paragraph. Without this, any list item long enough to wrap
+        // is split in half.
+        const line = lines[i];
+        if (items.length && line.trim() !== '' && !/^(#{2,4}\s|>\s|-{3,}$|\*{3,}$)/.test(line.trim())) {
+          items[items.length - 1] += ' ' + line.trim();
+          i++;
+          continue;
+        }
+        break;
       }
       flushList(ordered, items);
       continue;

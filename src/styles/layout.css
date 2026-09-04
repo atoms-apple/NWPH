@@ -238,3 +238,6 @@
   color: var(--white);
   max-width: 46ch;
 }
+
+/* Detail pages: prose carries the argument, the facts table supports it. */
+@media (min-width: 60em) { .split--wide { grid-template-columns: 1.6fr 1fr; } }

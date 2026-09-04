@@ -61,7 +61,8 @@ All copy lives in `src/content/`. No templates need touching.
 
 ```
 src/content/
-├── subsidiaries/   one file per company
+├── subsidiaries/   one file per venture (named or sector-only)
+├── milestones/     steps a named venture must complete before trading
 ├── people/         leadership
 ├── roles/          open positions (currently empty — this is accurate)
 ├── procurement/    procurement categories (currently empty)
@@ -88,6 +89,10 @@ Body prose appears on the subsidiary's own page.
 
 - `summary` is the card text **and** the page's meta description. Keep it under
   400 characters.
+- **`name` and `legalName` are optional.** Omit them and the venture publishes by
+  sector only, with no detail page and no link — the deliberate treatment for a
+  company that is not yet incorporated. Add a name and a detail page appears
+  automatically.
 - `draft: true` keeps an entry out of the build entirely. The build prints what
   it excluded, so a draft cannot be silently forgotten.
 - Empty collections are handled honestly: with no `roles/`, the careers page
@@ -96,13 +101,41 @@ Body prose appears on the subsidiary's own page.
 Every field is validated. Unknown fields, missing required fields, bad dates and
 out-of-range lengths all fail the build with the file and field named.
 
-### Adding a subsidiary
+### Naming a venture
 
-1. Create `src/content/subsidiaries/<slug>.md` with the fields above.
+Six of the seven ventures have no `name`. When one incorporates, add `name` and
+`legalName` to its file. That single change gives it a card heading, a detail
+page at `/subsidiaries/<slug>/`, a link from the index, and a sitemap entry.
+Nothing else needs editing.
+
+### Milestones
+
+`src/content/milestones/` holds the steps a named venture must complete before
+it can trade, rendered as a numbered sequence on its detail page.
+
+```markdown
+---
+title: Secure financing for equipment and working capital
+venture: ArcTrek Expeditions     # must match the venture's `name` exactly
+state: underway                  # optional: not-started | underway | complete
+order: 2
+draft: false
+---
+```
+
+`state` is **optional and currently unset on every step**. An unset step renders
+as a required step with no progress claimed. Only set it when the state can be
+stated accurately — a milestone wrongly marked complete is precisely the kind of
+overstatement this site exists to avoid.
+
+### Adding a venture
+
+1. Create `src/content/subsidiaries/<slug>.md` with at least `sector`, `status`,
+   `summary`, `order` and `draft`.
 2. Run `npm run check`.
 
-The card, the detail page at `/subsidiaries/<slug>/`, the filter counts, the
-stage table and the sitemap all update from that one file.
+The card, the filter counts, the stage table, the portfolio totals and the
+sitemap all update from that one file.
 
 ---
 
