@@ -1,0 +1,70 @@
+/* ── DESIGN TOKENS ──────────────────────────────────────────────────────────
+   Palette is fixed by the brand. Where a brand colour fails WCAG contrast in a
+   given role, a second token exists for that role rather than the palette being
+   changed — see gold below, and the audit in docs/ACCESSIBILITY.md.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Brand */
+  --navy: #1B3A5C;
+  --ice: #2E6E8E;
+  --gold: #B08D57;
+  --paper: #F7F7F5;
+  --white: #FFFFFF;
+
+  /* Gold, split by role.
+     --gold is 2.89:1 on white and 2.70:1 on paper: decorative use only
+     (rules, dots, borders, icon strokes). It must never carry text on a light
+     background. These two tokens carry gold text instead. */
+  --gold-text: #8A6D3B;   /* 4.85:1 on white, 4.52:1 on paper */
+  --gold-light: #E3CDA6;  /* 4.83:1 on navy — small text in dark sections */
+
+  /* Surfaces */
+  --surface: var(--paper);
+  --surface-raised: var(--white);
+  --surface-tint: #ECEFF2;
+  --surface-dark: var(--navy);
+
+  /* Text */
+  --ink: #1B2733;         /* 14.0:1 on paper */
+  --ink-muted: #5A646E;   /* 5.62:1 on paper, 5.23:1 on tint */
+  --on-dark: #FFFFFF;     /* 11.6:1 on navy */
+  --on-dark-muted: #B9C6D4; /* 6.70:1 on navy */
+
+  /* Hairlines — the grid aesthetic depends on these staying thin */
+  --line: rgba(27, 58, 92, 0.16);
+  --line-strong: rgba(27, 58, 92, 0.32);
+  --line-dark: rgba(255, 255, 255, 0.18);
+  --line-dark-strong: rgba(255, 255, 255, 0.36);
+
+  /* Focus — gold fails the 3:1 non-text requirement, so focus never uses it */
+  --focus: var(--navy);
+  --focus-on-dark: var(--white);
+
+  /* Type */
+  --font-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --step--1: clamp(0.82rem, 0.80rem + 0.10vw, 0.88rem);
+  --step-0:  clamp(1rem, 0.97rem + 0.15vw, 1.06rem);
+  --step-1:  clamp(1.18rem, 1.10rem + 0.35vw, 1.35rem);
+  --step-2:  clamp(1.42rem, 1.26rem + 0.70vw, 1.85rem);
+  --step-3:  clamp(1.70rem, 1.40rem + 1.30vw, 2.55rem);
+  --step-4:  clamp(2.05rem, 1.55rem + 2.20vw, 3.50rem);
+
+  /* Space — a 4px base scale */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-s:   1rem;
+  --space-m:   1.5rem;
+  --space-l:   2rem;
+  --space-xl:  3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  --measure: 68ch;
+  --max: 1180px;
+  --radius: 3px;
+  --hairline: 1px;
+}

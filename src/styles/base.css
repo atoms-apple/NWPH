@@ -1,0 +1,156 @@
+/* ── FONTS ──────────────────────────────────────────────────────────────────
+   Self-hosted and subset. Run `npm run fetch-fonts` once on a machine with
+   network access to populate public/fonts/ — see README "Fonts". If the files
+   are absent the site renders on the fallback stack with no layout break and
+   no invisible text.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Newsreader';
+  src: url('/fonts/newsreader-latin-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+2000-206F, U+2122, U+2212, U+FEFF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url('/fonts/newsreader-latin-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+2000-206F, U+2122, U+2212, U+FEFF;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-latin-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+2000-206F, U+2122, U+2212, U+FEFF;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-latin-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+2000-206F, U+2122, U+2212, U+FEFF;
+}
+
+/* Metric-matched fallbacks keep layout shift small while webfonts load. */
+@font-face {
+  font-family: 'Newsreader Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 103%;
+  ascent-override: 92%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Helvetica Neue'), local('Arial');
+  size-adjust: 100%;
+  ascent-override: 96%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+/* ── RESET ───────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  color: var(--navy);
+}
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); }
+h4 { font-size: var(--step-0); }
+
+p, li { text-wrap: pretty; }
+p { max-width: var(--measure); }
+
+a { color: var(--ice); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { color: var(--navy); }
+
+/* ── FOCUS ───────────────────────────────────────────────────────────────
+   A two-tone ring stays visible on every surface in the palette. Never
+   removed, never gold — gold is 2.7:1 on paper and fails the 3:1 minimum for
+   non-text indicators (WCAG 2.2 SC 1.4.11 and 2.4.13).
+   ────────────────────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.section--dark :focus-visible,
+.site-header :focus-visible {
+  outline-color: var(--focus-on-dark);
+}
+
+::selection { background: var(--navy); color: var(--white); }
+
+.skip-link {
+  position: absolute;
+  left: var(--space-s);
+  top: var(--space-s);
+  z-index: 200;
+  padding: var(--space-2xs) var(--space-s);
+  background: var(--white);
+  color: var(--navy);
+  border: 2px solid var(--navy);
+  font-weight: 600;
+  transform: translateY(-250%);
+  transition: transform 0.15s ease;
+}
+.skip-link:focus-visible { transform: translateY(0); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

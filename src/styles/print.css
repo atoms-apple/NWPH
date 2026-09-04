@@ -1,0 +1,70 @@
+/* ── PRINT ───────────────────────────────────────────────────────────────
+   Funders and procurement officers print. Dark sections invert to ink on
+   white, navigation and forms drop out, and link targets are printed inline so
+   a paper copy stays useful.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@media print {
+  @page { margin: 18mm 16mm; }
+
+  :root { --step-0: 10.5pt; --step--1: 9pt; }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  .site-header, .site-footer__base, .nav-toggle, .filter,
+  .form, .cta__actions, .hero__actions, .skip-link, .tabs__list {
+    display: none !important;
+  }
+
+  .section, .hero, .section--dark, .section--tint, .card, .cta, .callout, .stats__item {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #999 !important;
+  }
+  h1, h2, h3, h4,
+  .section--dark h1, .section--dark h2, .section--dark h3, .section--dark h4,
+  .hero h1, .status-notice__head, .stats__value {
+    color: #000 !important;
+  }
+  .section--dark .section__intro, .section--dark .muted,
+  .status-notice p:not(.status-notice__head), .stats__label, .card__body, .card__legal { color: #333 !important; }
+
+  .section, .hero { padding-block: 12pt; border-top: 0.5pt solid #999; }
+  .wrap { max-width: none; padding-inline: 0; }
+
+  /* Keep the honesty statement on the printed page, and make it prominent. */
+  .status-notice {
+    border: 1.5pt solid #000 !important;
+    background: #fff !important;
+    padding: 8pt;
+    page-break-inside: avoid;
+  }
+
+  .card, .cta, .callout, .person, .accordion__item, .stats__item { page-break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; }
+
+  .grid { display: block; }
+  .grid > * + * { margin-top: 10pt; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 0.5pt solid #999; }
+  .stats__item { border-right: 0.5pt solid #999; }
+
+  /* Panels are all open on paper. */
+  .tabs__panel[hidden] { display: block !important; }
+  .tabs__panel-heading { display: block !important; }
+  .accordion__body { display: block !important; }
+
+  a { color: #000 !important; text-decoration: underline; }
+  main a[href^='http']::after { content: ' (' attr(href) ')'; font-size: 8.5pt; word-break: break-all; }
+  main a[href^='mailto:']::after { content: ' (' attr(href) ')'; font-size: 8.5pt; }
+  main a[href^='/']::after { content: ' (nwph.ca' attr(href) ')'; font-size: 8.5pt; }
+
+  .table-scroll { overflow: visible; border: 0.5pt solid #999; }
+  table { min-width: 0; font-size: 9pt; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+}

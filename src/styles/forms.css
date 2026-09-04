@@ -1,0 +1,58 @@
+/* ── FORMS ───────────────────────────────────────────────────────────────── */
+
+.form { max-width: 44rem; }
+.form__grid { display: grid; gap: var(--space-m); }
+@media (min-width: 40em) { .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-m); } }
+
+.field { display: flex; flex-direction: column; gap: var(--space-3xs); }
+.field__label { font-size: var(--step--1); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); }
+.field__optional { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-muted); }
+.field__hint { font-size: var(--step--1); color: var(--ink-muted); }
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2xs) var(--space-xs);
+  background: var(--white);
+  color: var(--ink);
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: var(--radius);
+}
+.field textarea { min-height: 8rem; resize: vertical; }
+.field input:hover, .field textarea:hover, .field select:hover { border-color: var(--navy); }
+
+/* Invalid state is never colour alone — it carries a border weight change and
+   a text message bound to the control with aria-describedby. */
+.field input[aria-invalid='true'],
+.field textarea[aria-invalid='true'],
+.field select[aria-invalid='true'] {
+  border-width: 2px;
+  border-color: #A32E20;
+  background: #FDF6F5;
+}
+.field__error { font-size: var(--step--1); font-weight: 600; color: #8C2618; display: flex; gap: var(--space-3xs); }
+.field__error::before { content: '✕'; }
+.field__error:empty { display: none; }
+
+/* Honeypot: hidden from sight and from assistive technology, but a real field
+   a naive bot will fill. Never `display:none` alone — some bots skip those. */
+.hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+}
+
+.form__status { margin-bottom: var(--space-m); }
+.form__status:empty { display: none; }
+.alert { border: var(--hairline) solid var(--line); border-left: 4px solid var(--ice); background: var(--white); padding: var(--space-s) var(--space-m); }
+.alert--success { border-left-color: #1F6B4E; }
+.alert--error { border-left-color: #A32E20; }
+.alert__title { font-family: var(--font-display); font-size: var(--step-1); color: var(--navy); }
+.alert p { color: var(--ink-muted); margin-top: var(--space-3xs); }
+
+.form__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); align-items: center; margin-top: var(--space-m); }
+.form__required-note { font-size: var(--step--1); color: var(--ink-muted); }
+.req { color: #8C2618; }
