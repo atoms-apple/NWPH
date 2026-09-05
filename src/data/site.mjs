@@ -35,7 +35,9 @@ export const site = {
   origin: 'https://atoms-apple.github.io',
   // GitHub Pages serves this repository from a subpath. Every link and asset is
   // prefixed with it — an empty value here 404s the whole site on a project URL.
-  base: '/NWPH',
+  // Overridable so one Pages site can host the factual build at /NWPH/ and the
+  // demonstration build at /NWPH/demo/ from the same workflow.
+  base: process.env.SITE_BASE ?? '/NWPH',
   locale: 'en-CA',
   description:
     'North West Passage Holdings Corporation is an Inuit-owned holding company building and operating companies in sectors where Nunavummiut have no locally-owned alternative.',
