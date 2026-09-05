@@ -5,8 +5,8 @@ sector: Aviation
 status: operating
 founded: 2012
 managingDirector: George Major
-staff: XX
-communities: XX communities
+staff: "39"
+communities: 8 communities
 summary: Charter and scheduled regional air service between Nunavut communities, where flying is not a convenience but the only road there is.
 order: 6
 draft: false

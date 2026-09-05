@@ -1,58 +1,60 @@
-# Demonstration build — NWPH at 25 years
+# Future-state model — NWPH at 25 years
 
-**This branch is not true.** It renders North West Passage Holdings Corporation
-as a 25-year-old operating corporation with seven trading subsidiaries, a board,
-an executive team and a corporate history.
+This branch renders North West Passage Holdings Corporation as it could look
+once operating: twenty-five years in, seven trading subsidiaries, a board and
+executive, 214 staff, a job board, a news record and a reporting archive.
 
-In reality NWPH is pre-incorporation: no subsidiaries trade, there is no board,
-there are no executives, and there is no operating history. The factual site
-lives on `main` and is what is deployed.
+**It is a vision model, not a record.** NWPH is currently pre-incorporation.
+None of this has happened. Every page says so in a banner.
 
-## Do not deploy this branch
+Published at `/NWPH/demo/`. The factual site is on `main`, at `/NWPH/`.
 
-There is no workflow guard preventing it, so this is a convention, not a lock.
-If it is deployed:
+## Why the figures are concrete
 
-- Every page carries a red **Demonstration build** banner naming it as
-  illustrative.
-- Every page is `noindex, nofollow`, so search engines will not index it.
+An earlier version rendered every number as `XX`. That defeats the purpose — a
+stat strip full of Xs shows nothing, and the point of this branch is to be
+looked at.
 
-Both are one commit away from removal. Neither should be removed.
+Figures are therefore illustrative but concrete, and defined once in
+`demo.figures` in `src/data/site.mjs` so they stay consistent across the site.
+Change them there and every page follows.
 
 ## Why the names look like that
 
-People are the standard legal fictitious-person names — **Doe, Roe, Major,
-Stiles**. This is deliberate.
+People use the standard legal fictitious-person names — **Doe, Roe, Major,
+Stiles**.
 
 Nunavut has roughly 40,000 residents. A plausibly-generated Inuit name has a
 real chance of matching an actual person, who would then appear on a public
 website as a director or managing director of a company they have never heard
 of. Doe and Roe cannot be mistaken for anyone.
 
-Every fabricated biography begins with the word `PLACEHOLDER`. Adam
-Aliqatuqtuq's biography is his real reviewed copy; his role and appointment date
-on this branch are not.
+Adam Aliqatuqtuq's biography is his real reviewed copy; his role and appointment
+date on this branch are not.
 
-## Why the figures look like that
+## What is here
 
-Anything that would be a financial or operational fact renders as a visible
-placeholder — `$XX.X M`, `XXX` employees, `XX communities` — rather than an
-invented number. A fabricated revenue figure in a screenshot outlives the
-context that made it a mockup.
+| | |
+|---|---|
+| Pages | 45 |
+| Companies | 7 named, all trading, each with leadership, openings and news |
+| Job board | 12 postings with full detail pages, salary bands and references |
+| News | 10 entries, including the 2024 subsidiary wind-up |
+| Reports | 8 documents across 5 years |
+| Board | 6 directors, 3 independent, 3 committees |
+| Executive | 5 officers |
+| Subsidiary management | 7 managing directors |
 
-## What differs from `main`
+Pages: home, about, governance, leadership, history, portfolio + 7 company
+pages, careers + 12 role pages, community, news + 10 entries, procurement,
+reports, contact, privacy, accessibility, thank-you, 404.
 
-| | `main` | this branch |
-|---|---|---|
-| Status enum | `development \| planned \| concept` | adds `operating` |
-| Subsidiaries | 1 named, 6 sector assessments | 7 named, all operating |
-| People | 1 founder | 6 directors, 5 executives, 7 managing directors |
-| History | none | `/about/history/`, 2001–2026 |
-| Leadership | on the about page | `/about/leadership/` |
-| Front page | "0 of 7 operating" | 25th anniversary |
-| Robots | indexable | `noindex, nofollow` |
+## Guards
+
+- Every page carries the banner naming it an illustrative future-state model.
+- Every page is `noindex, nofollow`, and `robots.txt` disallows the path.
+- The deploy workflow **fails** if any demo page is missing either.
 
 ## Returning to the factual site
 
-Set `demo.enabled` to `false` in `src/data/site.mjs` to drop the banner and the
-noindex, or simply use `main`, which is the real site.
+Set `demo.enabled` to `false` in `src/data/site.mjs`, or use `main`.

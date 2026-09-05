@@ -1,9 +1,16 @@
-import { html } from '../lib/html.mjs';
-import { Breadcrumbs, Facts, CTABlock } from '../components/ui.mjs';
-import { site } from '../data/site.mjs';
+import { html, raw } from '../lib/html.mjs';
+import { Breadcrumbs, Facts, CTABlock, StatStrip } from '../components/ui.mjs';
+import { site, demo } from '../data/site.mjs';
 
 /** Reporting and documents — including a plain list of what does not exist. */
-export function reportsPage({ stats, base }) {
+export function reportsPage({ stats, reports = [], base }) {
+  const years = [...new Set(reports.map((r) => r.year))].sort((a, b) => b - a);
+  const KIND = {
+    'annual-report': 'Annual report',
+    'financial-statements': 'Financial statements',
+    policy: 'Policy',
+    plan: 'Plan',
+  };
   return {
     path: '/reports/',
     current: null,
@@ -28,6 +35,12 @@ export function reportsPage({ stats, base }) {
               meet plan.
             </p>
           </div>
+          ${StatStrip([
+            { label: 'Consolidated revenue', value: demo.figures.revenue, flag: true },
+            { label: 'Employees', value: String(demo.figures.employees) },
+            { label: 'Year end', value: demo.figures.yearEnd },
+            { label: 'Audit opinion', value: 'Unqualified' },
+          ], { label: 'Most recent reported year' })}
         </div>
       </section>
 
@@ -57,21 +70,47 @@ export function reportsPage({ stats, base }) {
                 </table>
               </div>
               <p class="field__hint" style="margin-top: var(--space-s)">
-                Figures in this demonstration build render as placeholders. Nothing here is a real
-                financial statement.
+                Figures throughout this model are illustrative.
               </p>
             </div>
             <div>
               ${Facts([
                 ['Incorporated', '2001, Nunavut'],
-                ['Financial year end', 'XX Month'],
-                ['Consolidated revenue', '$XX.X M'],
-                ['Employees', 'XXX'],
+                ['Financial year end', demo.figures.yearEnd],
+                ['Consolidated revenue', demo.figures.revenue],
+                ['Employees', String(demo.figures.employees)],
                 ['Operating companies', String(stats.byStatus.operating)],
                 ['Audit opinion', 'Unqualified'],
               ], { label: 'Corporate record' })}
             </div>
           </div>
+
+          ${reports.length ? html`
+            <div style="margin-top: var(--space-2xl)">
+              <h2>Published documents</h2>
+              <p class="section__intro">
+                Annual reports, audited statements and adopted policies, most recent first.
+              </p>
+              ${years.map((year) => html`
+                <div class="doc-year">
+                  <h3 class="doc-year__heading">${year}</h3>
+                  <ul class="doc-list" role="list">
+                    ${reports.filter((r) => r.year === year).map((report) => html`
+                      <li class="doc">
+                        <div>
+                          <p class="doc__kind">${KIND[report.kind]}</p>
+                          <p class="doc__title">${report.title}</p>
+                          ${report.body ? html`<div class="doc__note">${raw(report.body)}</div>` : ''}
+                        </div>
+                        <p class="doc__meta">${report.pages ? `${report.pages} pages · ` : ''}PDF</p>
+                      </li>`)}
+                  </ul>
+                </div>`)}
+              <p class="field__hint" style="margin-top: var(--space-m)">
+                Documents are listed rather than linked in this model. Figures shown throughout are
+                illustrative.
+              </p>
+            </div>` : ''}
 
           <div style="margin-top: var(--space-2xl)">
             ${CTABlock({

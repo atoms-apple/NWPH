@@ -2,12 +2,12 @@ import { html } from '../lib/html.mjs';
 import { StatStrip, CTABlock, SubsidiaryCard } from '../components/ui.mjs';
 import { demo } from '../data/site.mjs';
 
-export default function homePage({ subsidiaries, people, history, stats, base }) {
+export default function homePage({ subsidiaries, people, history, news, roles, stats, base }) {
+  const f = demo.figures;
   const operating = subsidiaries.filter((s) => s.status === 'operating');
   const featured = operating.slice(0, 3);
   const board = people.filter((p) => p.group === 'board');
-  const recent = history.slice(-3).reverse();
-
+  
   return {
     path: '/',
     current: '/',
@@ -37,8 +37,8 @@ export default function homePage({ subsidiaries, people, history, stats, base })
           ${StatStrip([
             { label: 'Years operating', value: String(demo.anniversary), flag: true },
             { label: 'Operating companies', value: String(stats.byStatus.operating) },
-            { label: 'Sectors', value: '7' },
-            { label: 'Employees', value: 'XXX' },
+            { label: 'Employees', value: String(f.employees) },
+            { label: 'Inuit employment', value: f.inuitEmployment },
           ], { label: 'The corporation at a glance' })}
         </div>
       </section>
@@ -65,16 +65,17 @@ export default function homePage({ subsidiaries, people, history, stats, base })
               </p>
               <p><a href="${base}/about/">Read the full mission and its limits →</a></p>
             </div>
-            <div class="prose">
-              <h3>Recent</h3>
-              <dl class="stack">
-                ${recent.map((entry) => html`
-                  <div>
-                    <dt class="card__sector">${entry.year}</dt>
-                    <dd style="margin-top: var(--space-3xs)">${entry.title}</dd>
-                  </div>`)}
-              </dl>
-              <p><a href="${base}/about/history/">Full history →</a></p>
+            <div>
+              ${StatStrip([
+                { label: 'Consolidated revenue', value: f.revenue },
+                { label: 'Communities', value: String(f.communities) },
+                { label: 'Spend with Nunavut suppliers', value: f.procurementLocal },
+                { label: 'Apprentices this year', value: String(f.apprentices) },
+              ], { light: true, label: 'Most recent reported year' })}
+              <p class="field__hint" style="margin-top: var(--space-s)">
+                Year ended ${f.yearEnd}. Full figures in the
+                <a href="${base}/reports/">annual report</a>.
+              </p>
             </div>
           </div>
         </div>
@@ -109,7 +110,26 @@ export default function homePage({ subsidiaries, people, history, stats, base })
         </div>
       </section>
 
-      <section class="section">
+      ${news.length ? html`
+        <section class="section">
+          <div class="wrap">
+            <p class="section__label">News</p>
+            <h2>Latest</h2>
+            <ul class="grid grid--3" role="list" style="margin-top: var(--space-xl)">
+              ${news.slice(0, 3).map((entry) => html`
+                <li class="card card--link">
+                  <p class="card__sector"><time datetime="${entry.date}">${entry.date}</time></p>
+                  <h3 class="card__title"><a href="${base}/news/${entry.slug}/">${entry.title}</a></h3>
+                  <p class="card__body">${entry.summary}</p>
+                </li>`)}
+            </ul>
+            <p style="margin-top: var(--space-l)">
+              <a class="btn btn--ghost" href="${base}/news/">All news</a>
+            </p>
+          </div>
+        </section>` : ''}
+
+      <section class="section section--tint">
         <div class="wrap">
           <p class="section__label">Accountability</p>
           <h2>Who runs these companies</h2>
@@ -134,8 +154,8 @@ export default function homePage({ subsidiaries, people, history, stats, base })
             })}
             ${CTABlock({
               title: 'Careers',
-              body: 'Roles across seven operating companies, with training pathways in each.',
-              actions: [{ href: `${base}/careers/`, label: 'Careers' }],
+              body: `${roles.length} positions open across the portfolio. Inuit employment preference applies to every role, and certification is funded.`,
+              actions: [{ href: `${base}/careers/`, label: `${roles.length} open positions` }],
             })}
           </div>
         </div>

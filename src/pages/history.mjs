@@ -26,8 +26,8 @@ export default function historyPage({ history, stats, base }) {
           ${StatStrip([
             { label: 'Years', value: String(demo.anniversary) },
             { label: 'Operating companies', value: String(stats.byStatus.operating) },
-            { label: 'Sectors', value: String(stats.total) },
-            { label: 'Communities served', value: 'XX' },
+            { label: 'Employees', value: String(demo.figures.employees) },
+            { label: 'Communities served', value: String(demo.figures.communities) },
           ], { label: 'Twenty-five years at a glance' })}
         </div>
       </section>

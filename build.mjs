@@ -22,10 +22,11 @@ import homePage from './src/pages/index.mjs';
 import aboutPage from './src/pages/about.mjs';
 import { subsidiariesIndex, subsidiaryDetail } from './src/pages/subsidiaries.mjs';
 import procurementPage from './src/pages/procurement.mjs';
-import careersPage from './src/pages/careers.mjs';
+import { careersIndex, roleDetail } from './src/pages/careers.mjs';
 import contactPage from './src/pages/contact.mjs';
 import { newsIndex, newsDetail } from './src/pages/news.mjs';
 import governancePage from './src/pages/governance.mjs';
+import communityPage from './src/pages/community.mjs';
 import { reportsPage, privacyPage, accessibilityPage } from './src/pages/policies.mjs';
 import leadershipPage from './src/pages/leadership.mjs';
 import historyPage from './src/pages/history.mjs';
@@ -127,7 +128,7 @@ async function build() {
   for (const [name, config] of Object.entries(collections)) {
     loaded[name] = await loadCollection(name, config.schema, { sort: config.sort });
   }
-  const { subsidiaries, people, roles, procurement, faq, news, milestones, history } = loaded;
+  const { subsidiaries, people, roles, procurement, faq, news, milestones, history, reports } = loaded;
 
   // 2. Derived statistics. Never authored by hand — see src/data/status.mjs.
   const stats = {
@@ -141,7 +142,7 @@ async function build() {
 
   // 3. Pages.
   const pages = [
-    homePage({ subsidiaries, people, history, stats, base }),
+    homePage({ subsidiaries, people, history, news, roles, stats, base }),
     aboutPage({ people, stats, base }),
     governancePage({ stats, base }),
     leadershipPage({ people, subsidiaries, base }),
@@ -154,13 +155,23 @@ async function build() {
       stats,
       base,
       milestones: milestones.filter((milestone) => milestone.venture === subsidiary.name),
+      manager: people.find((p) => p.group === 'subsidiary' && p.venture === subsidiary.name) ?? null,
+      roles: roles.filter((role) => role.subsidiary === subsidiary.name),
+      // Match news to a company by name mention, so an entry appears on the
+      // page of the company it is about without needing a field maintained.
+      news: news.filter((entry) => subsidiary.name && (
+        entry.title.includes(subsidiary.name) || entry.summary.includes(subsidiary.name) ||
+        entry.body.includes(subsidiary.name)
+      )).slice(0, 3),
     })),
     procurementPage({ tiers: procurement, faq, base }),
-    careersPage({ roles, base }),
+    careersIndex({ roles, subsidiaries, base }),
+    ...roles.map((role) => roleDetail(role, { base })),
     newsIndex({ news, base }),
     ...news.map((entry) => newsDetail(entry, { base })),
+    communityPage({ base }),
     contactPage({ base }),
-    reportsPage({ stats, base }),
+    reportsPage({ stats, reports, base }),
     privacyPage({ base }),
     accessibilityPage({ base }),
     thankYouPage({ base }),

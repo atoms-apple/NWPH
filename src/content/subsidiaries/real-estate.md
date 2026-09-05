@@ -5,8 +5,8 @@ sector: Real Estate & Housing
 status: operating
 founded: 2009
 managingDirector: Patricia Stiles
-staff: XX
-communities: XX communities
+staff: "27"
+communities: 6 communities
 summary: Residential and commercial development and property management, built for northern climate, northern households and the years after handover.
 order: 7
 draft: false

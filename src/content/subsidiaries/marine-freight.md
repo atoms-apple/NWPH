@@ -5,8 +5,8 @@ sector: Marine Freight & Logistics
 status: operating
 founded: 2002
 managingDirector: Thomas Stiles
-staff: XX seasonal
-communities: XX communities
+staff: 46 seasonal, 11 year-round
+communities: 13 communities
 summary: Marine cargo, lightering and sealift logistics under northern ownership, reducing the territory's dependence on supply chains controlled from outside it.
 order: 4
 draft: false

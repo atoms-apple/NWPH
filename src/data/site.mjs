@@ -4,26 +4,42 @@
  */
 
 /**
- * DEMONSTRATION BUILD.
+ * FUTURE-STATE MODEL.
  *
- * This branch renders NWPH as a 25-year-old operating corporation. None of it
- * is true: the corporation is pre-incorporation, has no subsidiaries trading,
- * no board, no executives and no financial history.
+ * This branch renders North West Passage Holdings Corporation as it could look
+ * once operating — twenty-five years in, seven trading subsidiaries, a board,
+ * staff and a reporting record. It is a vision model, not a record: NWPH is
+ * currently pre-incorporation and none of it has happened.
  *
- * Everything specific is a visible placeholder. People use the standard legal
- * fictitious-person names (Doe, Roe, Major, Stiles) rather than invented Inuit
- * names, because Nunavut has roughly 40,000 residents and a plausible generated
- * name has a real chance of matching someone who would then appear to be a
- * director of a company they have never heard of. Figures render as XX.X.
+ * It is built to be looked at, so the figures are concrete rather than XX
+ * placeholders — a stat strip full of Xs shows nothing. They are illustrative
+ * throughout, and the banner on every page says so.
  *
- * Setting this to false returns the build to the factual site on `main`.
+ * People use the standard legal fictitious-person names (Doe, Roe, Major,
+ * Stiles). Nunavut has roughly 40,000 residents, and a plausible generated name
+ * has a real chance of matching someone who would then appear publicly as a
+ * director of a company they have never heard of.
+ *
+ * Setting enabled to false returns this to the factual build on `main`.
  */
 export const demo = {
   enabled: true,
   founded: 2001,
   anniversary: 25,
   banner:
-    'Illustrative demonstration. NWPH is pre-incorporation — nothing on these pages describes real operations, people, results or history.',
+    'Illustrative future-state model — how NWPH could look once operating. The corporation is currently pre-incorporation; the figures, people and history on these pages are illustrative.',
+
+  /** Illustrative operating figures. One place, so they stay consistent. */
+  figures: {
+    employees: 214,
+    inuitEmployment: '68%',
+    revenue: '$41.2M',
+    communities: 13,
+    apprentices: 26,
+    scholarships: 18,
+    procurementLocal: '$9.8M',
+    yearEnd: '31 March',
+  },
 };
 
 export const site = {
@@ -65,7 +81,8 @@ export const nav = [
   { href: '/subsidiaries/', label: 'Portfolio' },
   { href: '/procurement/', label: 'Procurement' },
   { href: '/careers/', label: 'Careers' },
-  { href: '/news/', label: 'Updates' },
+  { href: '/community/', label: 'Community' },
+  { href: '/news/', label: 'News' },
   { href: '/contact/', label: 'Contact' },
 ];
 
@@ -76,15 +93,17 @@ export const footerNav = [
     links: [
       { href: '/about/', label: 'About & mission' },
       { href: '/about/governance/', label: 'Governance' },
-      { href: '/reports/', label: 'Reporting & documents' },
-      { href: '/news/', label: 'Updates' },
+      { href: '/about/leadership/', label: 'Leadership & board' },
+      { href: '/about/history/', label: 'History' },
+      { href: '/reports/', label: 'Reports & documents' },
     ],
   },
   {
     heading: 'Portfolio',
     links: [
-      { href: '/subsidiaries/', label: 'All ventures' },
-      { href: '/subsidiaries/arctrek-expeditions/', label: 'ArcTrek Expeditions' },
+      { href: '/subsidiaries/', label: 'All companies' },
+      { href: '/news/', label: 'News' },
+      { href: '/community/', label: 'Community' },
     ],
   },
   {

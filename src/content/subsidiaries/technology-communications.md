@@ -5,8 +5,8 @@ sector: Technology & Communications
 status: operating
 founded: 2015
 managingDirector: David Major
-staff: XX
-communities: XX communities
+staff: "24"
+communities: 9 communities
 summary: Remote monitoring, connectivity and field technical services built for Arctic infrastructure rather than adapted to it after the fact.
 order: 2
 draft: false

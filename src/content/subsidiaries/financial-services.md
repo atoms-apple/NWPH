@@ -5,7 +5,7 @@ sector: Financial Services
 status: operating
 founded: 2019
 managingDirector: Helen Roe
-staff: XX
+staff: "12"
 communities: Territory-wide
 summary: Lending and financial services designed around northern economic realities rather than transplanted from southern models. Not a bank, and does not hold deposits.
 order: 5

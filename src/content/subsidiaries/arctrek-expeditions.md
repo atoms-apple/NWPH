@@ -5,8 +5,8 @@ sector: Tourism & Expeditions
 status: operating
 founded: 2006
 managingDirector: Sarah Roe
-staff: XX seasonal, XX year-round
-communities: XX communities
+staff: 31 seasonal, 6 year-round
+communities: 5 communities
 summary: Inuit-guided Arctic expedition tourism across Nunavut — multi-day land-based trips led by guides who know the country, with outfitting and logistics handled in the territory.
 order: 1
 draft: false

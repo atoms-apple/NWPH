@@ -49,7 +49,24 @@ export const roleSchema = object({
   subsidiary: string({ optional: true, max: 60 }),
   location: string({ min: 2, max: 60 }),
   type: string({ min: 2, max: 40 }),
+  category: string({ optional: true, max: 40 }),
+  reference: string({ optional: true, max: 20 }),
+  salary: string({ optional: true, max: 60 }),
+  posted: isoDate({ optional: true }),
   closes: isoDate({ optional: true }),
+  // Whether Inuit employment preference applies. It does, everywhere.
+  priority: boolean({ fallback: true }),
+  order: number({ optional: true, integer: true }),
+  slug: string({ optional: true }),
+  draft: boolean(),
+});
+
+/** A published corporate document. */
+export const reportSchema = object({
+  title: string({ min: 5, max: 120 }),
+  year: number({ integer: true }),
+  kind: enumOf(['annual-report', 'financial-statements', 'policy', 'plan']),
+  pages: number({ optional: true, integer: true }),
   order: number({ optional: true, integer: true }),
   slug: string({ optional: true }),
   draft: boolean(),
@@ -105,10 +122,11 @@ const byOrder = (a, b) => (a.order ?? 999) - (b.order ?? 999) || (a.name ?? a.se
 export const collections = {
   subsidiaries: { schema: subsidiarySchema, sort: byOrder },
   people: { schema: personSchema, sort: byOrder },
-  roles: { schema: roleSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
+  roles: { schema: roleSchema, sort: (a, b) => (b.posted ?? '').localeCompare(a.posted ?? '') || (a.order ?? 999) - (b.order ?? 999) },
   procurement: { schema: procurementTierSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
   faq: { schema: faqSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
   milestones: { schema: milestoneSchema, sort: (a, b) => a.order - b.order },
   history: { schema: historySchema, sort: (a, b) => a.year - b.year },
+  reports: { schema: reportSchema, sort: (a, b) => b.year - a.year || (a.order ?? 0) - (b.order ?? 0) },
   news: { schema: newsSchema, sort: (a, b) => b.date.localeCompare(a.date) },
 };
