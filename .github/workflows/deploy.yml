@@ -30,6 +30,30 @@ jobs:
       # gate: a bad subsidiary status or a contrast regression fails the build.
       - name: Verify
         run: node tools/check.mjs
+
+      # The demonstration build renders NWPH as a 25-year-old operating
+      # corporation, which it is not. It is published under /NWPH/demo/ so it
+      # can be shown to someone, separated from the real site by path.
+      - name: Build demonstration site
+        run: |
+          git fetch --depth=1 origin demo/25-year-anniversary
+          git worktree add /tmp/demo FETCH_HEAD
+          cd /tmp/demo
+          SITE_BASE=/NWPH/demo node build.mjs
+          SITE_BASE=/NWPH/demo node tools/check.mjs
+          cp -r /tmp/demo/dist "$GITHUB_WORKSPACE/dist/demo"
+
+      # Fail the deploy rather than publish a fabricated site unmarked. Every
+      # demo page must carry the banner and be excluded from search.
+      - name: Confirm the demonstration build is marked
+        run: |
+          unmarked=0
+          while IFS= read -r f; do
+            grep -q 'demo-banner' "$f" || { echo "missing banner: $f"; unmarked=1; }
+            grep -q 'noindex' "$f" || { echo "indexable: $f"; unmarked=1; }
+          done < <(find dist/demo -name '*.html')
+          test "$unmarked" -eq 0
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

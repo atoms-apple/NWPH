@@ -108,7 +108,9 @@ function sitemap(paths) {
 }
 
 const robots = () =>
-  `User-agent: *\nAllow: /\nDisallow: /thank-you/\n\nSitemap: ${site.origin}${base}/sitemap.xml\n`;
+  // /demo/ holds the illustrative build. Excluded here as well as by a per-page
+  // noindex, so it cannot surface in search instead of the real site.
+  `User-agent: *\nAllow: /\nDisallow: /thank-you/\nDisallow: ${base}/demo/\n\nSitemap: ${site.origin}${base}/sitemap.xml\n`;
 
 /** Favicon — the same mark the header and footer use. */
 const favicon = faviconSvg;
