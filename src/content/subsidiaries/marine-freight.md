@@ -1,44 +1,30 @@
 ---
+name: Ima Sealift Solutions
+legalName: Ima Sealift Solutions Ltd.
 sector: Marine Freight & Logistics
-status: planned
-summary: Marine cargo and sealift under northern ownership, reducing the territory's dependence on supply chains controlled from outside it.
+status: operating
+founded: 2002
+managingDirector: Thomas Stiles
+staff: 46 seasonal, 11 year-round
+communities: 13 communities
+summary: Marine cargo, lightering and sealift logistics under northern ownership, reducing the territory's dependence on supply chains controlled from outside it.
 order: 4
 draft: false
 ---
 
-## The gap
+## What it does
 
-Almost everything heavy that enters Nunavut arrives by sea, in a shipping season
-measured in weeks. Fuel, vehicles, building materials, a year of dry goods — if
-it misses sealift, it either flies at many times the cost or waits until next
-year.
+Sealift consolidation, shore handling and lightering for Qikiqtani communities —
+getting cargo from vessel to beach in places with no deep-water port.
 
-That supply chain is operated by southern carriers. The vessels, the scheduling,
-the rate-setting and the terminal operations sit outside the territory, which
-means the timing of Nunavut's resupply is decided by companies with no stake in
-what happens if it slips.
+## Operations
 
-## What a venture here would require
+The season is short and unforgiving. The company operates landing craft and
+shore-handling equipment, and holds staging capacity at both ends of the
+voyage. A missed sealift is not a service failure; it is a community without
+fuel or building supply for a year, and the operation is planned accordingly.
 
-- Vessel capacity, whether owned, chartered or arranged through partnership —
-  the single largest capital requirement in the portfolio after aviation.
-- Marine crew and shore-side logistics staff, with the certification marine
-  operations require.
-- Lightering equipment and shore handling capability, since most Nunavut
-  communities have no deep-water port and cargo comes ashore by barge.
-- Warehousing and staging capacity at both ends of the voyage.
-- The insurance and liability position that Arctic marine operations attract.
+## Employment
 
-## Why not first
-
-The capital requirement, the seasonal risk concentration and the consequences of
-failure are all severe. A missed or mishandled sealift does not inconvenience a
-customer — it removes a community's fuel or building supply for a year. This is
-a sector to enter carefully, with partners, and with capital that does not
-depend on a single season going well.
-
-## Status
-
-No company has been formed. No vessel capacity has been sought and no route or
-partnership assessed. This page describes a gap NWPH intends to address, not
-work that is underway.
+Marine and shore crews are largely seasonal, with certification funded by the
+company and crew retained year to year.

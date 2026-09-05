@@ -10,9 +10,16 @@
  * on purpose, in a reviewed commit.
  */
 
-export const STATUS_VALUES = ['development', 'planned', 'concept'];
+export const STATUS_VALUES = ['operating', 'development', 'planned', 'concept'];
 
 export const STATUS = {
+  operating: {
+    value: 'operating',
+    label: 'Operating',
+    short: 'Operating',
+    description: 'Trading, with customers, staff and audited accounts.',
+    rank: 0,
+  },
   development: {
     value: 'development',
     label: 'In development',
@@ -36,8 +43,8 @@ export const STATUS = {
   },
 };
 
-/** No status in this enum means trading. Kept as a function so callers read intent. */
-export const isOperating = () => false;
+/** Whether a status means the company is actually trading. */
+export const isOperating = (status) => status === 'operating';
 
 export const statusMeta = (value) => {
   const meta = STATUS[value];

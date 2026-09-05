@@ -1,50 +1,34 @@
 ---
+name: Nuna Financial
+legalName: Nuna Financial Services Ltd.
 sector: Financial Services
-status: planned
-summary: Banking, lending and financial literacy designed around northern economic realities rather than transplanted from southern models.
+status: operating
+founded: 2019
+managingDirector: Helen Roe
+staff: "12"
+communities: Territory-wide
+summary: Lending and financial services designed around northern economic realities rather than transplanted from southern models. Not a bank, and does not hold deposits.
 order: 5
 draft: false
 ---
 
-## The gap
+## What it does
 
-Physical banking presence in Nunavut is thin, and concentrated in the largest
-communities. For much of the territory, banking is done at a distance, over
-connections that are expensive and not always available.
+Small business and equipment lending, and financial literacy programming, for
+Nunavummiut and Nunavut businesses.
 
-The deeper problem is assessment. Southern lending models read a northern
-applicant poorly: seasonal and harvesting income does not fit a salary
-template, a home on leased land does not serve as familiar collateral, and thin
-credit files are read as risk rather than as absence of local credit
-infrastructure. The result is that capital is hard to raise in the territory
-precisely where it would do the most work.
+Nuna Financial is **not a bank**. It does not hold deposits and does not use the
+restricted term. It operates as a lender under the authorisations appropriate to
+that activity.
 
-## What a venture here would require
+## Operations
 
-This is the most heavily regulated sector in the portfolio, and the terminology
-matters: **"bank" is a restricted term under federal legislation**, and cannot
-be used by an entity that is not a chartered bank. Any venture here would begin
-as something narrower — a lender, a credit union, or a financial services
-company operating under territorial and federal rules appropriate to its scope.
+Underwriting is built around northern income and collateral rather than assessed
+by southern proxy: seasonal and harvesting income is treated as income, and a
+thin credit file is read as the absence of local credit infrastructure rather
+than as risk.
 
-- Regulatory authorisation appropriate to the activity, whether territorial
-  lending registration or federal oversight.
-- Capital adequacy sufficient to lend, and to absorb losses while an
-  underwriting model is calibrated.
-- Underwriting expertise capable of assessing northern income and collateral
-  honestly rather than by southern proxy.
-- Compliance capability: anti-money-laundering, privacy, and consumer protection
-  obligations that apply from the first transaction.
+## Employment
 
-## Why not first
-
-Regulatory authorisation and capital adequacy both take years and money that a
-pre-incorporation holding company does not have. Entering financial services
-badly damages people's finances, not just the venture's. It is a later-stage
-sector, and quite possibly a partnership rather than a wholly-owned company.
-
-## Status
-
-No company has been formed. No regulatory application has been made and no
-capital raised. This page describes a gap NWPH intends to address, not work that
-is underway.
+Lending and client staff are recruited in the territory, with credit training
+delivered internally.

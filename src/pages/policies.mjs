@@ -1,15 +1,22 @@
-import { html } from '../lib/html.mjs';
-import { Breadcrumbs, Facts, CTABlock } from '../components/ui.mjs';
-import { site } from '../data/site.mjs';
+import { html, raw } from '../lib/html.mjs';
+import { Breadcrumbs, Facts, CTABlock, StatStrip } from '../components/ui.mjs';
+import { site, demo } from '../data/site.mjs';
 
 /** Reporting and documents — including a plain list of what does not exist. */
-export function reportsPage({ stats, base }) {
+export function reportsPage({ stats, reports = [], base }) {
+  const years = [...new Set(reports.map((r) => r.year))].sort((a, b) => b - a);
+  const KIND = {
+    'annual-report': 'Annual report',
+    'financial-statements': 'Financial statements',
+    policy: 'Policy',
+    plan: 'Plan',
+  };
   return {
     path: '/reports/',
     current: null,
     title: 'Reporting & documents',
     description:
-      'Corporate documents and reporting for North West Passage Holdings Corporation. Pre-incorporation: no audited statements, annual report or operating history exists.',
+      'Annual reports, audited financial statements and corporate documents for North West Passage Holdings Corporation.',
     body: html`
       <section class="section section--dark">
         <div class="wrap">
@@ -17,18 +24,23 @@ export function reportsPage({ stats, base }) {
           <p class="section__label">Reporting</p>
           <h1>Reporting and documents</h1>
           <p class="section__intro">
-            What NWPH can provide to funders, procurement officers and partners today, and what it
-            cannot.
+            Annual reporting, audited statements and corporate documentation for funders,
+            procurement officers and partners.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">There are no financial statements.</p>
+            <p class="status-notice__head">Audited annually since 2001.</p>
             <p>
-              NWPH is pre-incorporation. There is no trading entity, so there is
-              <strong>no audited statement, no annual report, no operating history and no credit
-              file</strong>. Any due diligence process that requires them cannot be satisfied yet,
-              and it is better to say so here than after a request.
+              Consolidated statements cover the holding company and all seven operating companies.
+              The annual report sets out each company's position, including the ones that did not
+              meet plan.
             </p>
           </div>
+          ${StatStrip([
+            { label: 'Consolidated revenue', value: demo.figures.revenue, flag: true },
+            { label: 'Employees', value: String(demo.figures.employees) },
+            { label: 'Year end', value: demo.figures.yearEnd },
+            { label: 'Audit opinion', value: 'Unqualified' },
+          ], { label: 'Most recent reported year' })}
         </div>
       </section>
 
@@ -39,39 +51,66 @@ export function reportsPage({ stats, base }) {
               <h2>Document availability</h2>
               <div class="table-scroll" tabindex="0" role="region" aria-label="Document availability">
                 <table>
-                  <caption>What exists today, and when each document is expected.</caption>
+                  <caption>Corporate documentation available to funders and procurement officers.</caption>
                   <thead>
                     <tr><th scope="col">Document</th><th scope="col">Available</th><th scope="col">Expected</th></tr>
                   </thead>
                   <tbody>
-                    <tr><th scope="row">Certificate of incorporation</th><td>No</td><td>At incorporation</td></tr>
-                    <tr><th scope="row">Articles and by-laws</th><td>No</td><td>At incorporation</td></tr>
-                    <tr><th scope="row">Board and director list</th><td>No</td><td>At incorporation</td></tr>
-                    <tr><th scope="row">Audited financial statements</th><td>No</td><td>First full year of trading</td></tr>
-                    <tr><th scope="row">Annual report</th><td>No</td><td>First full year of trading</td></tr>
-                    <tr><th scope="row">Procurement policy</th><td>No</td><td>Before the first requirement is issued</td></tr>
-                    <tr><th scope="row">Conflict of interest register</th><td>No</td><td>At incorporation</td></tr>
-                    <tr><th scope="row">Inuit firm registration</th><td>No</td><td>Not yet assessed</td></tr>
-                    <tr><th scope="row">Business plan</th><td>Not published</td><td>Not scheduled</td></tr>
-                    <tr><th scope="row">Venture milestones</th><td>Yes</td><td>Published on each venture page</td></tr>
+                    <tr><th scope="row">Certificate of incorporation</th><td>On request</td><td>Held since 2001</td></tr>
+                    <tr><th scope="row">Articles and by-laws</th><td>On request</td><td>Current</td></tr>
+                    <tr><th scope="row">Board and director list</th><td>Published</td><td>Leadership page</td></tr>
+                    <tr><th scope="row">Audited financial statements</th><td>On request</td><td>Annual, most recent year end</td></tr>
+                    <tr><th scope="row">Annual report</th><td>On request</td><td>Annual</td></tr>
+                    <tr><th scope="row">Procurement policy</th><td>On request</td><td>Current</td></tr>
+                    <tr><th scope="row">Conflict of interest register</th><td>On request</td><td>Maintained continuously</td></tr>
+                    <tr><th scope="row">Inuit firm registration</th><td>On request</td><td>Current</td></tr>
+                    <tr><th scope="row">Insurance certificates</th><td>On request</td><td>Current</td></tr>
+                    <tr><th scope="row">WSCC clearance</th><td>On request</td><td>Current</td></tr>
                   </tbody>
                 </table>
               </div>
               <p class="field__hint" style="margin-top: var(--space-s)">
-                Where a document is marked unavailable, it does not exist — not that it is withheld.
-                Anything that can be shared under discussion will be shared on request.
+                Figures throughout this model are illustrative.
               </p>
             </div>
             <div>
               ${Facts([
-                ['Financial year', 'Not yet set'],
-                ['Auditor', 'Not appointed'],
-                ['Legal counsel', 'Not appointed'],
-                ['Banking', 'Not established'],
-                ['Ventures operating', String(stats.operating)],
+                ['Incorporated', '2001, Nunavut'],
+                ['Financial year end', demo.figures.yearEnd],
+                ['Consolidated revenue', demo.figures.revenue],
+                ['Employees', String(demo.figures.employees)],
+                ['Operating companies', String(stats.byStatus.operating)],
+                ['Audit opinion', 'Unqualified'],
               ], { label: 'Corporate record' })}
             </div>
           </div>
+
+          ${reports.length ? html`
+            <div style="margin-top: var(--space-2xl)">
+              <h2>Published documents</h2>
+              <p class="section__intro">
+                Annual reports, audited statements and adopted policies, most recent first.
+              </p>
+              ${years.map((year) => html`
+                <div class="doc-year">
+                  <h3 class="doc-year__heading">${year}</h3>
+                  <ul class="doc-list" role="list">
+                    ${reports.filter((r) => r.year === year).map((report) => html`
+                      <li class="doc">
+                        <div>
+                          <p class="doc__kind">${KIND[report.kind]}</p>
+                          <p class="doc__title">${report.title}</p>
+                          ${report.body ? html`<div class="doc__note">${raw(report.body)}</div>` : ''}
+                        </div>
+                        <p class="doc__meta">${report.pages ? `${report.pages} pages · ` : ''}PDF</p>
+                      </li>`)}
+                  </ul>
+                </div>`)}
+              <p class="field__hint" style="margin-top: var(--space-m)">
+                Documents are listed rather than linked in this model. Figures shown throughout are
+                illustrative.
+              </p>
+            </div>` : ''}
 
           <div style="margin-top: var(--space-2xl)">
             ${CTABlock({
@@ -143,9 +182,8 @@ export function privacyPage({ base }) {
             <h2 id="retention">Retention</h2>
             <p>
               Submissions are kept until they are no longer useful for the purpose you sent them
-              for, or until you ask for them to be deleted. NWPH is pre-incorporation and has no
-              records management system; submissions currently reach a mailbox and stay there.
-              This section will be made more specific when there is a system to describe.
+              for, or until you ask for them to be deleted. Supplier and candidate records are
+              reviewed periodically and removed when no longer required.
             </p>
 
             <h2 id="your-rights">Access and deletion</h2>
@@ -156,8 +194,7 @@ export function privacyPage({ base }) {
 
             <h2 id="changes">Changes</h2>
             <p>
-              This notice describes the site as it currently operates. It will be updated when the
-              forms are connected to a submission endpoint, and again at incorporation.
+              This notice describes the site as it currently operates and is reviewed annually.
             </p>
           </div>
         </div>

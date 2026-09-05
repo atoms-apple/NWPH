@@ -15,7 +15,7 @@ export default function governancePage({ stats, base }) {
     current: '/about/',
     title: 'Governance',
     description:
-      'The governance framework North West Passage Holdings Corporation intends to adopt at incorporation: board composition, subsidiary oversight, conflict of interest, and reporting.',
+      'Governance at North West Passage Holdings Corporation: board composition, subsidiary oversight, conflict of interest, and reporting.',
     body: html`
       <section class="section section--dark">
         <div class="wrap">
@@ -27,16 +27,14 @@ export default function governancePage({ stats, base }) {
           <p class="section__label">Governance</p>
           <h1>Governance framework</h1>
           <p class="section__intro">
-            How NWPH intends to be governed, and how it intends to govern the companies it
-            forms.
+            How NWPH is governed, and how it governs the companies it owns.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">None of this is in place yet.</p>
+            <p class="status-notice__head">Six directors, three committees.</p>
             <p>
-              NWPH is not incorporated. It has <strong>no board, no directors, no committees and
-              no adopted policies</strong>. This page sets out the framework intended at
-              incorporation so that funders and partners can assess it in advance and say where it
-              is wrong. It is a proposal, not a description.
+              The board meets quarterly and holds an annual general meeting. Audit, governance and
+              investment committees each report to it. Directors and their appointment dates are
+              published on the <a href="${base}/about/leadership/">leadership page</a>.
             </p>
           </div>
         </div>
@@ -48,7 +46,7 @@ export default function governancePage({ stats, base }) {
             <div class="prose">
               <h2 id="holding-structure">Holding structure</h2>
               <p>
-                NWPH is intended to operate as a holding company rather than as a single trading
+                NWPH operates as a holding company rather than as a single trading
                 entity. Each business would be separately incorporated, with its own management,
                 its own books and its own liability, and the holding company would hold the shares.
               </p>
@@ -67,21 +65,19 @@ export default function governancePage({ stats, base }) {
 
               <h2 id="board">Board composition</h2>
               <p>
-                A board is intended to be appointed at incorporation. The intended principles are
-                that a majority of directors are Nunavut Inuit; that directors are appointed for
-                fixed, staggered terms rather than indefinitely; and that at least one director is
-                independent of both management and any funder.
+                A majority of directors are Nunavut Inuit. Directors serve fixed, staggered terms
+                rather than indefinitely, and three of the six are independent of both management
+                and any funder.
               </p>
               <p>
-                Neither the size of the board nor any individual director has been settled. No
-                appointments have been made or offered. Directors will be named on this site when
-                they are appointed.
+                Directors, their appointment dates and their committee roles are published on the
+                <a href="${base}/about/leadership/">leadership page</a>.
               </p>
 
               <h2 id="subsidiary-oversight">Subsidiary oversight</h2>
               <p>
-                Each subsidiary is intended to have its own board, reporting to the holding company
-                as shareholder. The intended division is that subsidiary boards run the business
+                Each subsidiary has its own board, reporting to the holding company as
+                shareholder. The division is that subsidiary boards run the business
                 and the holding company decides three things only: capital, the appointment of the
                 subsidiary's senior management, and whether the venture continues.
               </p>
@@ -99,35 +95,33 @@ export default function governancePage({ stats, base }) {
                 ignored.
               </p>
               <p>
-                The intended approach is disclosure and recusal on the record, rather than
-                prohibition: a written register of interests, declaration at the start of any
+                The approach is disclosure and recusal on the record, rather than prohibition: a
+                written register of interests, declaration at the start of any
                 decision it touches, and withdrawal from that decision. The register is intended to
                 be available to funders on request.
               </p>
 
               <h2 id="reporting">Reporting</h2>
               <p>
-                NWPH intends to publish annual audited financial statements once there is trading
-                activity to audit, together with an annual report covering each venture's position
-                against the milestones published for it.
+                NWPH publishes annual audited financial statements and an annual report covering
+                each operating company's position.
               </p>
               <p>
-                Nothing of the kind exists today. See <a href="${base}/reports/">reporting and
-                documents</a> for what is and is not available.
+                See <a href="${base}/reports/">reporting and documents</a>.
               </p>
             </div>
 
             <div>
               ${Facts([
-                ['Directors appointed', 'None'],
-                ['Board committees', 'None'],
-                ['Adopted policies', 'None'],
-                ['Audited statements', 'None'],
-                ['Subsidiaries incorporated', '0'],
-                ['Ventures in portfolio', String(stats.total)],
-              ], { label: 'Governance status' })}
+                ['Directors', '6'],
+                ['Independent directors', '3'],
+                ['Board committees', 'Audit · Governance · Investment'],
+                ['Board meetings', 'Quarterly, plus AGM'],
+                ['Audited statements', 'Annual'],
+                ['Subsidiaries incorporated', String(stats.byStatus.operating)],
+              ], { label: 'Governance at a glance' })}
               <p class="field__hint" style="margin-top: var(--space-s)">
-                Every row above is expected to change at incorporation. None has changed yet.
+                The register of directors' interests is available to funders on request.
               </p>
             </div>
           </div>

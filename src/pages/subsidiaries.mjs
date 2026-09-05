@@ -79,7 +79,7 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
  * assessment: the same template, but titled by sector and stating throughout
  * that no company has been formed.
  */
-export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
+export function subsidiaryDetail(subsidiary, { stats, base, milestones = [], manager = null, roles = [], news = [] }) {
   const meta = STATUS[subsidiary.status];
   const named = Boolean(subsidiary.name);
   const title = named ? subsidiary.name : subsidiary.sector;
@@ -107,8 +107,8 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
             <p>
               ${meta.description}
               ${named
-                ? html`<strong>This company is not operating.</strong>`
-                : html`<strong>No company has been formed in this sector, and none has been named.</strong>`}
+                ? html`<strong>Managing Director: ${subsidiary.managingDirector ?? '—'}.</strong>`
+                : html`<strong>No company has been formed in this sector.</strong>`}
             </p>
           </div>
         </div>
@@ -125,10 +125,11 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
               ${Facts(named ? [
                 ['Legal name', subsidiary.legalName],
                 ['Sector', subsidiary.sector],
-                ['Stage', meta.label],
-                ['Target', subsidiary.target || 'Not set'],
-                ['Operating', 'No'],
-                ['Incorporated', 'No'],
+                ['Status', meta.label],
+                ...(subsidiary.founded ? [['Formed', String(subsidiary.founded)]] : []),
+                ...(subsidiary.managingDirector ? [['Managing Director', subsidiary.managingDirector]] : []),
+                ...(subsidiary.staff ? [['Staff', subsidiary.staff]] : []),
+                ...(subsidiary.communities ? [['Operating in', subsidiary.communities]] : []),
               ] : [
                 ['Sector', subsidiary.sector],
                 ['Stage', meta.label],
@@ -159,12 +160,74 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
           </div>
         </section>` : ''}
 
+      ${manager ? html`
+        <section class="section section--tint">
+          <div class="wrap">
+            <p class="section__label">Accountability</p>
+            <h2>Who runs ${title}</h2>
+            <div class="split split--wide" style="margin-top: var(--space-l)">
+              <div class="founder">
+                <div class="founder__identity">
+                  <h3 class="founder__name">${manager.name}</h3>
+                  <p class="founder__role">${manager.role}</p>
+                </div>
+                <div class="founder__bio">
+                  ${raw(manager.body)}
+                  ${manager.appointed ? html`<p>Appointed ${manager.appointed}.</p>` : ''}
+                </div>
+              </div>
+              <div class="callout">
+                <p><strong>Each company has its own board.</strong></p>
+                <p>
+                  The managing director is accountable to that board, not directly to the holding
+                  company's executive. The holding company decides capital, senior appointments,
+                  and whether the company continues.
+                </p>
+                <p><a href="${base}/about/governance/">How the portfolio is governed →</a></p>
+              </div>
+            </div>
+          </div>
+        </section>` : ''}
+
+      ${roles.length ? html`
+        <section class="section">
+          <div class="wrap">
+            <p class="section__label">Careers</p>
+            <h2>${roles.length} open position${roles.length === 1 ? '' : 's'} at ${title}</h2>
+            <ul class="grid grid--2" role="list" style="margin-top: var(--space-l)">
+              ${roles.map((role) => html`
+                <li class="card card--link">
+                  <p class="card__sector">${role.category ?? 'Open position'}</p>
+                  <h3 class="card__title"><a href="${base}/careers/${role.slug}/">${role.title}</a></h3>
+                  <p class="card__legal">${role.location} · ${role.type}</p>
+                  <p class="card__body">${role.excerpt}</p>
+                </li>`)}
+            </ul>
+          </div>
+        </section>` : ''}
+
+      ${news.length ? html`
+        <section class="section section--tint">
+          <div class="wrap">
+            <p class="section__label">News</p>
+            <h2>Recent from ${title}</h2>
+            <ul class="grid grid--3" role="list" style="margin-top: var(--space-l)">
+              ${news.map((entry) => html`
+                <li class="card card--link">
+                  <p class="card__sector"><time datetime="${entry.date}">${entry.date}</time></p>
+                  <h3 class="card__title"><a href="${base}/news/${entry.slug}/">${entry.title}</a></h3>
+                  <p class="card__body">${entry.summary}</p>
+                </li>`)}
+            </ul>
+          </div>
+        </section>` : ''}
+
       <section class="section">
         <div class="wrap">
           ${CTABlock({
-            title: named ? 'Working with this venture' : 'Interested in this sector?',
+            title: named ? 'Working with this company' : 'Interested in this sector?',
             body: named
-              ? 'No contracts, bookings or applications are being accepted. Suppliers and partners can register now to be contacted when that changes.'
+              ? 'Suppliers can register to be contacted when this company issues a requirement. Partnership enquiries go through the holding company.'
               : 'NWPH expects to enter this sector through partnership as readily as through a start-up. Suppliers and prospective partners can register their interest now.',
             actions: [
               { href: `${base}/procurement/`, label: 'Register as a supplier', primary: true },

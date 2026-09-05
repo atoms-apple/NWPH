@@ -181,7 +181,9 @@ function checkDocument(file, html) {
   }
 
   // The honesty statement must survive on every page that carries the footer
-  if (!/ventures are currently operating/.test(html)) {
+  // Wording-agnostic so the guard survives a copy change, but the derived
+  // "N of M operating" statement still has to be on every page.
+  if (!/\d+ of \d+ (ventures|companies) are (currently )?operating/.test(html)) {
     problem('footer operating-count statement is missing');
   }
 
