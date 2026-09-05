@@ -21,6 +21,10 @@ export const subsidiarySchema = object({
   status: enumOf(STATUS_VALUES),
   summary: string({ min: 20, max: 400 }),
   target: string({ optional: true, max: 60 }),
+  founded: number({ optional: true, integer: true }),
+  managingDirector: string({ optional: true, max: 60 }),
+  staff: string({ optional: true, max: 40 }),
+  communities: string({ optional: true, max: 60 }),
   order: number({ optional: true, integer: true }),
   slug: string({ optional: true }),
   draft: boolean(),
@@ -29,6 +33,12 @@ export const subsidiarySchema = object({
 export const personSchema = object({
   name: string({ min: 2, max: 60 }),
   role: string({ min: 2, max: 80 }),
+  // Which listing the person belongs to. Absent means the founding group.
+  group: enumOf(['board', 'executive', 'subsidiary'], { optional: true }),
+  // Subsidiary the person leads, for group: subsidiary.
+  venture: string({ optional: true, max: 60 }),
+  appointed: number({ optional: true, integer: true }),
+  independent: boolean(),
   order: number({ optional: true, integer: true }),
   slug: string({ optional: true }),
   draft: boolean(),
@@ -73,6 +83,15 @@ export const milestoneSchema = object({
   draft: boolean(),
 });
 
+/** A dated entry in the corporate history. */
+export const historySchema = object({
+  year: number({ integer: true }),
+  title: string({ min: 5, max: 120 }),
+  order: number({ optional: true, integer: true }),
+  slug: string({ optional: true }),
+  draft: boolean(),
+});
+
 export const newsSchema = object({
   title: string({ min: 5, max: 120 }),
   date: isoDate(),
@@ -90,5 +109,6 @@ export const collections = {
   procurement: { schema: procurementTierSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
   faq: { schema: faqSchema, sort: (a, b) => (a.order ?? 999) - (b.order ?? 999) },
   milestones: { schema: milestoneSchema, sort: (a, b) => a.order - b.order },
+  history: { schema: historySchema, sort: (a, b) => a.year - b.year },
   news: { schema: newsSchema, sort: (a, b) => b.date.localeCompare(a.date) },
 };

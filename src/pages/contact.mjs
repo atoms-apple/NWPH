@@ -14,8 +14,8 @@ export default function contactPage({ base }) {
           <p class="section__label">Contact</p>
           <h1>Get in touch</h1>
           <p class="section__intro">
-            NWPH is pre-incorporation. Enquiries are answered by the founding group, not by staff,
-            so replies may take time.
+            Enquiries reach the holding company in Iqaluit and are directed to the relevant
+            operating company.
           </p>
         </div>
       </section>
@@ -31,7 +31,7 @@ export default function contactPage({ base }) {
                   <tbody>
                     <tr><th scope="row">Email</th><td><a href="mailto:${site.email}">${site.email}</a></td></tr>
                     <tr><th scope="row">Location</th><td>${site.headquarters}</td></tr>
-                    <tr><th scope="row">Incorporation</th><td>Not yet incorporated</td></tr>
+                    <tr><th scope="row">Incorporated</th><td>2001, Nunavut</td></tr>
                   </tbody>
                 </table>
               </div>

@@ -8,23 +8,22 @@ export default function procurementPage({ tiers, faq, base }) {
     current: '/procurement/',
     title: 'Procurement & suppliers',
     description:
-      'Supplier registration for North West Passage Holdings Corporation. NWPH is pre-incorporation and is not currently issuing contracts or purchase orders.',
+      'Supplier registration and procurement for North West Passage Holdings Corporation and its seven operating companies.',
     body: html`
       <section class="section section--dark">
         <div class="wrap">
           <p class="section__label">Suppliers</p>
           <h1>Procurement</h1>
           <p class="section__intro">
-            NWPH is not currently procuring goods or services. Registration records your
-            details in advance of that changing.
+            Registration puts your business in front of seven operating companies across the
+            portfolio.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">No contracts are being issued.</p>
+            <p class="status-notice__head">Registration is not a contract.</p>
             <p>
-              NWPH is <strong>pre-incorporation</strong> with no operating subsidiaries. There are
-              no open tenders, no purchase orders, and no procurement budget. Registration records
-              your details and nothing more — it is <strong>not</strong> a contract, a
-              pre-qualification, or a commitment to buy.
+              Registering records your details so that you are contacted when a relevant
+              requirement is issued. It is <strong>not</strong> a contract, a pre-qualification, a
+              standing offer, or a commitment to buy.
             </p>
           </div>
         </div>
@@ -79,7 +78,7 @@ export default function procurementPage({ tiers, faq, base }) {
         <div class="wrap">
           ${CTABlock({
             title: 'Need corporate documents?',
-            body: 'Funders and procurement officers can see what documentation exists, and request what is available. NWPH is pre-incorporation: audited statements and operating history do not exist.',
+            body: 'Audited statements, the annual report and corporate documentation for funders and procurement officers.',
             actions: [
               { href: `${base}/reports/`, label: 'Reporting & documents', primary: true },
               { href: `${base}/contact/#documents-form`, label: 'Request documents' },

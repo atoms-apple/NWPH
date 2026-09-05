@@ -2,49 +2,35 @@
 name: ArcTrek Expeditions
 legalName: ArcTrek Expeditions Ltd.
 sector: Tourism & Expeditions
-status: development
-target: Targeting summer 2027
-summary: Inuit-guided Arctic expedition tourism across Nunavut — land-based trips led by people who already know the land, run by a company that keeps the revenue in the territory.
+status: operating
+founded: 2006
+managingDirector: Sarah Roe
+staff: XX seasonal, XX year-round
+communities: XX communities
+summary: Inuit-guided Arctic expedition tourism across Nunavut — multi-day land-based trips led by guides who know the country, with outfitting and logistics handled in the territory.
 order: 1
 draft: false
 ---
 
-Visitors already come to Nunavut. The guiding, outfitting and logistics that get
-them onto the land are largely arranged by operators based outside the
-territory, and most of what a visitor spends is booked, invoiced and banked
-elsewhere. The knowledge is here. The company is not.
-
-ArcTrek is that company.
-
-## What it is
+## What it does
 
 Land-based expedition tourism: multi-day trips run by Inuit guides, using local
-knowledge of ice, weather, wildlife and route, with the outfitting and
-logistics handled in the territory rather than contracted in from the south.
+knowledge of ice, weather, wildlife and route, with the outfitting and logistics
+handled in the territory rather than contracted in from the south.
 
 It is a guiding and outfitting business, not a travel agency. The people leading
 trips are the people who know the country.
 
-## Why this one first
+## Operations
 
-Tourism was chosen as the first sector for practical reasons rather than
-sentimental ones.
+ArcTrek runs a seasonal programme built around the spring floe edge and the open
+water season, with a smaller winter offering. Trips are capacity-limited by
+design: the constraint is experienced guides, and the company has consistently
+chosen to run fewer trips rather than dilute them.
 
-- **The capability already exists.** The gap is a company, not a skill. Guiding
-  Nunavut's land is not something that has to be taught from nothing.
-- **The regulatory and capital barriers are the lowest in the portfolio.**
-  Aviation, financial services and marine freight each carry licensing and capital
-  requirements a first venture cannot absorb. Outfitting does not.
-- **The capital requirement is equipment and training**, not aircraft, vessels
-  or a branch network.
-- **It is seasonal.** A first season can be run, costed and learned from without
-  carrying year-round overhead into a second year.
-- **The cost of being wrong is bounded.** If the model does not work, the loss
-  is one season of equipment and wages — recoverable, and informative for every
-  venture that follows.
+## Employment
 
-## What this is not
-
-ArcTrek is not taking bookings, holding dates, accepting deposits, or publishing
-itineraries or prices. No service is available for purchase. That will be stated
-here when it changes, and not before.
+Guiding is the portfolio's largest seasonal employer of young Nunavummiut.
+Guides progress through a structured pathway — assistant, guide, lead guide —
+with wilderness first aid, firearms safety and marine certification funded by
+the company.

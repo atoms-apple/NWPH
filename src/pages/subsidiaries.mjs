@@ -107,8 +107,8 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
             <p>
               ${meta.description}
               ${named
-                ? html`<strong>This company is not operating.</strong>`
-                : html`<strong>No company has been formed in this sector, and none has been named.</strong>`}
+                ? html`<strong>Managing Director: ${subsidiary.managingDirector ?? '—'}.</strong>`
+                : html`<strong>No company has been formed in this sector.</strong>`}
             </p>
           </div>
         </div>

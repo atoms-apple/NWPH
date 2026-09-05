@@ -3,6 +3,29 @@
  * touching a template lives here or in src/content/.
  */
 
+/**
+ * DEMONSTRATION BUILD.
+ *
+ * This branch renders NWPH as a 25-year-old operating corporation. None of it
+ * is true: the corporation is pre-incorporation, has no subsidiaries trading,
+ * no board, no executives and no financial history.
+ *
+ * Everything specific is a visible placeholder. People use the standard legal
+ * fictitious-person names (Doe, Roe, Major, Stiles) rather than invented Inuit
+ * names, because Nunavut has roughly 40,000 residents and a plausible generated
+ * name has a real chance of matching someone who would then appear to be a
+ * director of a company they have never heard of. Figures render as XX.X.
+ *
+ * Setting this to false returns the build to the factual site on `main`.
+ */
+export const demo = {
+  enabled: true,
+  founded: 2001,
+  anniversary: 25,
+  banner:
+    'Illustrative demonstration. NWPH is pre-incorporation — nothing on these pages describes real operations, people, results or history.',
+};
+
 export const site = {
   name: 'North West Passage Holdings Corporation',
   shortName: 'NWPH',
@@ -36,6 +59,7 @@ export const formEndpoint = null;
 
 export const nav = [
   { href: '/about/', label: 'About' },
+  { href: '/about/history/', label: 'History' },
   { href: '/subsidiaries/', label: 'Portfolio' },
   { href: '/procurement/', label: 'Procurement' },
   { href: '/careers/', label: 'Careers' },

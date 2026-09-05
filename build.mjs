@@ -27,6 +27,8 @@ import contactPage from './src/pages/contact.mjs';
 import { newsIndex, newsDetail } from './src/pages/news.mjs';
 import governancePage from './src/pages/governance.mjs';
 import { reportsPage, privacyPage, accessibilityPage } from './src/pages/policies.mjs';
+import leadershipPage from './src/pages/leadership.mjs';
+import historyPage from './src/pages/history.mjs';
 import { thankYouPage, notFoundPage } from './src/pages/static.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
@@ -125,7 +127,7 @@ async function build() {
   for (const [name, config] of Object.entries(collections)) {
     loaded[name] = await loadCollection(name, config.schema, { sort: config.sort });
   }
-  const { subsidiaries, people, roles, procurement, faq, news, milestones } = loaded;
+  const { subsidiaries, people, roles, procurement, faq, news, milestones, history } = loaded;
 
   // 2. Derived statistics. Never authored by hand — see src/data/status.mjs.
   const stats = {
@@ -139,9 +141,11 @@ async function build() {
 
   // 3. Pages.
   const pages = [
-    homePage({ subsidiaries, stats, base }),
+    homePage({ subsidiaries, people, history, stats, base }),
     aboutPage({ people, stats, base }),
     governancePage({ stats, base }),
+    leadershipPage({ people, subsidiaries, base }),
+    ...(history.length ? [historyPage({ history, stats, base })] : []),
     subsidiariesIndex({ subsidiaries, stats, base }),
     // Every venture gets a page. A named one is a company page; an unnamed one
     // is a sector assessment — the gap, what a venture there would need, and a

@@ -1,44 +1,32 @@
 ---
+name: Illuvigaq Properties
+legalName: Illuvigaq Properties Ltd.
 sector: Real Estate & Housing
-status: planned
-summary: Development and property management addressing the territory's housing shortage, built for northern climate and northern households.
+status: operating
+founded: 2009
+managingDirector: Patricia Stiles
+staff: XX
+communities: XX communities
+summary: Residential and commercial development and property management, built for northern climate, northern households and the years after handover.
 order: 7
 draft: false
 ---
 
-## The gap
+## What it does
 
-Nunavut's housing shortage is the territory's most widely documented social and
-economic problem. It constrains everything downstream of it: recruitment,
-health, education, and the ability of any employer — including the ones NWPH
-intends to build — to bring staff into a community.
+Development, construction delivery and long-term property management of
+residential and commercial buildings in Qikiqtani communities.
 
-Construction and property management in the territory are largely delivered by
-southern firms mobilised for a season. The buildings stay. The construction
-margin, and the expertise, leave with the crew.
+## Operations
 
-## What a venture here would require
+Building design accounts for permafrost, extreme cold and household sizes that
+southern floor plans do not anticipate. Materials are planned onto sealift a
+season ahead and construction is delivered within a short window.
 
-- Development capital, and access to the federal and territorial housing
-  programmes that fund most northern construction.
-- A construction workforce, or a partnership with one, plus the seasonal
-  logistics to get materials in on sealift and build within a short season.
-- Land tenure — municipal lots, Inuit Owned Land, or Commissioner's land —
-  each with its own process and timeline.
-- Building design suited to permafrost, extreme cold, and household sizes that
-  southern floor plans do not anticipate.
-- Property management capability for the years after handover, which is where
-  most northern housing actually fails.
+Property management is treated as the main business rather than an afterthought,
+because that is where most northern housing actually fails.
 
-## Why not first
+## Employment
 
-Development is slow, capital-intensive, and dependent on programme funding
-cycles that a new corporation has no track record to access. It is also the
-sector where a failure is least recoverable, because the asset cannot be moved
-or resold easily. It needs a balance sheet and a delivery record first.
-
-## Status
-
-No company has been formed. No land, financing or programme application has
-been pursued. This page describes a gap NWPH intends to address, not work that
-is underway.
+Trades training and apprenticeship placement run alongside each build, with the
+intention that the crew is local by the time the building is finished.

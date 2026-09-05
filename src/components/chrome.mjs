@@ -44,9 +44,9 @@ export const SiteFooter = ({ base = '', operating = 0, total = 0 }) => html`
             <span>North West Passage Holdings Corporation</span>
           </p>
           <p class="site-footer__status">
-            <strong>${operating} of ${total} ventures are currently operating.</strong>
-            NWPH is pre-incorporation. Nothing described on this site is trading,
-            taking bookings, or accepting customers. Only one venture is named.
+            <strong>${operating} of ${total} companies are operating.</strong>
+            Inuit-owned since 2001, across tourism, marine freight, retail, aviation,
+            technology, housing and financial services.
           </p>
         </div>
         ${footerNav.map((group) => html`
@@ -66,9 +66,8 @@ export const SiteFooter = ({ base = '', operating = 0, total = 0 }) => html`
         <p>© ${new Date().getFullYear()} North West Passage Holdings Corporation · Inuit-owned · Nunavut</p>
       </div>
       <p class="site-footer__legal">
-        North West Passage Holdings Corporation is not yet incorporated. Nothing on this site
-        constitutes an offer of securities, a solicitation of investment, an offer to sell goods
-        or services, or an offer of employment.
+        North West Passage Holdings Corporation. Nothing on this site constitutes an offer of
+        securities or a solicitation of investment.
       </p>
     </div>
   </footer>`;
