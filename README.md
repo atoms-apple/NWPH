@@ -1,10 +1,20 @@
-# North West Passage Holdings Corporation — website
+# North West Passage Holdings Corporation
 
-Static site for NWPH, an Inuit-owned holding company in Iqaluit, Nunavut.
+Two things live in this repository:
+
+1. **The corporate site** for NWPH, an Inuit-owned holding company in Iqaluit,
+   Nunavut. Published at `/NWPH/`.
+2. **The North Winds Airlines app** — a working prototype of the passenger app
+   for the portfolio's aviation venture. Published at `/NWPH/app/`.
+   See [`docs/APP.md`](docs/APP.md).
 
 **The site's central claim is that nothing is operating yet.** That is not a
 disclaimer bolted on to marketing copy — it is enforced by the content schema.
 Read [The status enum](#the-status-enum) before editing anything.
+
+The airline app is held to the same standard. North Winds does not exist: no
+company, no certification, no aircraft. The app says so in the header of every
+screen, and CI fails the deploy if that marking goes missing.
 
 ---
 
@@ -17,13 +27,23 @@ built-ins.
 ## Local development
 
 ```bash
-npm run dev      # build, then serve at http://localhost:4321
-npm run build    # build to dist/
-npm run check    # build, then run contrast + accessibility + link checks
-npm run serve    # serve an existing dist/
+npm run dev        # build both, then serve at http://localhost:4321
+npm run build      # build site and app to dist/
+npm run check      # build, then run every check
+npm run serve      # serve an existing dist/
+
+npm run build:app  # just the airline app → dist/app/
+npm run check:app  # just the app's checks
 ```
 
-`npm run check` is the gate CI uses. Run it before pushing.
+`npm run check` is the gate CI uses. Run it before pushing. It covers both: the
+site's contrast, accessibility and link checks, then the app's 660-odd
+assertions over its schedule, pricing, itinerary and booking engines.
+
+The site build clears `dist/`, so build the site before the app. `npm run build`
+does them in that order.
+
+Local preview of the app: **http://localhost:4321/NWPH/app/**
 
 ---
 
@@ -222,7 +242,8 @@ invisible text — `font-display: swap` throughout.
 ## Architecture
 
 ```
-build.mjs              the whole build
+build.mjs              the site build
+build-app.mjs          the airline app build
 src/
 ├── content/           all editable copy
 ├── content.config.mjs schemas — the validation gate
@@ -237,8 +258,19 @@ src/
 │   └── policies.mjs   reporting, privacy, accessibility
 ├── styles/            tokens → base → layout → components → forms → print
 └── client/enhance.js  progressive enhancement only
+app/                   the North Winds Airlines app — see docs/APP.md
+├── index.html         the shell
+├── sw.js              offline precache
+├── styles/            its own token system, with a dark theme
+└── src/
+    ├── data/          airports, aircraft, routes, fares
+    ├── engine/        schedule, pricing, itinerary search, bookings
+    ├── lib/           templating, routing, state, dates, deterministic random
+    └── views/         one module per screen
 tools/
-├── check.mjs          contrast + accessibility + link verification
+├── check.mjs          site: contrast + accessibility + link verification
+├── check-app.mjs      app: engine assertions, network validity, contrast, build output
+├── png.mjs            a small PNG encoder, for the app's generated icons
 ├── serve.mjs          local preview
 ├── fetch-fonts.mjs    one-off font download
 └── form-worker.js     server-side form handler (deploy separately)
@@ -264,8 +296,37 @@ always "shows everything", never "shows nothing".
 
 ---
 
+## The airline app
+
+`/NWPH/app/` is a booking app for North Winds Airlines: search and book across
+the three service lines, change flights and dates, choose seats, add bags and
+freight, check in, and carry a boarding pass offline.
+
+It shares the brand palette and the no-dependency approach, and nothing else —
+it is an application, with its own token system, its own dark theme and its own
+verification. Everything runs on the device: the timetable is computed from
+route patterns, fares from distance and demand, and bookings live in the
+browser.
+
+Three things about it are worth knowing before editing:
+
+- **It is marked as a prototype in the app chrome**, not in small print, and CI
+  fails the deploy if the marking, the `noindex` or the payment-screen notice
+  goes missing.
+- **It is not linked from the factual site.** On that site aviation is a sector
+  assessment with no company formed; a link to a working booking app would say
+  otherwise. To show it to someone, send the URL.
+- **The checks are the interesting part.** `tools/check-app.mjs` asserts that
+  every route's aircraft can use every runway it calls at, that every fare
+  breakdown sums to its total, that no itinerary routes a passenger back over
+  their own departure point, and that every module import resolves. Full list in
+  [`docs/APP.md`](docs/APP.md).
+
+---
+
 ## Further reading
 
+- [`docs/APP.md`](docs/APP.md) — **the North Winds Airlines app**
 - [`docs/STACK.md`](docs/STACK.md) — why this stack
 - [`docs/ACCESSIBILITY.md`](docs/ACCESSIBILITY.md) — audit, fixes, what is outstanding
 - [`docs/CONTENT-GAPS.md`](docs/CONTENT-GAPS.md) — **decisions needed before launch**

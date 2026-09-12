@@ -1,0 +1,78 @@
+/* ── BASE ────────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* The app owns its scrolling; the shell does not bounce. */
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+h1, h2, h3, h4 { margin: 0; line-height: 1.22; font-weight: 650; letter-spacing: -0.011em; }
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); }
+h4 { font-size: var(--text-md); }
+p { margin: 0 0 var(--s3); }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--altitude-text); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+ul, ol { margin: 0 0 var(--s3); padding-left: var(--s5); }
+li { margin-bottom: var(--s1); }
+
+small { font-size: var(--text-sm); }
+strong { font-weight: 650; }
+
+img, svg { max-width: 100%; }
+svg.icon { display: block; flex: none; }
+
+hr { border: 0; border-top: 1px solid var(--line); margin: var(--s5) 0; }
+
+/* Focus: always visible, never only a colour change. */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.on-chrome :focus-visible { outline-color: var(--focus-on-chrome); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute; top: -100px; left: var(--s3); z-index: 100;
+  background: var(--surface); color: var(--ink);
+  padding: var(--s3) var(--s4); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); font-weight: 600; text-decoration: none;
+}
+.skip-link:focus { top: calc(var(--safe-top) + var(--s3)); }
+
+/* Numbers that line up in a column: fares, times, seat rows. */
+.tnum { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

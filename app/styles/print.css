@@ -1,0 +1,38 @@
+/* ── PRINT ───────────────────────────────────────────────────────────────────
+   The one thing worth printing from this app is a boarding pass, and the one
+   place it gets printed is a community office with a laser printer. So the
+   chrome goes, the pass keeps its structure, and the barcode block stays black
+   on white regardless of the theme the screen was in.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@media print {
+  .app-header, .tabbar, .action-bar, .toast-host, .skip-link,
+  .btn-row, .chips, .note, .steps { display: none !important; }
+
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  .app-main { padding: 0; max-width: none; }
+
+  .pass {
+    border: 1px solid #000;
+    box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 12mm;
+  }
+  .pass__head { background: #000 !important; color: #fff !important; }
+  .pass__bars span { background: #000 !important; }
+  .pass__tear::before, .pass__tear::after { display: none; }
+  .pass__note, .pass__city, .pass__cell dt { color: #333 !important; }
+
+  .card { border: 1px solid #999; break-inside: avoid; }
+  details.disclosure { border: 0; }
+  details.disclosure > summary { display: none; }
+  details.disclosure > .disclosure__body { padding: 0; }
+
+  a[href^='#']::after { content: ''; }
+}

@@ -13,6 +13,10 @@ const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml',
   '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.woff2': 'font/woff2',
+  // The app: a manifest served as octet-stream is ignored, and a module served
+  // as anything but JavaScript is refused outright.
+  '.webmanifest': 'application/manifest+json', '.png': 'image/png',
+  '.json': 'application/json', '.mjs': 'text/javascript; charset=utf-8',
 };
 
 createServer(async (req, res) => {

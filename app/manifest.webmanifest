@@ -1,0 +1,25 @@
+{
+  "name": "North Winds Airlines",
+  "short_name": "North Winds",
+  "description": "Book, change and manage flights across Nunavut and south — Altitude jets, Express direct services and the Connect milk runs.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12293F",
+  "theme_color": "#12293F",
+  "categories": ["travel", "navigation"],
+  "lang": "en-CA",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "Book a flight", "url": "./#/book" },
+    { "name": "My trips", "url": "./#/trips" },
+    { "name": "Check in", "url": "./#/checkin" },
+    { "name": "Flight status", "url": "./#/flights" }
+  ]
+}

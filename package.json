@@ -2,16 +2,20 @@
   "name": "nwph-website",
   "version": "1.0.0",
   "private": true,
-  "description": "North West Passage Holdings Corporation \u2014 corporate website",
+  "description": "North West Passage Holdings Corporation — corporate website and the North Winds Airlines app",
   "type": "module",
   "engines": {
     "node": ">=20.6.0"
   },
   "scripts": {
-    "build": "node build.mjs",
-    "dev": "node build.mjs && node tools/serve.mjs",
+    "build": "node build.mjs && node build-app.mjs",
+    "build:site": "node build.mjs",
+    "build:app": "node build-app.mjs",
+    "dev": "npm run build && node tools/serve.mjs",
     "serve": "node tools/serve.mjs",
-    "check": "node build.mjs && node tools/check.mjs",
+    "check": "npm run build && node tools/check.mjs && node tools/check-app.mjs",
+    "check:site": "node tools/check.mjs",
+    "check:app": "node tools/check-app.mjs",
     "fetch-fonts": "node tools/fetch-fonts.mjs"
   },
   "dependencies": {},

@@ -24,12 +24,30 @@ jobs:
         with:
           node-version: '22'
       # No dependencies to install — the build uses Node built-ins only.
-      - name: Build
+      - name: Build site
         run: node build.mjs
       # Content validation and the accessibility/metadata checks are part of the
       # gate: a bad subsidiary status or a contrast regression fails the build.
-      - name: Verify
+      - name: Verify site
         run: node tools/check.mjs
+
+      # The North Winds Airlines app, published under /NWPH/app/.
+      - name: Build app
+        run: node build-app.mjs
+      # Its own gate: the schedule, fare and booking engines are asserted
+      # against the rules they implement, every route is checked against the
+      # runways it calls at, and the prototype markers must still be present.
+      - name: Verify app
+        run: node tools/check-app.mjs
+
+      # Fail the deploy rather than publish a booking app for an airline that
+      # does not exist without saying so on every screen.
+      - name: Confirm the app is marked as a prototype
+        run: |
+          grep -q 'noindex' dist/app/index.html || { echo 'app is indexable'; exit 1; }
+          grep -q 'proto-chip' dist/app/src/main.js || { echo 'app header has no prototype marker'; exit 1; }
+          grep -q 'does not exist' dist/app/src/views/about.js || { echo 'about screen does not state the airline is not real'; exit 1; }
+          grep -q 'No payment is taken' dist/app/src/views/payment.js || { echo 'payment screen does not say no payment is taken'; exit 1; }
 
       # The demonstration build renders NWPH as a 25-year-old operating
       # corporation, which it is not. It is published under /NWPH/demo/ so it

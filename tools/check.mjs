@@ -94,10 +94,21 @@ function checkContrast() {
 
 /* ── HTML checks ─────────────────────────────────────────────────────────── */
 
+/**
+ * Every page of the site.
+ *
+ * dist/app/ is skipped: it is the North Winds booking application, a
+ * single-page app with its own shell, its own landmarks and its own gate in
+ * tools/check-app.mjs. Holding it to the corporate site's page rules — a
+ * footer operating count, one h1 per document — would test the wrong thing.
+ */
+const APP_DIR = path.join(dist, 'app');
+
 async function htmlFiles(dir) {
   const out = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
+    if (full === APP_DIR) continue;
     if (entry.isDirectory()) out.push(...(await htmlFiles(full)));
     else if (entry.name.endsWith('.html')) out.push(full);
   }
