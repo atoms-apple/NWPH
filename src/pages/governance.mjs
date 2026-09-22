@@ -30,11 +30,12 @@ export default function governancePage({ stats, base }) {
             How NWPH is governed, and how it governs the companies it owns.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">Six directors, three committees.</p>
+            <p class="status-notice__head">Four directors, two committees.</p>
             <p>
-              The board meets quarterly and holds an annual general meeting. Audit, governance and
-              investment committees each report to it. Directors and their appointment dates are
-              published on the <a href="${base}/about/leadership/">leadership page</a>.
+              The board meets quarterly and holds an annual general meeting. Audit and governance
+              committees report to it; investment decisions are taken by the full board while the
+              portfolio is this size. Directors and their appointment dates are published on the
+              <a href="${base}/about/leadership/">leadership page</a>.
             </p>
           </div>
         </div>
@@ -66,8 +67,8 @@ export default function governancePage({ stats, base }) {
               <h2 id="board">Board composition</h2>
               <p>
                 A majority of directors are Nunavut Inuit. Directors serve fixed, staggered terms
-                rather than indefinitely, and three of the six are independent of both management
-                and any funder.
+                rather than indefinitely, and two of the four are independent of both management
+                and any funder — including the Chair, who is not the founder.
               </p>
               <p>
                 Directors, their appointment dates and their committee roles are published on the
@@ -113,9 +114,9 @@ export default function governancePage({ stats, base }) {
 
             <div>
               ${Facts([
-                ['Directors', '6'],
-                ['Independent directors', '3'],
-                ['Board committees', 'Audit · Governance · Investment'],
+                ['Directors', '4'],
+                ['Independent directors', '2'],
+                ['Board committees', 'Audit · Governance'],
                 ['Board meetings', 'Quarterly, plus AGM'],
                 ['Audited statements', 'Annual'],
                 ['Subsidiaries incorporated', String(stats.byStatus.operating)],

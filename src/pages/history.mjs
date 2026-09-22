@@ -8,7 +8,7 @@ export default function historyPage({ history, stats, base }) {
     path: '/about/history/',
     current: '/about/history/',
     title: 'History',
-    description: `Twenty-five years of North West Passage Holdings Corporation, from incorporation in ${demo.founded} to a portfolio of ${stats.byStatus.operating} operating companies.`,
+    description: `How North West Passage Holdings Corporation got from a sector assessment to ${stats.byStatus.operating} operating companies.`,
     body: html`
       <section class="section section--dark">
         <div class="wrap">
@@ -17,18 +17,18 @@ export default function historyPage({ history, stats, base }) {
             { href: `${base}/about/`, label: 'About' },
             { label: 'History' },
           ])}
-          <p class="section__label">${demo.founded}–${demo.founded + demo.anniversary}</p>
-          <h1>Twenty-five years</h1>
+          <p class="section__label">${demo.founded - 1}–${demo.year}</p>
+          <h1>How we got here</h1>
           <p class="section__intro">
-            From one subsidiary handling cargo onto a beach, to a portfolio operating across seven
-            sectors.
+            A short history, because there is not much of it yet. Eighteen months of assessment,
+            incorporation, and two companies since.
           </p>
           ${StatStrip([
-            { label: 'Years', value: String(demo.anniversary) },
+            { label: 'Incorporated', value: String(demo.founded) },
             { label: 'Operating companies', value: String(stats.byStatus.operating) },
             { label: 'Employees', value: String(demo.figures.employees) },
-            { label: 'Communities served', value: String(demo.figures.communities) },
-          ], { label: 'Twenty-five years at a glance' })}
+            { label: 'Communities', value: String(demo.figures.communities) },
+          ], { label: 'The corporation at a glance' })}
         </div>
       </section>
 

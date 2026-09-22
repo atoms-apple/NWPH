@@ -31,7 +31,7 @@ export default function contactPage({ base }) {
                   <tbody>
                     <tr><th scope="row">Email</th><td><a href="mailto:${site.email}">${site.email}</a></td></tr>
                     <tr><th scope="row">Location</th><td>${site.headquarters}</td></tr>
-                    <tr><th scope="row">Incorporated</th><td>2001, Nunavut</td></tr>
+                    <tr><th scope="row">Incorporated</th><td>2026, Nunavut</td></tr>
                   </tbody>
                 </table>
               </div>

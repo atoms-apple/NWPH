@@ -1,11 +1,12 @@
 ---
 name: Susan Major
-role: Chief Operating Officer
+role: Director of Operations & Shared Services
 group: executive
-appointed: 2015
+appointed: 2027
 independent: false
+alsoDirector: false
 order: 3
 draft: false
 ---
-PLACEHOLDER. Shared services across the portfolio: procurement, insurance,
-facilities and health and safety.
+PLACEHOLDER. Procurement, insurance, payroll and health and safety across the
+portfolio — the functions a single small company cannot carry alone.

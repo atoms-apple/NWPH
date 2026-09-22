@@ -23,7 +23,8 @@ const PersonRow = (person) => html`
  * operating company.
  */
 export default function leadershipPage({ people, subsidiaries, base }) {
-  const board = people.filter((p) => p.group === 'board');
+  // An officer who also sits on the board belongs in both listings.
+  const board = people.filter((p) => p.group === 'board' || p.alsoDirector);
   const executive = people.filter((p) => p.group === 'executive');
   const managers = people.filter((p) => p.group === 'subsidiary');
   const independent = board.filter((p) => p.independent).length;
@@ -33,7 +34,7 @@ export default function leadershipPage({ people, subsidiaries, base }) {
     current: '/about/',
     title: 'Leadership & board',
     description:
-      'The board of directors, executive team, and the managing directors accountable for each operating company in the North West Passage Holdings portfolio.',
+      'The board of directors, executive team, and the general managers accountable for each operating company in the North West Passage Holdings portfolio.',
     body: html`
       <section class="section section--dark">
         <div class="wrap">
@@ -43,7 +44,7 @@ export default function leadershipPage({ people, subsidiaries, base }) {
             { label: 'Leadership & board' },
           ])}
           <p class="section__label">Leadership</p>
-          <h1>Board, executive and subsidiary management</h1>
+          <h1>Board, executive and company management</h1>
           <p class="section__intro">
             Who governs the corporation, who runs it, and who is accountable for each operating
             company.
@@ -67,12 +68,14 @@ export default function leadershipPage({ people, subsidiaries, base }) {
               ${Facts([
                 ['Directors', String(board.length)],
                 ['Independent directors', String(independent)],
-                ['Committees', 'Audit · Governance · Investment'],
+                ['Committees', 'Audit · Governance'],
                 ['Executive officers', String(executive.length)],
                 ['Operating companies', String(subsidiaries.filter((s) => s.status === 'operating').length)],
               ], { label: 'Board composition' })}
               <p class="field__hint" style="margin-top: var(--space-s)">
-                The register of directors' interests is available to funders on request.
+                The board is deliberately small at this stage and is expected to grow as the
+                portfolio does. The register of directors' interests is available to funders on
+                request.
               </p>
             </div>
           </div>
@@ -95,27 +98,27 @@ export default function leadershipPage({ people, subsidiaries, base }) {
           <p class="section__label">Subsidiary management</p>
           <h2>Who runs each company</h2>
           <p class="section__intro">
-            Each operating company has its own managing director, accountable to that company's
+            Each operating company has its own general manager, accountable to that company's
             board rather than directly to the holding company's executive.
           </p>
 
           <div class="table-scroll" tabindex="0" role="region" aria-label="Subsidiary management">
             <table>
-              <caption>Managing directors by operating company.</caption>
+              <caption>General managers by operating company.</caption>
               <thead>
                 <tr>
                   <th scope="col">Company</th><th scope="col">Sector</th>
-                  <th scope="col">Managing Director</th><th scope="col">Appointed</th>
+                  <th scope="col">General Manager</th><th scope="col">Appointed</th>
                 </tr>
               </thead>
               <tbody>
-                ${subsidiaries.filter((s) => s.managingDirector).map((subsidiary) => {
+                ${subsidiaries.filter((s) => s.generalManager).map((subsidiary) => {
                   const manager = managers.find((p) => p.venture === subsidiary.name);
                   return html`
                     <tr>
                       <th scope="row"><a href="${base}/subsidiaries/${subsidiary.slug}/">${subsidiary.name}</a></th>
                       <td>${subsidiary.sector}</td>
-                      <td>${subsidiary.managingDirector}</td>
+                      <td>${subsidiary.generalManager}</td>
                       <td>${manager?.appointed ?? '—'}</td>
                     </tr>`;
                 })}

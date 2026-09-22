@@ -17,14 +17,14 @@ export function careersIndex({ roles, subsidiaries, base }) {
     path: '/careers/',
     current: '/careers/',
     title: 'Careers',
-    description: `${roles.length} open positions across the seven operating companies in the North West Passage Holdings portfolio. Inuit employment preference applies to every role.`,
+    description: `${roles.length} open positions at North West Passage Holdings Corporation and its operating companies. Inuit employment preference applies to every role.`,
     body: html`
       <section class="section section--dark">
         <div class="wrap">
           <p class="section__label">Careers</p>
           <h1>${roles.length} open positions</h1>
           <p class="section__intro">
-            Work across seven operating companies, in the communities they serve.
+            A small corporation, hiring in the communities it operates in.
           </p>
           <div class="status-notice">
             <p class="status-notice__head">Inuit employment preference applies to every role.</p>

@@ -309,17 +309,10 @@ tbody tr:last-child td { border-bottom: none; }
 
 .filter-empty { display: none; border: var(--hairline) solid var(--line); background: var(--white); padding: var(--space-m); color: var(--ink-muted); }
 
-.subsidiary-browser:has(#filter-development:checked) .subsidiary-grid > .card:not([data-status='development']),
-.subsidiary-browser:has(#filter-planned:checked) .subsidiary-grid > .card:not([data-status='planned']),
-.subsidiary-browser:has(#filter-concept:checked) .subsidiary-grid > .card:not([data-status='concept']) {
-  display: none;
-}
-
-.subsidiary-browser:has(#filter-development:checked) .filter-empty[data-for='development'],
-.subsidiary-browser:has(#filter-planned:checked) .filter-empty[data-for='planned'],
-.subsidiary-browser:has(#filter-concept:checked) .filter-empty[data-for='concept'] {
-  display: block;
-}
+/* The per-status :has() rules are generated at build time from STATUS_VALUES
+   (see buildStyles in build.mjs) and injected at __FILTER_RULES__ below, so
+   adding a status cannot leave the filter behind. */
+__FILTER_RULES__
 
 /* A disabled stage has nothing to show; make that legible rather than dead. */
 .filter__option input:disabled + label { opacity: 0.55; cursor: not-allowed; border-style: dashed; }

@@ -22,7 +22,7 @@ export const subsidiarySchema = object({
   summary: string({ min: 20, max: 400 }),
   target: string({ optional: true, max: 60 }),
   founded: number({ optional: true, integer: true }),
-  managingDirector: string({ optional: true, max: 60 }),
+  generalManager: string({ optional: true, max: 60 }),
   staff: string({ optional: true, max: 40 }),
   communities: string({ optional: true, max: 60 }),
   order: number({ optional: true, integer: true }),
@@ -39,6 +39,8 @@ export const personSchema = object({
   venture: string({ optional: true, max: 60 }),
   appointed: number({ optional: true, integer: true }),
   independent: boolean(),
+  // An officer who also sits on the board appears in both listings.
+  alsoDirector: boolean(),
   order: number({ optional: true, integer: true }),
   slug: string({ optional: true }),
   draft: boolean(),

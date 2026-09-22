@@ -20,25 +20,25 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
         ${ContourField()}
         <div class="wrap">
           <p class="anniversary">
-            <span class="anniversary__number">${demo.anniversary}</span>
-            <span class="anniversary__label">Years · ${demo.founded}–${demo.founded + demo.anniversary}</span>
+            <span class="anniversary__number">${demo.year - demo.founded}</span>
+            <span class="anniversary__label">Years · Incorporated ${demo.founded}</span>
           </p>
           <p class="section__label">Inuit-owned · Iqaluit, Nunavut</p>
-          <h1>Twenty-five years of Nunavut ownership</h1>
+          <h1>Two companies trading. Five sectors to go.</h1>
           <p class="hero__lede">
             North West Passage Holdings Corporation builds and operates companies in sectors where
-            Nunavummiut would otherwise have no locally-owned alternative. Seven of them are
-            trading today.
+            Nunavummiut would otherwise have no locally-owned alternative. It was incorporated in
+            ${demo.founded}, and it is early.
           </p>
 
           <p class="hero__actions">
             <a class="btn btn--primary" href="${base}/subsidiaries/">Our companies</a>
-            <a class="btn btn--ghost" href="${base}/about/history/">Twenty-five years</a>
+            <a class="btn btn--ghost" href="${base}/about/history/">How we got here</a>
           </p>
 
           ${StatStrip([
-            { label: 'Years operating', value: String(demo.anniversary), flag: true },
-            { label: 'Operating companies', value: String(stats.byStatus.operating) },
+            { label: 'Operating companies', value: String(stats.byStatus.operating), flag: true },
+            { label: 'Sectors still ahead', value: String(stats.total - stats.byStatus.operating) },
             { label: 'Employees', value: String(f.employees) },
             { label: 'Inuit employment', value: f.inuitEmployment },
           ], { label: 'The corporation at a glance' })}
@@ -86,9 +86,10 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
       <section class="section section--tint">
         <div class="wrap">
           <p class="section__label">The portfolio</p>
-          <h2>${stats.byStatus.operating} operating companies</h2>
+          <h2>${stats.byStatus.operating} operating, ${stats.total - stats.byStatus.operating} ahead</h2>
           <p class="section__intro">
-            Each addresses a sector where Nunavummiut would otherwise have no locally-owned option.
+            The order is deliberate. Companies are started one at a time, beginning with the one
+            whose failure would cost least.
           </p>
           <ul class="grid grid--3" role="list" style="margin-top: var(--space-xl)">
             ${featured.map((subsidiary) => SubsidiaryCard(subsidiary, { base }))}
@@ -107,7 +108,7 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
           </blockquote>
           <p class="section__intro" style="margin-top: var(--space-l)">
             Each company has to work as a business on its own terms. Inuit ownership is the point,
-            not the excuse. One subsidiary was wound up in 2024 for failing that test.
+            not the excuse. Neither operating company is being carried, and neither would be.
           </p>
         </div>
       </section>
@@ -136,8 +137,8 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
           <p class="section__label">Accountability</p>
           <h2>Who runs these companies</h2>
           <p class="section__intro">
-            ${board.length} directors govern the corporation, and each operating company has its own
-            managing director accountable for it.
+            ${board.length} directors govern the corporation — two of them independent of both
+            management and any funder — and each operating company has its own general manager.
           </p>
           <p style="margin-top: var(--space-l)">
             <a class="btn btn--ghost" href="${base}/about/leadership/">Board &amp; leadership</a>
@@ -146,7 +147,7 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
           <div class="grid grid--3" style="margin-top: var(--space-2xl)">
             ${CTABlock({
               title: 'Suppliers',
-              body: 'Register to be contacted when requirements are issued across the portfolio.',
+              body: 'Register to be contacted when a requirement is issued. Procurement is small and early, and that is when relationships are easiest to form.',
               actions: [{ href: `${base}/procurement/`, label: 'Supplier registration', primary: true }],
             })}
             ${CTABlock({
@@ -156,7 +157,7 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
             })}
             ${CTABlock({
               title: 'Careers',
-              body: `${roles.length} positions open across the portfolio. Inuit employment preference applies to every role, and certification is funded.`,
+              body: `${roles.length} positions open. Inuit employment preference applies to every role, and certification is funded.`,
               actions: [{ href: `${base}/careers/`, label: `${roles.length} open positions` }],
             })}
           </div>

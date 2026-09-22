@@ -1,11 +1,12 @@
 ---
 name: Robert Roe
-role: Chief Financial Officer
+role: Director of Finance
 group: executive
-appointed: 2019
+appointed: 2027
 independent: false
+alsoDirector: false
 order: 2
 draft: false
 ---
-PLACEHOLDER. Consolidated reporting, audit, treasury and the capital allocation
-process across the subsidiaries.
+PLACEHOLDER. Reporting, audit and the capital allocation process across the
+operating companies. The corporation's second full-time appointment.

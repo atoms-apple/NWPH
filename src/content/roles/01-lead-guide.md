@@ -4,10 +4,10 @@ subsidiary: ArcTrek Expeditions
 location: Qikiqtarjuaq, NU
 type: Seasonal, full-time
 category: Operations
-reference: ATE-26-014
+reference: ATE-29-002
 salary: $34–$41 per hour, plus camp allowance
-posted: 2026-08-18
-closes: 2026-09-26
+posted: 2028-09-02
+closes: 2028-10-20
 priority: true
 order: 1
 draft: false
@@ -37,5 +37,4 @@ the job offer, not a barrier to it.
 
 - Seasonal contract with returning-guide priority each year
 - Certification and re-certification paid in full
-- Equipment provided
-- Travel from your home community to the trip start
+- Equipment provided, and travel from your home community to the trip start

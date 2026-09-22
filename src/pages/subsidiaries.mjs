@@ -14,15 +14,15 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
           <p class="section__label">The portfolio</p>
           <h1>Our companies</h1>
           <p class="section__intro">
-            ${stats.total} companies, each addressing a sector where Nunavummiut would otherwise
-            have no locally-owned option.
+            ${stats.operating} operating companies, and ${stats.total - stats.operating} sectors
+            the corporation intends to enter.
           </p>
           <div class="status-notice">
             <p class="status-notice__head">${stats.operating} of ${stats.total} are operating.</p>
             <p>
-              Each is separately incorporated, with its own board and its own managing director.
-              The holding company decides three things only: capital, senior appointments, and
-              whether a company continues.
+              ${stats.byStatus.development + stats.byStatus.planned + stats.byStatus.concept} more
+              are at earlier stages, published by sector only — a company that does not legally
+              exist should not be given a name that reads as though it does.
             </p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
             <table>
               <caption>How each company in the portfolio is classified.</caption>
               <thead>
-                <tr><th scope="col">Stage</th><th scope="col">Meaning</th><th scope="col">Ventures</th></tr>
+                <tr><th scope="col">Stage</th><th scope="col">Meaning</th><th scope="col">Companies</th></tr>
               </thead>
               <tbody>
                 ${STATUS_VALUES.map((value) => html`
@@ -103,7 +103,7 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [], man
             <p>
               ${meta.description}
               ${named
-                ? html`<strong>Managing Director: ${subsidiary.managingDirector ?? '—'}.</strong>`
+                ? html`<strong>General Manager: ${subsidiary.generalManager ?? '—'}.</strong>`
                 : html`<strong>No company has been formed in this sector.</strong>`}
             </p>
           </div>
@@ -123,7 +123,7 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [], man
                 ['Sector', subsidiary.sector],
                 ['Status', meta.label],
                 ...(subsidiary.founded ? [['Formed', String(subsidiary.founded)]] : []),
-                ...(subsidiary.managingDirector ? [['Managing Director', subsidiary.managingDirector]] : []),
+                ...(subsidiary.generalManager ? [['General Manager', subsidiary.generalManager]] : []),
                 ...(subsidiary.staff ? [['Staff', subsidiary.staff]] : []),
                 ...(subsidiary.communities ? [['Operating in', subsidiary.communities]] : []),
               ] : [

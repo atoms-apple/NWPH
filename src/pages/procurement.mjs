@@ -8,15 +8,15 @@ export default function procurementPage({ tiers, faq, base }) {
     current: '/procurement/',
     title: 'Procurement & suppliers',
     description:
-      'Supplier registration and procurement for North West Passage Holdings Corporation and its seven operating companies.',
+      'Supplier registration and procurement for North West Passage Holdings Corporation and its operating companies.',
     body: html`
       <section class="section section--dark">
         <div class="wrap">
           <p class="section__label">Suppliers</p>
           <h1>Procurement</h1>
           <p class="section__intro">
-            Registration puts your business in front of seven operating companies across the
-            portfolio.
+            Procurement here is small and early, which is when relationships are easiest to
+            form.
           </p>
           <div class="status-notice">
             <p class="status-notice__head">Registration is not a contract.</p>

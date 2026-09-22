@@ -57,7 +57,17 @@ async function buildStyles() {
     parts.push(await readFile(path.join(root, 'src/styles', file), 'utf8'));
   }
   const printHost = site.origin.replace(/^https?:\/\//, '');
-  const css = minifyCss(parts.join('\n')).replaceAll('__PRINT_HOST__', printHost);
+
+  // Filter rules, one pair per status. Generated rather than hand-written so a
+  // new status cannot ship with a filter option that quietly does nothing.
+  const filterRules = STATUS_VALUES.map((value) => [
+    `.subsidiary-browser:has(#filter-${value}:checked) .subsidiary-grid > .card:not([data-status='${value}']) { display: none; }`,
+    `.subsidiary-browser:has(#filter-${value}:checked) .filter-empty[data-for='${value}'] { display: block; }`,
+  ].join('\n')).join('\n');
+
+  const css = minifyCss(parts.join('\n'))
+    .replaceAll('__PRINT_HOST__', printHost)
+    .replace('__FILTER_RULES__', filterRules);
   await writeFile(path.join(dist, 'assets/site.css'), css);
   return css.length;
 }

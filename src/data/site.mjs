@@ -6,14 +6,14 @@
 /**
  * FUTURE-STATE MODEL.
  *
- * This branch renders North West Passage Holdings Corporation as it could look
- * once operating — twenty-five years in, seven trading subsidiaries, a board,
- * staff and a reporting record. It is a vision model, not a record: NWPH is
- * currently pre-incorporation and none of it has happened.
+ * This branch renders North West Passage Holdings Corporation as a newly-formed
+ * corporation in its early operating years: incorporated, one company trading a
+ * second season, a second just launched, and the rest still ahead of it.
  *
- * It is built to be looked at, so the figures are concrete rather than XX
- * placeholders — a stat strip full of Xs shows nothing. They are illustrative
- * throughout, and the banner on every page says so.
+ * It is a vision model, not a record. NWPH is pre-incorporation today and none
+ * of this has happened. The figures are deliberately small and concrete — a
+ * young company's numbers, not an established one's — because the point is to
+ * show a plausible near future rather than an aspirational far one.
  *
  * People use the standard legal fictitious-person names (Doe, Roe, Major,
  * Stiles). Nunavut has roughly 40,000 residents, and a plausible generated name
@@ -24,21 +24,22 @@
  */
 export const demo = {
   enabled: true,
-  founded: 2001,
-  anniversary: 25,
+  founded: 2026,
+  /** The year the model is set in. */
+  year: 2028,
   bannerLabel: 'Future-state model',
   banner:
-    'Illustrative future-state model — how NWPH could look once operating. The corporation is pre-incorporation today.',
+    'Illustrative future-state model — how NWPH could look in its early operating years. The corporation is pre-incorporation today.',
 
-  /** Illustrative operating figures. One place, so they stay consistent. */
+  /** Illustrative figures for a young corporation. One place, kept consistent. */
   figures: {
-    employees: 214,
-    inuitEmployment: '68%',
-    revenue: '$41.2M',
-    communities: 13,
-    apprentices: 26,
-    scholarships: 18,
-    procurementLocal: '$9.8M',
+    employees: 23,
+    inuitEmployment: '74%',
+    revenue: '$2.4M',
+    communities: 3,
+    apprentices: 4,
+    scholarships: 2,
+    procurementLocal: '$610,000',
     yearEnd: '31 March',
   },
 };

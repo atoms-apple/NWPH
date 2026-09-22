@@ -28,11 +28,11 @@ export function reportsPage({ stats, reports = [], base }) {
             procurement officers and partners.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">Audited annually since 2001.</p>
+            <p class="status-notice__head">First full reporting year complete.</p>
             <p>
-              Consolidated statements cover the holding company and all seven operating companies.
-              The annual report sets out each company's position, including the ones that did not
-              meet plan.
+              Consolidated statements cover the holding company and both operating subsidiaries.
+              The annual report sets out where each company stands against its plan, including
+              where it does not meet it.
             </p>
           </div>
           ${StatStrip([
@@ -56,7 +56,7 @@ export function reportsPage({ stats, reports = [], base }) {
                     <tr><th scope="col">Document</th><th scope="col">Available</th><th scope="col">Expected</th></tr>
                   </thead>
                   <tbody>
-                    <tr><th scope="row">Certificate of incorporation</th><td>On request</td><td>Held since 2001</td></tr>
+                    <tr><th scope="row">Certificate of incorporation</th><td>On request</td><td>Held since ${demo.founded}</td></tr>
                     <tr><th scope="row">Articles and by-laws</th><td>On request</td><td>Current</td></tr>
                     <tr><th scope="row">Board and director list</th><td>Published</td><td>Leadership page</td></tr>
                     <tr><th scope="row">Audited financial statements</th><td>On request</td><td>Annual, most recent year end</td></tr>
@@ -75,7 +75,7 @@ export function reportsPage({ stats, reports = [], base }) {
             </div>
             <div>
               ${Facts([
-                ['Incorporated', '2001, Nunavut'],
+                ['Incorporated', `${demo.founded}, Nunavut`],
                 ['Financial year end', demo.figures.yearEnd],
                 ['Consolidated revenue', demo.figures.revenue],
                 ['Employees', String(demo.figures.employees)],

@@ -1,5 +1,5 @@
 import { html, raw } from '../lib/html.mjs';
-import { site, nav, footerNav } from '../data/site.mjs';
+import { site, nav, footerNav, demo } from '../data/site.mjs';
 import { Mark } from './logo.mjs';
 
 const navItems = (current, base) => nav.map((item) => html`
@@ -60,8 +60,8 @@ export const SiteFooter = ({ base = '', operating = 0, total = 0 }) => html`
           </p>
           <p class="site-footer__status">
             <strong>${operating} of ${total} companies are operating.</strong>
-            Inuit-owned since 2001, across tourism, marine freight, retail, aviation,
-            technology, housing and financial services.
+            Inuit-owned, incorporated in ${demo.founded}, building companies in sectors where
+            Nunavummiut would otherwise have no locally-owned option.
           </p>
         </div>
         ${footerNav.map((group) => html`

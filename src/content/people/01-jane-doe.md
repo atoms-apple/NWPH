@@ -1,12 +1,12 @@
 ---
 name: Jane Doe
-role: Director, Chair of Audit Committee
+role: Director, Chair of the Audit Committee
 group: board
-appointed: 2009
+appointed: 2026
 independent: true
+alsoDirector: false
 order: 2
 draft: false
 ---
 PLACEHOLDER. Chartered professional accountant with a background in northern
-co-operative and development finance. Chairs the audit committee and sits on the
-investment committee.
+co-operative and development finance.

@@ -20,7 +20,7 @@ export default function aboutPage({ people, stats, base }) {
     current: '/about/',
     title: 'About & mission',
     description:
-      'Why North West Passage Holdings Corporation exists, what it will and will not do, and how a portfolio of seven operating companies is governed.',
+      'Why North West Passage Holdings Corporation exists, what it will and will not do, and how its operating companies are governed.',
     body: html`
       <section class="section section--dark">
         <div class="wrap">
@@ -31,11 +31,11 @@ export default function aboutPage({ people, stats, base }) {
             companies operating in Nunavut — not to add to their number.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">Twenty-five years, seven companies</p>
+            <p class="status-notice__head">Two years in</p>
             <p>
-              NWPH was incorporated in <strong>2001</strong> and operates seven companies across
-              tourism, marine freight, retail, aviation, technology, housing and financial
-              services. What follows is the mandate they are held to.
+              NWPH was incorporated in <strong>2026</strong> and operates two companies, in tourism
+              and in technology. Five further sectors are at earlier stages. What follows is the
+              mandate all of them are held to.
             </p>
           </div>
 
@@ -195,8 +195,8 @@ export default function aboutPage({ people, stats, base }) {
               label: 'Ownership',
               body: `<div class="prose">
                 <p>NWPH is Inuit-owned and its articles require it to remain so. Ownership has not
-                been diluted in twenty-five years of operation, and no external shareholder holds an
-                interest in the holding company.</p>
+                been diluted since incorporation, and no external shareholder holds an interest in
+                the holding company.</p>
                 <p>Inuit firm registration is current and available on request.</p>
                 <p><a href="${base}/reports/">What documentation exists →</a></p>
               </div>`,
