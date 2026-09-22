@@ -1,8 +1,9 @@
 ---
 sector: Retail & Supply
-status: planned
+status: development
+target: Targeting 2029
 summary: Community retail supplying everyday essentials and northern goods, structured so that margin stays in the community rather than leaving it.
-order: 3
+order: 2
 draft: false
 ---
 

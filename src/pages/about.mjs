@@ -20,7 +20,7 @@ export default function aboutPage({ people, stats, base }) {
     current: '/about/',
     title: 'About & mission',
     description:
-      'Why North West Passage Holdings Corporation exists, what it will and will not do, and where it actually stands today. Pre-incorporation, with no operating subsidiaries.',
+      'Why North West Passage Holdings Corporation exists, what it will and will not do, and how its operating companies are governed.',
     body: html`
       <section class="section section--dark">
         <div class="wrap">
@@ -31,11 +31,11 @@ export default function aboutPage({ people, stats, base }) {
             companies operating in Nunavut — not to add to their number.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">Where this actually stands</p>
+            <p class="status-notice__head">Two years in</p>
             <p>
-              NWPH is <strong>pre-incorporation</strong>. It has no operating subsidiaries, no
-              revenue, and no employees. Everything below describes what is being built and why.
-              None of it describes something that exists.
+              NWPH was incorporated in <strong>2026</strong> and operates two companies, in tourism
+              and in technology. Five further sectors are at earlier stages. What follows is the
+              mandate all of them are held to.
             </p>
           </div>
 
@@ -184,8 +184,9 @@ export default function aboutPage({ people, stats, base }) {
                 division. A failure in one should not take the others with it.</p>
                 <p>The holding company's role is capital, governance, and shared administration —
                 the functions a single small northern company cannot carry on its own.</p>
-                <p>None of this exists yet. NWPH itself is not incorporated. Share structure, board
-                composition and governance arrangements are not settled.</p>
+                <p>The holding company's role is capital allocation, governance, and the shared
+                administrative functions a single small northern company cannot carry alone:
+                bookkeeping, insurance, legal and audit.</p>
                 <p><a href="${base}/about/governance/">The full governance framework →</a></p>
               </div>`,
             },
@@ -193,12 +194,10 @@ export default function aboutPage({ people, stats, base }) {
               id: 'ownership',
               label: 'Ownership',
               body: `<div class="prose">
-                <p>NWPH is Inuit-owned and intended to remain so. The specific ownership structure —
-                whether shares are held individually, by a trust, or with a community or beneficiary
-                organisation holding a stake — has not been settled and will be published when it
-                is.</p>
-                <p>No claim is made here about beneficiary ownership percentages or Inuit firm
-                registry status, because neither has been established.</p>
+                <p>NWPH is Inuit-owned and its articles require it to remain so. Ownership has not
+                been diluted since incorporation, and no external shareholder holds an interest in
+                the holding company.</p>
+                <p>Inuit firm registration is current and available on request.</p>
                 <p><a href="${base}/reports/">What documentation exists →</a></p>
               </div>`,
             },
@@ -225,14 +224,12 @@ export default function aboutPage({ people, stats, base }) {
           <p class="section__label">Leadership</p>
           <h2>${people.length === 1 ? 'Founder' : 'Who is behind this'}</h2>
           <p class="section__intro">
-            NWPH has no employees and no board. Directors will be appointed at incorporation, and
-            named here when they are.
+            The board governs the corporation; each operating company has its own managing
+            director accountable for it.
           </p>
-          <div style="margin-top: var(--space-xl)">
-            ${people.length === 1
-              ? Founder(people[0])
-              : html`<ul class="grid grid--3" role="list">${people.map(PersonCard)}</ul>`}
-          </div>
+          <p style="margin-top: var(--space-l)">
+            <a class="btn btn--ghost" href="${base}/about/leadership/">Board, executive &amp; subsidiary management</a>
+          </p>
         </div>
       </section>`,
   };

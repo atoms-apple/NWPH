@@ -1,5 +1,5 @@
 import { html, raw } from '../lib/html.mjs';
-import { site, nav, footerNav } from '../data/site.mjs';
+import { site, nav, footerNav, demo } from '../data/site.mjs';
 import { Mark } from './logo.mjs';
 
 const navItems = (current, base) => nav.map((item) => html`
@@ -7,6 +7,21 @@ const navItems = (current, base) => nav.map((item) => html`
 
 export const SiteHeader = ({ current, base = '' }) => html`
   <header class="site-header">
+    <div class="site-header__utility">
+      <div class="wrap site-header__utility-inner">
+        <p class="site-header__hq">
+          <span class="site-header__hq-label">Head office</span>
+          ${site.headquarters}
+        </p>
+        <nav class="site-header__secondary" aria-label="Secondary">
+          <ul>
+            <li><a href="${base}/about/leadership/">Leadership</a></li>
+            <li><a href="${base}/reports/">Reports</a></li>
+            <li><a href="mailto:${site.email}">${site.email}</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
     <div class="wrap site-header__bar">
       <a class="brand" href="${base}/">
         ${Mark({ size: 30, className: 'brand__mark' })}
@@ -44,9 +59,9 @@ export const SiteFooter = ({ base = '', operating = 0, total = 0 }) => html`
             <span>North West Passage Holdings Corporation</span>
           </p>
           <p class="site-footer__status">
-            <strong>${operating} of ${total} ventures are currently operating.</strong>
-            NWPH is pre-incorporation. Nothing described on this site is trading,
-            taking bookings, or accepting customers. Only one venture is named.
+            <strong>${operating} of ${total} companies are operating.</strong>
+            Inuit-owned, incorporated in ${demo.founded}, building companies in sectors where
+            Nunavummiut would otherwise have no locally-owned option.
           </p>
         </div>
         ${footerNav.map((group) => html`
@@ -66,9 +81,8 @@ export const SiteFooter = ({ base = '', operating = 0, total = 0 }) => html`
         <p>© ${new Date().getFullYear()} North West Passage Holdings Corporation · Inuit-owned · Nunavut</p>
       </div>
       <p class="site-footer__legal">
-        North West Passage Holdings Corporation is not yet incorporated. Nothing on this site
-        constitutes an offer of securities, a solicitation of investment, an offer to sell goods
-        or services, or an offer of employment.
+        North West Passage Holdings Corporation. Nothing on this site constitutes an offer of
+        securities or a solicitation of investment.
       </p>
     </div>
   </footer>`;

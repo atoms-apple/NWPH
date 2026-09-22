@@ -7,23 +7,22 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
     path: '/subsidiaries/',
     current: '/subsidiaries/',
     title: 'Subsidiaries',
-    description: `The ${stats.total} ventures in the North West Passage Holdings portfolio and the development stage of each. None are operating; only one is named.`,
+    description: `The ${stats.total} companies in the North West Passage Holdings portfolio, their sectors, and the managing director accountable for each.`,
     body: html`
       <section class="section section--dark">
         <div class="wrap">
           <p class="section__label">The portfolio</p>
-          <h1>Subsidiaries</h1>
+          <h1>Our companies</h1>
           <p class="section__intro">
-            ${stats.total} ventures, each addressing a sector where Nunavummiut have no
-            locally-owned alternative.
+            ${stats.operating} operating companies, and ${stats.total - stats.operating} sectors
+            the corporation intends to enter.
           </p>
           <div class="status-notice">
             <p class="status-notice__head">${stats.operating} of ${stats.total} are operating.</p>
             <p>
-              Every venture below is at a pre-operational stage. None is incorporated,
-              trading, taking bookings, or hiring. <strong>Only one is named</strong> — the rest are
-              published by sector, because a company that does not legally exist should not be
-              given a name that reads as though it does.
+              ${stats.byStatus.development + stats.byStatus.planned + stats.byStatus.concept} more
+              are at earlier stages, published by sector only — a company that does not legally
+              exist should not be given a name that reads as though it does.
             </p>
           </div>
         </div>
@@ -34,9 +33,9 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
           <h2 class="visually-hidden">Browse the portfolio</h2>
           <div class="table-scroll" tabindex="0" role="region" aria-label="What each stage means">
             <table>
-              <caption>What each stage label means. None of them means operating.</caption>
+              <caption>How each company in the portfolio is classified.</caption>
               <thead>
-                <tr><th scope="col">Stage</th><th scope="col">Meaning</th><th scope="col">Ventures</th></tr>
+                <tr><th scope="col">Stage</th><th scope="col">Meaning</th><th scope="col">Companies</th></tr>
               </thead>
               <tbody>
                 ${STATUS_VALUES.map((value) => html`
@@ -45,11 +44,7 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
                     <td>${STATUS[value].description}</td>
                     <td>${stats.byStatus[value]}</td>
                   </tr>`)}
-                <tr>
-                  <th scope="row">Operating</th>
-                  <td>Trading, with customers. No venture in this portfolio has reached this stage.</td>
-                  <td>${stats.operating}</td>
-                </tr>
+
               </tbody>
             </table>
           </div>
@@ -59,13 +54,14 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
           </div>
 
           <div class="callout" style="margin-top: var(--space-xl)">
-            <p><strong>Why six of these have no name.</strong></p>
+            <p><strong>How a company enters the portfolio.</strong></p>
             <p>
-              The sectors are committed to. The companies are not yet companies — none is
-              incorporated, and several have not been designed beyond the decision to enter the
-              sector. A name published now would be repeated, indexed, and quoted back as evidence
-              of something operating. Names appear here at incorporation, not before.
+              A sector qualifies on two conditions: Nunavummiut have no locally-owned option in it,
+              and an Inuit-owned company could run it competitively rather than merely exist in it.
+              The investment committee applies both to every proposal, and the second is the one
+              that does the work.
             </p>
+            <p><a href="${base}/about/governance/">How the portfolio is governed →</a></p>
           </div>
         </div>
       </section>`,
@@ -79,7 +75,7 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
  * assessment: the same template, but titled by sector and stating throughout
  * that no company has been formed.
  */
-export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
+export function subsidiaryDetail(subsidiary, { stats, base, milestones = [], manager = null, roles = [], news = [] }) {
   const meta = STATUS[subsidiary.status];
   const named = Boolean(subsidiary.name);
   const title = named ? subsidiary.name : subsidiary.sector;
@@ -107,8 +103,8 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
             <p>
               ${meta.description}
               ${named
-                ? html`<strong>This company is not operating.</strong>`
-                : html`<strong>No company has been formed in this sector, and none has been named.</strong>`}
+                ? html`<strong>General Manager: ${subsidiary.generalManager ?? '—'}.</strong>`
+                : html`<strong>No company has been formed in this sector.</strong>`}
             </p>
           </div>
         </div>
@@ -125,10 +121,11 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
               ${Facts(named ? [
                 ['Legal name', subsidiary.legalName],
                 ['Sector', subsidiary.sector],
-                ['Stage', meta.label],
-                ['Target', subsidiary.target || 'Not set'],
-                ['Operating', 'No'],
-                ['Incorporated', 'No'],
+                ['Status', meta.label],
+                ...(subsidiary.founded ? [['Formed', String(subsidiary.founded)]] : []),
+                ...(subsidiary.generalManager ? [['General Manager', subsidiary.generalManager]] : []),
+                ...(subsidiary.staff ? [['Staff', subsidiary.staff]] : []),
+                ...(subsidiary.communities ? [['Operating in', subsidiary.communities]] : []),
               ] : [
                 ['Sector', subsidiary.sector],
                 ['Stage', meta.label],
@@ -159,12 +156,74 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [] }) {
           </div>
         </section>` : ''}
 
+      ${manager ? html`
+        <section class="section section--tint">
+          <div class="wrap">
+            <p class="section__label">Accountability</p>
+            <h2>Who runs ${title}</h2>
+            <div class="split split--wide" style="margin-top: var(--space-l)">
+              <div class="founder">
+                <div class="founder__identity">
+                  <h3 class="founder__name">${manager.name}</h3>
+                  <p class="founder__role">${manager.role}</p>
+                </div>
+                <div class="founder__bio">
+                  ${raw(manager.body)}
+                  ${manager.appointed ? html`<p>Appointed ${manager.appointed}.</p>` : ''}
+                </div>
+              </div>
+              <div class="callout">
+                <p><strong>Each company has its own board.</strong></p>
+                <p>
+                  The managing director is accountable to that board, not directly to the holding
+                  company's executive. The holding company decides capital, senior appointments,
+                  and whether the company continues.
+                </p>
+                <p><a href="${base}/about/governance/">How the portfolio is governed →</a></p>
+              </div>
+            </div>
+          </div>
+        </section>` : ''}
+
+      ${roles.length ? html`
+        <section class="section">
+          <div class="wrap">
+            <p class="section__label">Careers</p>
+            <h2>${roles.length} open position${roles.length === 1 ? '' : 's'} at ${title}</h2>
+            <ul class="grid grid--2" role="list" style="margin-top: var(--space-l)">
+              ${roles.map((role) => html`
+                <li class="card card--link">
+                  <p class="card__sector">${role.category ?? 'Open position'}</p>
+                  <h3 class="card__title"><a href="${base}/careers/${role.slug}/">${role.title}</a></h3>
+                  <p class="card__legal">${role.location} · ${role.type}</p>
+                  <p class="card__body">${role.excerpt}</p>
+                </li>`)}
+            </ul>
+          </div>
+        </section>` : ''}
+
+      ${news.length ? html`
+        <section class="section section--tint">
+          <div class="wrap">
+            <p class="section__label">News</p>
+            <h2>Recent from ${title}</h2>
+            <ul class="grid grid--3" role="list" style="margin-top: var(--space-l)">
+              ${news.map((entry) => html`
+                <li class="card card--link">
+                  <p class="card__sector"><time datetime="${entry.date}">${entry.date}</time></p>
+                  <h3 class="card__title"><a href="${base}/news/${entry.slug}/">${entry.title}</a></h3>
+                  <p class="card__body">${entry.summary}</p>
+                </li>`)}
+            </ul>
+          </div>
+        </section>` : ''}
+
       <section class="section">
         <div class="wrap">
           ${CTABlock({
-            title: named ? 'Working with this venture' : 'Interested in this sector?',
+            title: named ? 'Working with this company' : 'Interested in this sector?',
             body: named
-              ? 'No contracts, bookings or applications are being accepted. Suppliers and partners can register now to be contacted when that changes.'
+              ? 'Suppliers can register to be contacted when this company issues a requirement. Partnership enquiries go through the holding company.'
               : 'NWPH expects to enter this sector through partnership as readily as through a start-up. Suppliers and prospective partners can register their interest now.',
             actions: [
               { href: `${base}/procurement/`, label: 'Register as a supplier', primary: true },
