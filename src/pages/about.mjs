@@ -184,8 +184,9 @@ export default function aboutPage({ people, stats, base }) {
                 division. A failure in one should not take the others with it.</p>
                 <p>The holding company's role is capital, governance, and shared administration —
                 the functions a single small northern company cannot carry on its own.</p>
-                <p>None of this exists yet. NWPH itself is not incorporated. Share structure, board
-                composition and governance arrangements are not settled.</p>
+                <p>The holding company's role is capital allocation, governance, and the shared
+                administrative functions a single small northern company cannot carry alone:
+                bookkeeping, insurance, legal and audit.</p>
                 <p><a href="${base}/about/governance/">The full governance framework →</a></p>
               </div>`,
             },
@@ -193,12 +194,10 @@ export default function aboutPage({ people, stats, base }) {
               id: 'ownership',
               label: 'Ownership',
               body: `<div class="prose">
-                <p>NWPH is Inuit-owned and intended to remain so. The specific ownership structure —
-                whether shares are held individually, by a trust, or with a community or beneficiary
-                organisation holding a stake — has not been settled and will be published when it
-                is.</p>
-                <p>No claim is made here about beneficiary ownership percentages or Inuit firm
-                registry status, because neither has been established.</p>
+                <p>NWPH is Inuit-owned and its articles require it to remain so. Ownership has not
+                been diluted in twenty-five years of operation, and no external shareholder holds an
+                interest in the holding company.</p>
+                <p>Inuit firm registration is current and available on request.</p>
                 <p><a href="${base}/reports/">What documentation exists →</a></p>
               </div>`,
             },

@@ -7,6 +7,21 @@ const navItems = (current, base) => nav.map((item) => html`
 
 export const SiteHeader = ({ current, base = '' }) => html`
   <header class="site-header">
+    <div class="site-header__utility">
+      <div class="wrap site-header__utility-inner">
+        <p class="site-header__hq">
+          <span class="site-header__hq-label">Head office</span>
+          ${site.headquarters}
+        </p>
+        <nav class="site-header__secondary" aria-label="Secondary">
+          <ul>
+            <li><a href="${base}/about/leadership/">Leadership</a></li>
+            <li><a href="${base}/reports/">Reports</a></li>
+            <li><a href="mailto:${site.email}">${site.email}</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
     <div class="wrap site-header__bar">
       <a class="brand" href="${base}/">
         ${Mark({ size: 30, className: 'brand__mark' })}

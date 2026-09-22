@@ -157,7 +157,17 @@ export function roleDetail(role, { base }) {
           <p class="section__label">${role.subsidiary ?? 'North West Passage Holdings'}</p>
           <h1>${role.title}</h1>
           <p class="section__intro">${role.location} · ${role.type}</p>
-          ${role.priority ? html`
+          ${role.closed ? html`
+            <div class="status-notice">
+              <p class="status-notice__head">This competition has closed.</p>
+              <p>
+                Applications closed on ${role.closes ? formatDate(role.closes) : 'the posted date'}.
+                The posting is kept here for reference. See
+                <a href="${base}/careers/">current openings</a>, or register an expression of
+                interest to be contacted when a similar position opens.
+              </p>
+            </div>` : ''}
+          ${!role.closed && role.priority ? html`
             <div class="status-notice">
               <p class="status-notice__head">Inuit employment preference applies.</p>
               <p>
@@ -189,15 +199,18 @@ export function roleDetail(role, { base }) {
           </div>
 
           <div class="cta" style="margin-top: var(--space-2xl)">
-            <h2 class="cta__title">How to apply</h2>
+            <h2 class="cta__title">${role.closed ? 'This competition has closed' : 'How to apply'}</h2>
             <p>
-              Send a résumé and a short note about why this role, quoting reference
-              <strong>${role.reference ?? role.slug}</strong>. Applications are acknowledged within
-              five working days.
+              ${role.closed
+                ? 'Applications are no longer being accepted for this position. Registering an expression of interest means you are contacted directly when a similar role opens.'
+                : html`Send a résumé and a short note about why this role, quoting reference
+                  <strong>${role.reference ?? role.slug}</strong>. Applications are acknowledged
+                  within five working days.`}
             </p>
             <p class="cta__actions">
-              <a class="btn btn--primary" href="${base}/careers/#interest-form">Apply</a>
-              <a class="btn btn--ghost" href="${base}/careers/">All positions</a>
+              <a class="btn ${role.closed ? 'btn--ghost' : 'btn--primary'}" href="${base}/careers/#interest-form">
+                ${role.closed ? 'Register interest' : 'Apply'}</a>
+              <a class="btn ${role.closed ? 'btn--primary' : 'btn--ghost'}" href="${base}/careers/">Current openings</a>
             </p>
           </div>
         </div>

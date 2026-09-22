@@ -116,9 +116,11 @@
   white-space: nowrap;
 }
 .status-pill__dot { inline-size: 6px; block-size: 6px; border-radius: 50%; background: currentColor; flex: none; }
+.status-pill--operating { color: #15603F; }
 .status-pill--development { color: #1F6B4E; }
 .status-pill--planned { color: var(--gold-text); }
 .status-pill--concept { color: var(--ink-muted); }
+.section--dark .status-pill--operating { color: #6FD3A6; }
 .section--dark .status-pill--development { color: #6FD3A6; }
 .section--dark .status-pill--planned { color: var(--gold-light); }
 .section--dark .status-pill--concept { color: var(--on-dark-muted); }
@@ -477,10 +479,9 @@ tbody tr:last-child td { border-bottom: none; }
    describes operations, people and results that do not exist. */
 
 .demo-banner {
-  background: #6B2318;
-  color: #FFFFFF;
-  border-bottom: 2px solid #E3CDA6;
-  font-size: var(--step--1);
+  background: #0E2036;
+  color: var(--on-dark-muted);
+  font-size: 0.76rem;
   line-height: 1.5;
 }
 .demo-banner__inner {
@@ -488,12 +489,15 @@ tbody tr:last-child td { border-bottom: none; }
   flex-wrap: wrap;
   gap: var(--space-2xs) var(--space-s);
   align-items: baseline;
-  padding-block: var(--space-2xs);
+  padding-block: 5px;
 }
 .demo-banner strong {
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
+  color: var(--gold-light);
+  border-left: 3px solid var(--gold);
+  padding-left: var(--space-2xs);
   flex: none;
 }
 @media print {
@@ -611,3 +615,50 @@ tbody tr:last-child td { border-bottom: none; }
 .doc__title { font-family: var(--font-display); font-size: var(--step-1); color: var(--navy); }
 .doc__note { color: var(--ink-muted); font-size: var(--step--1); margin-top: var(--space-3xs); max-width: 60ch; }
 .doc__meta { font-size: var(--step--1); color: var(--ink-muted); white-space: nowrap; }
+
+/* ── ELEVATION ──────────────────────────────────────────────────────────
+   The hairline grid stays the structure; these lift the cards off it just
+   enough to read as considered rather than flat. Deliberately shallow — a
+   holding company is not a consumer product. */
+
+:root {
+  --lift-1: 0 1px 2px rgba(27, 39, 51, 0.04), 0 2px 8px rgba(27, 39, 51, 0.04);
+  --lift-2: 0 2px 4px rgba(27, 39, 51, 0.05), 0 8px 24px rgba(27, 39, 51, 0.07);
+}
+
+.card, .cta, .callout, .filter, .table-scroll {
+  box-shadow: var(--lift-1);
+}
+.card--link { transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease; }
+.card--link:hover { box-shadow: var(--lift-2); transform: translateY(-2px); }
+.section--dark .card, .section--dark .cta, .section--dark .callout { box-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .card--link:hover { transform: none; } }
+
+/* ── SECTOR MARKS ───────────────────────────────────────────────────────── */
+
+.card__mark {
+  color: var(--gold-text);
+  margin-bottom: var(--space-2xs);
+  line-height: 0;
+}
+.card--venture { padding-top: var(--space-m); }
+.card--unnamed .card__mark { color: var(--ink-muted); }
+.section--dark .card__mark { color: var(--gold-light); }
+
+/* ── HERO CONTOURS ──────────────────────────────────────────────────────
+   Chart isolines behind the hero. Decorative, aria-hidden, and drawn rather
+   than loaded so it costs no request. */
+
+.hero--figured { position: relative; overflow: hidden; }
+.hero--figured > .wrap { position: relative; z-index: 1; }
+.contours {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 62%;
+  color: var(--gold);
+  opacity: 0.4;
+  pointer-events: none;
+}
+@media (max-width: 44em) { .contours { height: 45%; opacity: 0.3; } }
+@media print { .contours { display: none; } }

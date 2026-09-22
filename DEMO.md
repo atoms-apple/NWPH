@@ -49,6 +49,24 @@ Pages: home, about, governance, leadership, history, portfolio + 7 company
 pages, careers + 12 role pages, community, news + 10 entries, procurement,
 reports, contact, privacy, accessibility, thank-you, 404.
 
+## Design
+
+The head office site is meant to read as more senior than a subsidiary's, not
+flashier. What carries that:
+
+- A three-tier masthead — model notice, utility bar (head office, leadership,
+  reports, contact), then the wordmark and navigation.
+- Line-drawn sector marks on the same 24-unit grid as the corporate mark, so the
+  portfolio reads as one family.
+- A generated contour field behind the hero — chart isolines, a few hundred
+  bytes of SVG rather than an image request.
+- A shallow two-step elevation system over the hairline grid. Restrained on
+  purpose: a holding company is not a consumer product.
+
+Webfonts are still not installed, so this renders in Georgia and system sans
+rather than Newsreader and Inter. `npm run fetch-fonts` on any machine with
+network access closes that gap.
+
 ## Guards
 
 - Every page carries the banner naming it an illustrative future-state model.

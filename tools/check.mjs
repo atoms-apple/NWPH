@@ -42,7 +42,7 @@ const TOKENS = {
   navy: '#1B3A5C', ice: '#2E6E8E', gold: '#B08D57', paper: '#F7F7F5', white: '#FFFFFF',
   goldText: '#8A6D3B', goldLight: '#E3CDA6', tint: '#ECEFF2', ink: '#1B2733',
   inkMuted: '#5A646E', onDark: '#FFFFFF', onDarkMuted: '#B9C6D4',
-  statusDev: '#1F6B4E', statusDevDark: '#6FD3A6', error: '#8C2618', navyStat: '#16304C',
+  statusDev: '#1F6B4E', statusDevDark: '#6FD3A6', statusOperating: '#15603F', error: '#8C2618', navyStat: '#16304C',
 };
 
 // [label, foreground, background, minimum ratio]
@@ -61,6 +61,8 @@ const PAIRS = [
   ['muted on navy', TOKENS.onDarkMuted, TOKENS.navy, 4.5],
   ['gold-light on navy', TOKENS.goldLight, TOKENS.navy, 4.5],
   ['gold-light on stat panel', TOKENS.goldLight, TOKENS.navyStat, 4.5],
+  ['status "operating" on white', TOKENS.statusOperating, TOKENS.white, 4.5],
+  ['status "operating" on tint', TOKENS.statusOperating, TOKENS.tint, 4.5],
   ['status "in development" on white', TOKENS.statusDev, TOKENS.white, 4.5],
   ['status "in development" on navy', TOKENS.statusDevDark, TOKENS.navy, 4.5],
   ['error text on white', TOKENS.error, TOKENS.white, 4.5],

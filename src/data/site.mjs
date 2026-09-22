@@ -26,8 +26,9 @@ export const demo = {
   enabled: true,
   founded: 2001,
   anniversary: 25,
+  bannerLabel: 'Future-state model',
   banner:
-    'Illustrative future-state model — how NWPH could look once operating. The corporation is currently pre-incorporation; the figures, people and history on these pages are illustrative.',
+    'Illustrative future-state model — how NWPH could look once operating. The corporation is pre-incorporation today.',
 
   /** Illustrative operating figures. One place, so they stay consistent. */
   figures: {

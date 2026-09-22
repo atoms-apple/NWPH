@@ -1,6 +1,7 @@
 import { html } from '../lib/html.mjs';
 import { StatStrip, CTABlock, SubsidiaryCard } from '../components/ui.mjs';
 import { demo } from '../data/site.mjs';
+import { ContourField } from '../components/icons.mjs';
 
 export default function homePage({ subsidiaries, people, history, news, roles, stats, base }) {
   const f = demo.figures;
@@ -15,7 +16,8 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
     description:
       `North West Passage Holdings Corporation is an Inuit-owned holding company in Iqaluit, Nunavut, operating ${stats.byStatus.operating} companies across tourism, marine freight, retail, aviation, technology, housing and financial services.`,
     body: html`
-      <section class="hero">
+      <section class="hero hero--figured">
+        ${ContourField()}
         <div class="wrap">
           <p class="anniversary">
             <span class="anniversary__number">${demo.anniversary}</span>

@@ -277,3 +277,44 @@
 
 /* Detail pages: prose carries the argument, the facts table supports it. */
 @media (min-width: 60em) { .split--wide { grid-template-columns: 1.6fr 1fr; } }
+
+/* ── UTILITY BAR ────────────────────────────────────────────────────────
+   The thin band above the masthead that a head office carries: where the
+   corporation is, and the two destinations a funder or supplier arrives
+   looking for. Folds away on small screens, where the space is worth more. */
+
+.site-header__utility {
+  background: #142C46;
+  border-bottom: var(--hairline) solid var(--line-dark);
+  font-size: 0.76rem;
+}
+.site-header__utility-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  min-height: 34px;
+  padding-block: 4px;
+}
+.site-header__hq { color: var(--on-dark-muted); margin: 0; max-width: none; }
+.site-header__hq-label {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-right: var(--space-2xs);
+}
+.site-header__secondary ul {
+  display: flex;
+  gap: var(--space-m);
+  list-style: none;
+  padding: 0;
+}
+.site-header__secondary a {
+  color: var(--on-dark-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-block: 2px;
+}
+.site-header__secondary a:hover { color: var(--white); border-bottom-color: var(--gold); }
+@media (max-width: 60em) { .site-header__utility { display: none; } }
+@media print { .site-header__utility { display: none; } }

@@ -60,7 +60,7 @@ ${noindex || demo.enabled ? raw('<meta name="robots" content="noindex, nofollow"
 ${demo.enabled ? html`
 <div class="demo-banner" role="note">
   <div class="wrap demo-banner__inner">
-    <strong>Demonstration build</strong>
+    <strong>${demo.bannerLabel}</strong>
     <span>${demo.banner}</span>
   </div>
 </div>` : ''}

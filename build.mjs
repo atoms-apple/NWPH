@@ -130,6 +130,13 @@ async function build() {
   }
   const { subsidiaries, people, roles, procurement, faq, news, milestones, history, reports } = loaded;
 
+  // A posting past its closing date is not an open position. Marked rather
+  // than deleted, so an existing link reaches the posting and is told it
+  // closed instead of 404ing.
+  const today = new Date().toISOString().slice(0, 10);
+  for (const role of roles) role.closed = Boolean(role.closes && role.closes < today);
+  const openRoles = roles.filter((role) => !role.closed);
+
   // 2. Derived statistics. Never authored by hand — see src/data/status.mjs.
   const stats = {
     headquarters: site.headquarters,
@@ -142,7 +149,7 @@ async function build() {
 
   // 3. Pages.
   const pages = [
-    homePage({ subsidiaries, people, history, news, roles, stats, base }),
+    homePage({ subsidiaries, people, history, news, roles: openRoles, stats, base }),
     aboutPage({ people, stats, base }),
     governancePage({ stats, base }),
     leadershipPage({ people, subsidiaries, base }),
@@ -156,7 +163,7 @@ async function build() {
       base,
       milestones: milestones.filter((milestone) => milestone.venture === subsidiary.name),
       manager: people.find((p) => p.group === 'subsidiary' && p.venture === subsidiary.name) ?? null,
-      roles: roles.filter((role) => role.subsidiary === subsidiary.name),
+      roles: openRoles.filter((role) => role.subsidiary === subsidiary.name),
       // Match news to a company by name mention, so an entry appears on the
       // page of the company it is about without needing a field maintained.
       news: news.filter((entry) => subsidiary.name && (
@@ -165,7 +172,7 @@ async function build() {
       )).slice(0, 3),
     })),
     procurementPage({ tiers: procurement, faq, base }),
-    careersIndex({ roles, subsidiaries, base }),
+    careersIndex({ roles: openRoles, subsidiaries, base }),
     ...roles.map((role) => roleDetail(role, { base })),
     newsIndex({ news, base }),
     ...news.map((entry) => newsDetail(entry, { base })),
@@ -204,6 +211,9 @@ async function build() {
   const named = subsidiaries.filter((s) => s.name).length;
   console.log(`  Portfolio: ${stats.total} ventures — ${stats.operating} operating (${STATUS_VALUES.map((v) => `${stats.byStatus[v]} ${v}`).join(', ')})`);
   console.log(`  ${named} named, ${stats.total - named} published by sector only`);
+  if (roles.length) {
+    console.log(`  Roles: ${openRoles.length} open, ${roles.length - openRoles.length} closed`);
+  }
 
   const fonts = await readdir(path.join(root, 'public/fonts')).catch(() => []);
   if (!fonts.some((file) => file.endsWith('.woff2'))) {

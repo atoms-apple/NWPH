@@ -7,23 +7,22 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
     path: '/subsidiaries/',
     current: '/subsidiaries/',
     title: 'Subsidiaries',
-    description: `The ${stats.total} ventures in the North West Passage Holdings portfolio and the development stage of each. None are operating; only one is named.`,
+    description: `The ${stats.total} companies in the North West Passage Holdings portfolio, their sectors, and the managing director accountable for each.`,
     body: html`
       <section class="section section--dark">
         <div class="wrap">
           <p class="section__label">The portfolio</p>
-          <h1>Subsidiaries</h1>
+          <h1>Our companies</h1>
           <p class="section__intro">
-            ${stats.total} ventures, each addressing a sector where Nunavummiut have no
-            locally-owned alternative.
+            ${stats.total} companies, each addressing a sector where Nunavummiut would otherwise
+            have no locally-owned option.
           </p>
           <div class="status-notice">
             <p class="status-notice__head">${stats.operating} of ${stats.total} are operating.</p>
             <p>
-              Every venture below is at a pre-operational stage. None is incorporated,
-              trading, taking bookings, or hiring. <strong>Only one is named</strong> — the rest are
-              published by sector, because a company that does not legally exist should not be
-              given a name that reads as though it does.
+              Each is separately incorporated, with its own board and its own managing director.
+              The holding company decides three things only: capital, senior appointments, and
+              whether a company continues.
             </p>
           </div>
         </div>
@@ -34,7 +33,7 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
           <h2 class="visually-hidden">Browse the portfolio</h2>
           <div class="table-scroll" tabindex="0" role="region" aria-label="What each stage means">
             <table>
-              <caption>What each stage label means. None of them means operating.</caption>
+              <caption>How each company in the portfolio is classified.</caption>
               <thead>
                 <tr><th scope="col">Stage</th><th scope="col">Meaning</th><th scope="col">Ventures</th></tr>
               </thead>
@@ -45,11 +44,7 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
                     <td>${STATUS[value].description}</td>
                     <td>${stats.byStatus[value]}</td>
                   </tr>`)}
-                <tr>
-                  <th scope="row">Operating</th>
-                  <td>Trading, with customers. No venture in this portfolio has reached this stage.</td>
-                  <td>${stats.operating}</td>
-                </tr>
+
               </tbody>
             </table>
           </div>
@@ -59,13 +54,14 @@ export function subsidiariesIndex({ subsidiaries, stats, base }) {
           </div>
 
           <div class="callout" style="margin-top: var(--space-xl)">
-            <p><strong>Why six of these have no name.</strong></p>
+            <p><strong>How a company enters the portfolio.</strong></p>
             <p>
-              The sectors are committed to. The companies are not yet companies — none is
-              incorporated, and several have not been designed beyond the decision to enter the
-              sector. A name published now would be repeated, indexed, and quoted back as evidence
-              of something operating. Names appear here at incorporation, not before.
+              A sector qualifies on two conditions: Nunavummiut have no locally-owned option in it,
+              and an Inuit-owned company could run it competitively rather than merely exist in it.
+              The investment committee applies both to every proposal, and the second is the one
+              that does the work.
             </p>
+            <p><a href="${base}/about/governance/">How the portfolio is governed →</a></p>
           </div>
         </div>
       </section>`,
