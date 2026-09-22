@@ -16,7 +16,7 @@
 
 import { html, raw, icon, on, $, $$, announce } from '../lib/dom.js';
 import { go } from '../lib/router.js';
-import { getCheckout, setCheckout, getState } from '../lib/store.js';
+import { getCheckout, setCheckout, getState, checkoutComplete } from '../lib/store.js';
 import { itineraryFromRefs } from '../engine/search.js';
 import { buildSeatMap, aircraftType } from '../data/aircraft.js';
 import { occupiedSeats } from '../engine/schedule.js';
@@ -27,19 +27,21 @@ import { airport } from '../data/airports.js';
 import { formatDate } from '../lib/dates.js';
 import { steps, pageHead, note } from './ui.js';
 
-/** Every segment across both directions, flattened, in travel order. */
+/** Every segment across every leg, flattened, in travel order. */
 function allSegments(checkout) {
-  const outbound = itineraryFromRefs(checkout.outbound);
-  const inbound = checkout.inbound ? itineraryFromRefs(checkout.inbound) : null;
-  return [
-    ...(outbound?.segments ?? []).map((s) => ({ seg: s, direction: 'Outbound' })),
-    ...(inbound?.segments ?? []).map((s) => ({ seg: s, direction: 'Return' })),
-  ];
+  const out = [];
+  checkout.journeys.forEach((refs, index) => {
+    const journey = refs ? itineraryFromRefs(refs) : null;
+    for (const seg of journey?.segments ?? []) {
+      out.push({ seg, direction: checkout.legs[index]?.label ?? `Flight ${index + 1}` });
+    }
+  });
+  return out;
 }
 
 export default function seatsView({ query }) {
   const checkout = getCheckout();
-  if (!checkout?.outbound || !checkout.family || !checkout.passengers) return { redirect: '/book' };
+  if (!checkoutComplete(checkout) || !checkout.family || !checkout.passengers) return { redirect: '/book' };
 
   const segments = allSegments(checkout);
   if (!segments.length) return { redirect: '/book' };

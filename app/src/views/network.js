@@ -79,7 +79,7 @@ function projector(codes) {
 }
 
 /** The network as an SVG. Routes first, then nodes, so labels sit on top. */
-function networkMap(codes, routeList, { title }) {
+export function networkMap(codes, routeList, { title, bare = false }) {
   const project = projector(codes);
   const shown = new Set(codes);
 
@@ -158,6 +158,22 @@ function networkMap(codes, routeList, { title }) {
           text-anchor="${flip ? 'end' : 'start'}">${a.name}</text>
       </g>`;
   });
+
+  if (bare) {
+    return html`
+      <svg viewBox="${project.viewBox}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <g>${lines}</g>
+        <g>${nodes.map(() => '')}</g>
+        <g>${codes.map((code) => {
+          const point = project.point(code);
+          const a = airport(code);
+          return html`<circle class="map-node ${a.hub ? 'map-node--hub' : ''}"
+            cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}"
+            r="${(a.hub ? project.radiusHub : project.radius).toFixed(1)}"
+            stroke-width="${project.stroke.toFixed(2)}"/>`;
+        })}</g>
+      </svg>`;
+  }
 
   return html`
     <div class="map-frame">

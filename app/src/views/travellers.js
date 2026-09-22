@@ -13,7 +13,7 @@
 
 import { html, raw, icon, on, $, $$, announce } from '../lib/dom.js';
 import { go } from '../lib/router.js';
-import { getCheckout, setCheckout, getState, setProfile } from '../lib/store.js';
+import { getCheckout, setCheckout, getState, setProfile, checkoutComplete } from '../lib/store.js';
 import { passengerTypes, fareTypeById } from '../data/brand.js';
 import { itineraryFromRefs } from '../engine/search.js';
 import { steps, pageHead, note } from './ui.js';
@@ -31,7 +31,7 @@ function passengerSlots(passengers) {
 
 export default function travellersView() {
   const checkout = getCheckout();
-  if (!checkout?.outbound || !checkout.family) return { redirect: '/book' };
+  if (!checkoutComplete(checkout) || !checkout.family) return { redirect: '/book' };
 
   const search = checkout.search ?? getState().search;
   const profile = getState().profile;

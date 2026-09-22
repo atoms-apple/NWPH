@@ -4,9 +4,10 @@ Two things live in this repository:
 
 1. **The corporate site** for NWPH, an Inuit-owned holding company in Iqaluit,
    Nunavut. Published at `/NWPH/`.
-2. **The North Winds Airlines app** — a working prototype of the passenger app
-   for the portfolio's aviation venture. Published at `/NWPH/app/`.
-   See [`docs/APP.md`](docs/APP.md).
+2. **The North Winds Airlines site and app** — a working prototype of the full
+   web presence for the portfolio's aviation venture: a travel-information site
+   on a wide screen, an app on a phone, from one codebase. Fifty-odd screens.
+   Published at `/NWPH/app/`. See [`docs/APP.md`](docs/APP.md).
 
 **The site's central claim is that nothing is operating yet.** That is not a
 disclaimer bolted on to marketing copy — it is enforced by the content schema.
@@ -37,8 +38,8 @@ npm run check:app  # just the app's checks
 ```
 
 `npm run check` is the gate CI uses. Run it before pushing. It covers both: the
-site's contrast, accessibility and link checks, then the app's 660-odd
-assertions over its schedule, pricing, itinerary and booking engines.
+corporate site's contrast, accessibility and link checks, then the airline site's 700
+assertions over its schedule, pricing, itinerary, booking and navigation.
 
 The site build clears `dist/`, so build the site before the app. `npm run build`
 does them in that order.
@@ -296,11 +297,14 @@ always "shows everything", never "shows nothing".
 
 ---
 
-## The airline app
+## The airline site
 
-`/NWPH/app/` is a booking app for North Winds Airlines: search and book across
-the three service lines, change flights and dates, choose seats, add bags and
-freight, check in, and carry a boarding pass offline.
+`/NWPH/app/` is the whole North Winds web presence: search and book across the
+three service lines, multi-city itineraries, cargo and charter quotes, a page
+for every community, baggage rules with a calculator, a searchable help centre,
+live travel advisories, the loyalty programme, careers, and the legal pages —
+plus the app side of it, where you manage a booking, check in and carry a
+boarding pass offline.
 
 It shares the brand palette and the no-dependency approach, and nothing else —
 it is an application, with its own token system, its own dark theme and its own
@@ -319,8 +323,8 @@ Three things about it are worth knowing before editing:
 - **The checks are the interesting part.** `tools/check-app.mjs` asserts that
   every route's aircraft can use every runway it calls at, that every fare
   breakdown sums to its total, that no itinerary routes a passenger back over
-  their own departure point, and that every module import resolves. Full list in
-  [`docs/APP.md`](docs/APP.md).
+  their own departure point, that all 87 navigation links resolve, and that
+  every module import resolves. Full list in [`docs/APP.md`](docs/APP.md).
 
 ---
 

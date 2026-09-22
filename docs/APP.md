@@ -1,8 +1,9 @@
-# North Winds Airlines — the passenger app
+# North Winds Airlines — the site and app
 
-A working prototype of the booking app for **North Winds Airlines**, the
-aviation venture in the NWPH portfolio. It builds to `dist/app/` and is
-published at `/NWPH/app/`.
+A working prototype of the full web presence for **North Winds Airlines**, the
+aviation venture in the NWPH portfolio: a marketing and travel-information site
+on a wide screen, an app on a phone, from one codebase. It builds to
+`dist/app/` and is published at `/NWPH/app/`.
 
 **The airline does not exist.** No company, no Air Operator Certificate, no
 aircraft, no seats for sale. On the corporation's own site, aviation is listed
@@ -14,15 +15,41 @@ see [Keeping it honest](#keeping-it-honest).
 
 ## What it does
 
+Fifty-odd screens across six sections.
+
+### Book
 | | |
 |---|---|
 | **Search and book** | One search across all three service lines, with connections built between them. Fare families, traveller details, seat maps, bags and freight, review and confirmation. |
-| **Manage a booking** | Change the flight or the date with the fare difference and fee quoted before anything is committed. Cancel with the refund or credit stated up front. Full change history. |
-| **Check in** | Opens 24 hours out. Assigns seats to anyone who has none, and issues a boarding pass per traveller per flight. |
-| **Boarding passes** | Rendered from data on the device, with a real IATA BCBP (M1) string. Works with no signal and prints. |
-| **Flight status** | A departure board for any community on any date, or one flight end to end. Delays name the actual cause, which up here is usually the weather. |
-| **Milk runs** | Each circuit's sequence of stops, its cadence and its next departures. |
-| **Network** | Every community, drawn from real coordinates, with its runway, its services and where it connects to. |
+| **Multi-city** | Up to four flights on one booking under one fare family. Each leg is checked for service before you commit, and a leg with no service on its date offers the next one that works. |
+| **Low-fare calendar** | A month of fares on one route. On this network its first job is showing which days have a service at all. |
+| **Seat sales** | Fares genuinely below the norm for their own route, measured against the median of comparable journeys on the same pairing. |
+| **Cargo** | Freight quoted by chargeable weight across seven classes, with the aircraft that will carry it and what could hold it up. |
+| **Charter** | Five types, quoted by block hour including positioning — and only the types that can use both runways are offered. |
+| **Groups, medical and duty travel** | Group holds and terms, medical authorisations, billed corporate accounts. |
+
+### Travel
+| | |
+|---|---|
+| **Manage a booking** | Change the flight or date with the difference and fee quoted before anything is committed. Cancel with the refund or credit stated up front. Full change history. |
+| **Rebook after disruption** | Free, keeps the fare, ordered by arrival rather than price — because price is irrelevant when the airline is paying. |
+| **Same-day standby** | Included on Flex and Summit. Shows the actual load and says plainly when the odds are poor. |
+| **Upgrades** | Priced as the fare difference with no change fee, and only where every flight in the journey has space. |
+| **Check in and boarding passes** | 24-hour window, seats assigned to anyone without one, a pass per traveller per flight with a real IATA BCBP (M1) string. Works offline and prints. |
+| **Flight status** | A departure board for any community on any date, or one flight end to end. |
+| **Travel credits** | What a cancellation left, and when it expires. |
+
+### Where we fly
+Destinations index and a page per community — Inuktitut name, what the place is, what the strip is like, what the light does at that latitude, which services call and where you can reach without a change. Plus the route map, the milk-run circuits, the fleet and a printable timetable.
+
+### Travel info
+Baggage with a calculator, identification, special assistance, live travel advisories, a searchable help centre, contact, conditions of carriage, privacy and accessibility.
+
+### Circle
+The loyalty programme, a tier comparison, miles activity, and redemption pricing.
+
+### About
+Our story, community commitments, careers with six roles, and the accounting of what in this prototype is real.
 
 ---
 
@@ -52,26 +79,47 @@ No framework, no bundler, no dependencies. Native ES modules, served as written.
 
 ```
 app/
-├── index.html              the shell — header, main, tab bar, live region
+├── index.html              the shell — header, main, footer, tab bar, menu sheet
 ├── manifest.webmanifest    installable, with shortcuts
-├── sw.js                   precaches the whole app; stamped at build time
-├── styles/                 tokens → base → layout → components → flight → print
+├── sw.js                   precaches the whole site; stamped at build time
+├── styles/                 tokens → base → layout → components → hero → flight → print
 └── src/
-    ├── main.js             routes, chrome, navigation, toasts
+    ├── main.js             the route table, navigation, toasts
     ├── lib/
     │   ├── dom.js          escape-by-default templating, delegated events, icons
     │   ├── router.js       hash routing
-    │   ├── store.js        state, persisted to localStorage
+    │   ├── store.js        state and checkout, persisted to localStorage
     │   ├── dates.js        dates, ISO weeks, DST, three time zones
     │   └── random.js       deterministic pseudo-randomness
-    ├── data/               airports, aircraft and cabins, routes, brand and fares
+    ├── data/
+    │   ├── sitemap.js      the site's architecture — menus, tabs and footer read it
+    │   ├── airports.js     30 communities and gateways, real coordinates
+    │   ├── aircraft.js     seven types and their cabins
+    │   ├── network.js      42 routes and 7 circuits
+    │   ├── brand.js        service lines, fare families, fare types, ancillaries
+    │   ├── destinations.js what there is to say about each place
+    │   ├── policies.js     baggage, identification, assistance, carriage, privacy
+    │   ├── services.js     cargo classes, charter fleet, group terms, careers
+    │   ├── help.js         28 questions, searchable
+    │   └── advisories.js   standing facts, plus disruption derived from the schedule
     ├── engine/
     │   ├── schedule.js     routes + a date → flights, segments, inventory, status
     │   ├── pricing.js      fares, charges, totals — integer cents throughout
     │   ├── search.js       itineraries across service lines
-    │   └── booking.js      create, change, cancel, check in, boarding passes
-    └── views/              one module per screen
+    │   ├── booking.js      create, change, cancel, check in, boarding passes
+    │   ├── disruption.js   rebooking, standby and upgrade rules
+    │   ├── services.js     cargo, charter and redemption quoting
+    │   └── deals.js        fares below the norm for their own route
+    └── views/              chrome, plus one module per section
 ```
+
+### One source for the navigation
+
+The desktop menus, the phone's full-screen menu and the footer sitemap are three
+presentations of `src/data/sitemap.js`. Adding a screen means adding it there and
+registering its route; it then appears in all three, in the right section, with
+the same wording — and a check asserts that all 87 navigation links resolve to a
+registered route.
 
 ### Everything is derived
 
@@ -156,14 +204,16 @@ modules natively.
 | Itineraries | No journey visits the same airport twice; segments join end to end; connections are within bounds; a stored itinerary rebuilds identically |
 | Pricing | **Every breakdown sums to its total**; fare families are strictly ordered; infants pay no security charge or airport fee; discounts apply to the fare and nothing else |
 | Bookings | Fare rules are enforced where they are written; a change releases seats; check-in never assigns a cabin the fare may not use; the BCBP is well formed |
+| **Navigation** | **Every link in every menu, the tab bar and the footer resolves to a registered route**, and every one carries an explanation |
 | Contrast | Every text-on-surface pair in light **and** dark, read out of `tokens.css` rather than restated |
 | Build output | Every module import resolves; the manifest's icons exist; the service worker was stamped; the prototype markers are present |
 
-Two of these deserve their names in full. The **runway check** is why no route
+Three of these deserve their names in full. The **runway check** is why no route
 in the app puts a 737 on a 869-metre gravel strip at Pangnirtung. The **import
-graph check** is what a bundler would otherwise catch: with no build step for
-the application code, a mistyped import path would only fail when someone opened
-the screen that needed it.
+graph check** is what a bundler would otherwise catch: with no build step for the
+application code, a mistyped import path would only fail when someone opened the
+screen that needed it. And the **navigation check** is what stops a site with six
+menus and fifty screens shipping a dead link for a person to find.
 
 The contrast checker parses `app/styles/tokens.css`. A checker holding its own
 copy of the palette passes happily while the app ships a different one.
@@ -211,14 +261,34 @@ booking app would say otherwise.
 
 ---
 
+## Design
+
+The palette is taken from what the sky over Baffin does: a deep night blue as
+the ground of the brand, an aurora green used sparingly and never as a wash, the
+low sun's amber for warnings and deals, and a paper that is cool rather than
+cream because northern daylight is blue. Both themes are designed rather than
+one inverted from the other.
+
+Type is a system stack on purpose — there is no webfont to download and nothing
+to fall back from, which matters on a metered satellite link. The freshness
+comes from the scale, the weights and the spacing.
+
+Nothing is a photograph. The hero is CSS gradients with the real network traced
+behind it; each destination card carries a generated sky whose darkness and
+aurora strength follow the community's latitude, so Grise Fiord at 76°N reads
+darker than Iqaluit at 63°N. A stock image of "the Arctic" pinned to a named
+community would be a lie about somewhere specific; the light, at least, is true.
+
 ## Known limits
 
-- **Multi-city** is not built. The search form offers it and says plainly that
-  it is not available rather than pretending.
 - **Retrieving a booking made elsewhere** cannot work: bookings live on the
   device that made them, and there is no server to ask.
+- **Redemption** quotes are real but the booking completes as a cash purchase;
+  paying in miles is not built.
 - **Seat changes after booking** are made at check-in rather than from the
   booking screen.
+- **Every enquiry form** — groups, charter, assistance, corporate — says plainly
+  that nothing was sent, because nothing was.
 - The **boarding-pass bar pattern is decorative**. The BCBP string beneath it is
   correctly formed, but a prototype should not emit something a gate reader
   might act on.

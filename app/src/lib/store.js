@@ -39,6 +39,8 @@ const initial = () => ({
     firstName: '', lastName: '', email: '', phone: '',
     memberNumber: null, miles: 0, homeAirport: 'YFB',
     savedTravellers: [],
+    cards: [],
+    notifications: {},
   },
   // The booking in progress. Cleared on confirmation, kept across reloads so a
   // dropped connection halfway through checkout does not lose the trip.
@@ -127,6 +129,56 @@ export function addCredit(credit) {
 /* ── Checkout ────────────────────────────────────────────────────────────── */
 
 export const getCheckout = () => state.checkout;
+
+/**
+ * Start a checkout from a search.
+ *
+ * A booking in progress is a list of legs, each of which needs an itinerary
+ * chosen for it. A one-way trip has one leg, a return has two, and multi-city
+ * has up to four — the rest of the flow does not care which, so there is one
+ * code path through fares, seats, extras and payment instead of three.
+ */
+export function startCheckout(search, legs = null) {
+  const resolved = legs ?? (search.tripType === 'return' && search.returnDate
+    ? [
+      { from: search.from, to: search.to, date: search.departDate, label: 'Outbound' },
+      { from: search.to, to: search.from, date: search.returnDate, label: 'Return' },
+    ]
+    : [{ from: search.from, to: search.to, date: search.departDate, label: 'Outbound' }]);
+
+  const checkout = {
+    search,
+    mode: legs ? 'multi' : search.tripType,
+    legs: resolved,
+    journeys: resolved.map(() => null),
+    active: 0,
+    family: null,
+    passengers: null,
+    contact: null,
+    seats: {},
+    extras: {},
+    assistance: [],
+    useCredit: false,
+    payWithMiles: false,
+  };
+  update({ checkout });
+  return checkout;
+}
+
+/** Record the itinerary chosen for one leg, and advance to the next. */
+export function chooseLeg(index, refs) {
+  const checkout = state.checkout;
+  if (!checkout) return null;
+  const journeys = checkout.journeys.map((existing, i) => (i === index ? refs : existing));
+  const nextOpen = journeys.findIndex((journey) => journey === null);
+  const next = { ...checkout, journeys, active: nextOpen === -1 ? index : nextOpen };
+  update({ checkout: next });
+  return next;
+}
+
+/** True once every leg has an itinerary. */
+export const checkoutComplete = (checkout = state.checkout) =>
+  Boolean(checkout?.journeys?.length) && checkout.journeys.every(Boolean);
 
 export function setCheckout(patch) {
   const next = patch === null ? null : { ...(state.checkout ?? {}), ...patch };

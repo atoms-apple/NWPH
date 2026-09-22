@@ -12,7 +12,7 @@
 
 import { html, raw, icon, on, $, $$, announce } from '../lib/dom.js';
 import { go } from '../lib/router.js';
-import { getCheckout, setCheckout, getState, saveBooking, clearCheckout } from '../lib/store.js';
+import { getCheckout, setCheckout, getState, saveBooking, clearCheckout, checkoutComplete, update } from '../lib/store.js';
 import { itineraryFromRefs } from '../engine/search.js';
 import { priceItinerary, seatFeeCents, money, milesEarned } from '../engine/pricing.js';
 import { createBooking, fareRules, makeReference } from '../engine/booking.js';
@@ -24,9 +24,7 @@ import { steps, pageHead, note, legList, priceBreakdown, journeyLine } from './u
 /** Price the whole booking: both directions, seats, extras, in one total. */
 export function quoteCheckout(checkout) {
   const search = checkout.search;
-  const outbound = itineraryFromRefs(checkout.outbound);
-  const inbound = checkout.inbound ? itineraryFromRefs(checkout.inbound) : null;
-  const journeys = [outbound, inbound].filter(Boolean);
+  const journeys = checkout.journeys.map((refs) => (refs ? itineraryFromRefs(refs) : null)).filter(Boolean);
 
   let seatFees = 0;
   for (const journey of journeys) {
@@ -72,7 +70,7 @@ export function quoteCheckout(checkout) {
 
 export default function paymentView() {
   const checkout = getCheckout();
-  if (!checkout?.family || !checkout.passengers?.length) return { redirect: '/book' };
+  if (!checkoutComplete(checkout) || !checkout.family || !checkout.passengers?.length) return { redirect: '/book' };
 
   const { journeys, price, miles } = quoteCheckout(checkout);
   if (!journeys.length) return { redirect: '/book' };
@@ -93,7 +91,7 @@ export default function paymentView() {
           <div class="stack">
             ${journeys.map((journey, index) => html`
               <div class="card">
-                <p class="option__note">${index === 0 ? 'Outbound' : 'Return'} · ${formatDate(journey.departDate, 'long')}</p>
+                <p class="option__note">${checkout.legs[index]?.label ?? `Flight ${index + 1}`} · ${formatDate(journey.departDate, 'long')}</p>
                 ${journeyLine(journey)}
                 <details class="disclosure" style="margin-top:var(--s3)">
                   <summary>Every leg</summary>
@@ -213,7 +211,10 @@ export default function paymentView() {
         <div class="card card--raised">
           <h2 class="card__title">Total</h2>
           <p style="font-size:var(--text-3xl);font-weight:700;letter-spacing:-.03em;margin:var(--s2) 0">${money(price.total)}</p>
-          <p class="option__note">${price.passengerCount} traveller${price.passengerCount > 1 ? 's' : ''} · ${journeys.length > 1 ? 'return' : 'one way'} · ${airline.currency}</p>
+          <p class="option__note">
+          ${price.passengerCount} traveller${price.passengerCount > 1 ? 's' : ''} ·
+          ${journeys.length > 1 ? `${journeys.length} flights` : 'one way'} · ${airline.currency}
+        </p>
           <hr>
           ${priceBreakdown(price, { title: 'Every charge', open: true })}
           <p class="option__note" style="margin-top:var(--s3)">Earns ${miles.toLocaleString('en-CA')} miles.</p>
@@ -259,7 +260,7 @@ function wire(root, { checkout, journeys, price, miles }) {
 
     const booking = createBooking({
       journeys: journeys.map((journey, index) => ({
-        label: index === 0 ? 'Outbound' : 'Return',
+        label: checkout.legs[index]?.label ?? `Flight ${index + 1}`,
         segments: journey.segments,
       })),
       passengers: checkout.passengers,

@@ -75,7 +75,7 @@ const markSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" rol
 
 // Cascade order: tokens, then base, then layout, then components, then the
 // airline-specific pieces that build on all of them.
-const CSS_FILES = ['tokens.css', 'base.css', 'layout.css', 'components.css', 'flight.css', 'print.css'];
+const CSS_FILES = ['tokens.css', 'base.css', 'layout.css', 'components.css', 'hero.css', 'flight.css', 'print.css'];
 
 /** Comments and redundant whitespace only — nothing that could change meaning. */
 const minifyCss = (css) => css

@@ -1,19 +1,21 @@
 /**
  * Application entry point.
  *
- * Sets up the shell — header, tab bar, offline indicator, toasts — registers
- * the routes, and hands each navigation to the matching view. Views return
- * markup plus an optional `onMount`; everything else about the frame is handled
- * here so no screen has to think about it.
+ * Registers every route, then hands each navigation to the matching view.
+ * Views return markup plus an optional `onMount`; the frame — header, menus,
+ * footer, tab bar, focus and scrolling — is handled here so no screen has to
+ * think about it.
  */
 
-import { html, raw, render, mount, cx, icon, on, announce, $ } from './lib/dom.js';
+import { html, render, mount, icon, on, announce, $, $$ } from './lib/dom.js';
 import { route, start, resolve, go, href, back } from './lib/router.js';
-import { getState, subscribe, allBookings } from './lib/store.js';
+import { getState, subscribe } from './lib/store.js';
 import { airline } from './data/brand.js';
+import { header, menuSheet, tabbar, footer } from './views/chrome.js';
 
 import homeView from './views/home.js';
 import searchView from './views/search.js';
+import multiCityView from './views/multicity.js';
 import resultsView from './views/results.js';
 import faresView from './views/fares.js';
 import travellersView from './views/travellers.js';
@@ -21,99 +23,114 @@ import seatsView from './views/seats.js';
 import extrasView from './views/extras.js';
 import paymentView from './views/payment.js';
 import confirmationView from './views/confirmation.js';
+import { dealsView, calendarView, redeemView } from './views/deals.js';
 import { tripsView, tripView, changeView, cancelView } from './views/trips.js';
+import { rebookView, standbyView, upgradeView } from './views/travelday.js';
 import { checkinView, checkinStartView, passView } from './views/checkin.js';
 import { statusView } from './views/status.js';
-import { networkView, brandView, milkRunsView, circuitView, communityView } from './views/network.js';
-import profileView from './views/profile.js';
+import { networkView, brandView, milkRunsView, circuitView } from './views/network.js';
+import { destinationsView, destinationView, fleetView, timetableView } from './views/explore.js';
+import {
+  cargoView, cargoQuoteView, charterView, charterQuoteView, groupsView,
+  assistanceView, medicalView, corporateView,
+} from './views/services.js';
+import {
+  baggageView, documentsView, advisoriesView, helpView, contactView,
+  legalView, privacyView, accessibilityView,
+} from './views/info.js';
+import { storyView, communityView, careersView, roleView } from './views/company.js';
+import {
+  accountView, profileView, circleView, tiersView, milesView,
+  travellersView as savedTravellersView, paymentMethodsView, notificationsView, creditsView,
+} from './views/account.js';
 import aboutView from './views/about.js';
 
 /* ── Routes ──────────────────────────────────────────────────────────────── */
 
+const BOOK = { tab: 'book', section: 'book' };
+const TRIPS = { tab: 'trips', section: 'trips' };
+const EXPLORE = { tab: 'explore', section: 'explore' };
+const INFO = { tab: 'more', section: 'info' };
+const CIRCLE = { tab: 'more', section: 'circle' };
+const COMPANY = { tab: 'more', section: 'company' };
+
 route('/', homeView, { tab: 'home' });
-route('/book', searchView, { tab: 'book', title: 'Book a flight' });
-route('/book/results', resultsView, { tab: 'book', title: 'Choose your flight', back: '/book' });
-route('/book/fares', faresView, { tab: 'book', title: 'Choose a fare', back: '/book/results' });
-route('/book/travellers', travellersView, { tab: 'book', title: 'Travellers', back: '/book/fares' });
-route('/book/seats', seatsView, { tab: 'book', title: 'Choose seats', back: '/book/travellers' });
-route('/book/extras', extrasView, { tab: 'book', title: 'Bags and extras', back: '/book/seats' });
-route('/book/payment', paymentView, { tab: 'book', title: 'Review and pay', back: '/book/extras' });
-route('/book/confirmed/:reference', confirmationView, { tab: 'trips', title: 'Booking confirmed' });
 
-route('/trips', tripsView, { tab: 'trips', title: 'My trips' });
-route('/trips/:reference', tripView, { tab: 'trips', title: 'Booking', back: '/trips' });
-route('/trips/:reference/change/:journey', changeView, { tab: 'trips', title: 'Change flight' });
-route('/trips/:reference/cancel', cancelView, { tab: 'trips', title: 'Cancel booking' });
+/* Booking */
+route('/book', searchView, { ...BOOK, title: 'Book a flight' });
+route('/book/multi-city', multiCityView, { ...BOOK, title: 'Multi-city', back: '/book' });
+route('/book/calendar', calendarView, { ...BOOK, title: 'Low-fare calendar', back: '/book' });
+route('/book/redeem', redeemView, { ...CIRCLE, title: 'Book with miles', back: '/circle' });
+route('/deals', dealsView, { ...BOOK, title: 'Seat sales' });
+route('/book/results', resultsView, { ...BOOK, title: 'Choose your flight', back: '/book' });
+route('/book/fares', faresView, { ...BOOK, title: 'Choose a fare', back: '/book/results' });
+route('/book/travellers', travellersView, { ...BOOK, title: 'Travellers', back: '/book/fares' });
+route('/book/seats', seatsView, { ...BOOK, title: 'Choose seats', back: '/book/travellers' });
+route('/book/extras', extrasView, { ...BOOK, title: 'Bags and extras', back: '/book/seats' });
+route('/book/payment', paymentView, { ...BOOK, title: 'Review and pay', back: '/book/extras' });
+route('/book/confirmed/:reference', confirmationView, { ...TRIPS, title: 'Booking confirmed' });
 
-route('/checkin', checkinStartView, { tab: 'checkin', title: 'Check in' });
-route('/checkin/:reference', checkinView, { tab: 'checkin', title: 'Check in', back: '/checkin' });
-route('/pass/:reference/:journey/:passenger', passView, { tab: 'checkin', title: 'Boarding pass' });
+/* Trips and the day of travel */
+route('/trips', tripsView, { ...TRIPS, title: 'My trips' });
+route('/trips/:reference', tripView, { ...TRIPS, title: 'Booking', back: '/trips' });
+route('/trips/:reference/change/:journey', changeView, { ...TRIPS, title: 'Change flight' });
+route('/trips/:reference/rebook/:journey', rebookView, { ...TRIPS, title: 'Rebook' });
+route('/trips/:reference/standby/:journey', standbyView, { ...TRIPS, title: 'Same-day standby' });
+route('/trips/:reference/upgrade/:journey', upgradeView, { ...TRIPS, title: 'Upgrade' });
+route('/trips/:reference/cancel', cancelView, { ...TRIPS, title: 'Cancel booking' });
+route('/credits', creditsView, { ...TRIPS, title: 'Travel credits' });
 
-route('/flights', statusView, { tab: 'flights', title: 'Flight status' });
-route('/network', networkView, { tab: 'more', title: 'Route network' });
-route('/network/community/:code', communityView, { tab: 'more', title: 'Community', back: '/network' });
-route('/milk-runs', milkRunsView, { tab: 'more', title: 'Milk runs' });
-route('/milk-runs/:id', circuitView, { tab: 'more', title: 'Circuit', back: '/milk-runs' });
-route('/brand/:id', brandView, { tab: 'more', title: 'Service line', back: '/' });
-route('/profile', profileView, { tab: 'more', title: airline.name });
-route('/about', aboutView, { tab: 'more', title: 'About this app' });
+route('/checkin', checkinStartView, { tab: 'trips', section: 'trips', title: 'Check in' });
+route('/checkin/:reference', checkinView, { tab: 'trips', section: 'trips', title: 'Check in', back: '/checkin' });
+route('/pass/:reference/:journey/:passenger', passView, { tab: 'trips', section: 'trips', title: 'Boarding pass' });
+route('/flights', statusView, { tab: 'trips', section: 'trips', title: 'Flight status' });
 
-/* ── Chrome ──────────────────────────────────────────────────────────────── */
+/* Where we fly */
+route('/destinations', destinationsView, { ...EXPLORE, title: 'Destinations' });
+route('/destinations/:code', destinationView, { ...EXPLORE, title: 'Community', back: '/destinations' });
+route('/network', networkView, { ...EXPLORE, title: 'Route network' });
+route('/milk-runs', milkRunsView, { ...EXPLORE, title: 'Milk runs' });
+route('/milk-runs/:id', circuitView, { ...EXPLORE, title: 'Circuit', back: '/milk-runs' });
+route('/brand/:id', brandView, { ...EXPLORE, title: 'Service line', back: '/network' });
+route('/fleet', fleetView, { ...EXPLORE, title: 'Our fleet' });
+route('/timetable', timetableView, { ...EXPLORE, title: 'Timetable' });
 
-const TABS = [
-  { id: 'home', path: '/', label: 'Home', icon: 'wind' },
-  { id: 'book', path: '/book', label: 'Book', icon: 'search' },
-  { id: 'trips', path: '/trips', label: 'Trips', icon: 'ticket' },
-  { id: 'checkin', path: '/checkin', label: 'Check in', icon: 'check' },
-  { id: 'flights', path: '/flights', label: 'Flights', icon: 'plane' },
-];
+/* Services */
+route('/cargo', cargoView, { ...BOOK, title: 'Cargo and freight' });
+route('/cargo/quote', cargoQuoteView, { ...BOOK, title: 'Freight quote', back: '/cargo' });
+route('/charter', charterView, { ...BOOK, title: 'Charter' });
+route('/charter/quote', charterQuoteView, { ...BOOK, title: 'Charter quote', back: '/charter' });
+route('/groups', groupsView, { ...BOOK, title: 'Group travel' });
+route('/medical-travel', medicalView, { ...BOOK, title: 'Medical travel' });
+route('/corporate', corporateView, { ...BOOK, title: 'Duty and corporate travel' });
 
-const NAV = [
-  { path: '/book', label: 'Book' },
-  { path: '/trips', label: 'My trips' },
-  { path: '/checkin', label: 'Check in' },
-  { path: '/flights', label: 'Flight status' },
-  { path: '/milk-runs', label: 'Milk runs' },
-  { path: '/network', label: 'Network' },
-];
+/* Travel information */
+route('/baggage', baggageView, { ...INFO, title: 'Baggage' });
+route('/documents', documentsView, { ...INFO, title: 'Identification' });
+route('/assistance', assistanceView, { ...INFO, title: 'Special assistance' });
+route('/advisories', advisoriesView, { ...INFO, title: 'Travel advisories' });
+route('/help', helpView, { ...INFO, title: 'Help centre' });
+route('/contact', contactView, { ...INFO, title: 'Contact us' });
+route('/legal', legalView, { ...INFO, title: 'Conditions of carriage' });
+route('/privacy', privacyView, { ...INFO, title: 'Privacy notice' });
+route('/accessibility', accessibilityView, { ...INFO, title: 'Accessibility' });
 
-function renderHeader(current) {
-  const showBack = Boolean(current.route?.back);
-  const heading = current.route?.title;
+/* Circle and the account */
+route('/circle', circleView, { ...CIRCLE, title: 'North Winds Circle' });
+route('/circle/tiers', tiersView, { ...CIRCLE, title: 'Tiers and benefits', back: '/circle' });
+route('/account', accountView, { ...CIRCLE, title: 'Your account' });
+route('/account/profile', profileView, { ...CIRCLE, title: 'Your details', back: '/account' });
+route('/account/miles', milesView, { ...CIRCLE, title: 'My miles', back: '/account' });
+route('/account/travellers', savedTravellersView, { ...CIRCLE, title: 'Saved travellers', back: '/account' });
+route('/account/payment', paymentMethodsView, { ...CIRCLE, title: 'Payment methods', back: '/account' });
+route('/account/notifications', notificationsView, { ...CIRCLE, title: 'Notifications', back: '/account' });
 
-  return html`
-    <div class="on-chrome">
-      ${offline ? html`<div class="offline-bar">${icon('offline', { size: 16 })} Offline — showing what is stored on this device</div>` : ''}
-      <div class="header-bar">
-        ${showBack
-          ? html`<button type="button" class="header-back" data-action="back">${icon('back', { size: 20 })} Back</button>
-                 <h2 class="header-title">${heading}</h2>`
-          : html`<a class="wordmark" href="${href('/')}">
-                   ${icon('wind', { size: 22, className: 'wordmark__mark' })}
-                   <span>North Winds<span class="visually-hidden"> Airlines</span></span>
-                 </a>`}
-        <span class="header-spacer"></span>
-        <nav class="header-nav" aria-label="Sections">
-          ${NAV.map((item) => html`
-            <a href="${href(item.path)}" ${current.path === item.path ? raw('aria-current="page"') : ''}>${item.label}</a>`)}
-        </nav>
-        <a class="proto-chip" href="${href('/about')}">Prototype</a>
-      </div>
-    </div>`;
-}
-
-function renderTabbar(current) {
-  const tab = current.route?.tab ?? 'home';
-  const upcoming = allBookings().filter((b) => b.status === 'confirmed').length;
-  return html`
-    ${TABS.map((item) => html`
-      <a href="${href(item.path)}" ${tab === item.id ? raw('aria-current="page"') : ''}>
-        ${icon(item.icon, { size: 22 })}
-        ${item.id === 'trips' && upcoming ? html`<span class="tabbar__dot" aria-hidden="true"></span>` : ''}
-        <span>${item.label}</span>
-        ${item.id === 'trips' && upcoming ? html`<span class="visually-hidden">, ${upcoming} booking${upcoming > 1 ? 's' : ''}</span>` : ''}
-      </a>`)}`;
-}
+/* Company */
+route('/story', storyView, { ...COMPANY, title: 'Our story' });
+route('/community', communityView, { ...COMPANY, title: 'In the community' });
+route('/careers', careersView, { ...COMPANY, title: 'Careers' });
+route('/careers/:id', roleView, { ...COMPANY, title: 'Role', back: '/careers' });
+route('/about', aboutView, { ...COMPANY, title: 'About this app' });
 
 /* ── Toasts ──────────────────────────────────────────────────────────────── */
 
@@ -121,7 +138,7 @@ export function toast(message, kind = 'default') {
   const host = document.getElementById('toast-host');
   if (!host) return;
   const element = document.createElement('div');
-  element.className = cx('toast', kind !== 'default' && `toast--${kind}`);
+  element.className = `toast${kind !== 'default' ? ` toast--${kind}` : ''}`;
   element.textContent = message;
   host.append(element);
   announce(message);
@@ -157,18 +174,45 @@ function renderInto(main, content) {
   return container;
 }
 
+function closeMenu() {
+  const sheet = document.getElementById('menu-sheet');
+  if (!sheet || sheet.hidden) return;
+  sheet.hidden = true;
+  document.body.style.overflow = '';
+  $$('[data-action="open-menu"]').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+}
+
+function openMenu() {
+  const sheet = document.getElementById('menu-sheet');
+  if (!sheet) return;
+  mount(sheet, menuSheet());
+  sheet.hidden = false;
+  document.body.style.overflow = 'hidden';
+  $$('[data-action="open-menu"]').forEach((b) => b.setAttribute('aria-expanded', 'true'));
+  sheet.querySelector('a, button')?.focus({ preventScroll: true });
+}
+
+/** Close any open desktop dropdown. */
+function closeMenus() {
+  $$('.menu-panel').forEach((panel) => { panel.hidden = true; });
+  $$('[data-menu]').forEach((button) => button.setAttribute('aria-expanded', 'false'));
+}
+
 function navigate(current) {
   currentRoute = current;
   const main = document.getElementById('main');
+  closeMenu();
+  closeMenus();
 
   if (!current.route) {
     renderInto(main, html`
       <div class="empty">
         <h1>Screen not found</h1>
-        <p>That link does not lead anywhere in this app.</p>
-        <a class="btn btn--primary" href="${href('/')}">Go to the home screen</a>
+        <p>That link does not lead anywhere on this site.</p>
+        <a class="btn btn--primary" href="${href('/')}">Go to the home page</a>
       </div>`);
     document.title = `Not found — ${airline.name}`;
+    drawChrome(current);
     return;
   }
 
@@ -193,21 +237,23 @@ function navigate(current) {
   // checkout in progress, for instance.
   if (output?.redirect) { go(output.redirect, { replace: true }); return; }
 
+  main.classList.toggle('is-bleed', Boolean(output.bleed));
   const container = renderInto(main, output.body);
-  document.title = output.title ? `${output.title} — ${airline.name}` : airline.name;
+  document.title = output.title ? `${output.title} — ${airline.name}` : `${airline.name} — flights across Nunavut`;
 
-  mount(document.getElementById('app-header'), renderHeader(current));
-  mount(document.getElementById('tabbar'), renderTabbar(current));
-
+  drawChrome(current);
   if (output.onMount) output.onMount(container);
 
-  // Focus and scroll: a new screen starts at the top, with focus in the
-  // content rather than left on a link in the tab bar.
   if (!output.keepScroll) window.scrollTo(0, 0);
   if (!output.keepFocus) main.focus({ preventScroll: true });
 }
 
-/** Re-render the current screen in place — used after a state change. */
+function drawChrome(current) {
+  mount(document.getElementById('app-header'), header(current, { offline }));
+  mount(document.getElementById('tabbar'), tabbar(current));
+  mount(document.getElementById('site-footer'), footer());
+}
+
 export function refresh() {
   if (currentRoute) navigate(resolve());
 }
@@ -216,21 +262,40 @@ window.nwRefresh = refresh;
 /* ── Boot ────────────────────────────────────────────────────────────────── */
 
 function boot() {
-  const root = document.getElementById('app');
+  const root = document.body;
 
-  // One delegated listener for the whole app. Views mark controls with
-  // data-action and never bind handlers of their own.
   on(root, 'click', '[data-action="back"]', (event) => { event.preventDefault(); back(); });
+  on(root, 'click', '[data-action="open-menu"]', (event) => { event.preventDefault(); openMenu(); });
+  on(root, 'click', '[data-action="close-menu"]', () => closeMenu());
 
-  // Anything that changes stored state redraws the screen it happened on.
+  // Desktop dropdowns: click to open, click away or Escape to close.
+  on(root, 'click', '[data-menu]', (event, button) => {
+    event.preventDefault();
+    const panel = document.getElementById(`menu-${button.dataset.menu}`);
+    const wasOpen = !panel.hidden;
+    closeMenus();
+    if (!wasOpen) {
+      panel.hidden = false;
+      button.setAttribute('aria-expanded', 'true');
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.mainnav__item')) closeMenus();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    closeMenus();
+    closeMenu();
+  });
+
   subscribe(() => {
-    mount(document.getElementById('tabbar'), renderTabbar(currentRoute ?? resolve()));
+    if (currentRoute) mount(document.getElementById('tabbar'), tabbar(currentRoute));
   });
 
   const setOnline = (value) => {
     if (offline === !value) return;
     offline = !value;
-    mount(document.getElementById('app-header'), renderHeader(currentRoute ?? resolve()));
+    if (currentRoute) mount(document.getElementById('app-header'), header(currentRoute, { offline }));
     if (offline) announce('You are offline. Bookings stored on this device are still available.');
   };
   window.addEventListener('online', () => setOnline(true));

@@ -12,7 +12,7 @@
 
 import { html, raw, icon, on } from '../lib/dom.js';
 import { href, go } from '../lib/router.js';
-import { getCheckout, setCheckout, getState } from '../lib/store.js';
+import { getCheckout, setCheckout, getState, checkoutComplete } from '../lib/store.js';
 import { itineraryFromRefs } from '../engine/search.js';
 import { priceItinerary, familyAvailable, familySeatsLeft, money, moneyRounded } from '../engine/pricing.js';
 import { fareFamilies, fareTypeById } from '../data/brand.js';
@@ -21,14 +21,12 @@ import { steps, note, journeyLine, legList, pageHead } from './ui.js';
 
 export default function faresView() {
   const checkout = getCheckout();
-  if (!checkout?.outbound) return { redirect: '/book' };
+  if (!checkoutComplete(checkout)) return { redirect: '/book' };
 
   const search = checkout.search ?? getState().search;
-  const outbound = itineraryFromRefs(checkout.outbound);
-  const inbound = checkout.inbound ? itineraryFromRefs(checkout.inbound) : null;
-  if (!outbound) return { redirect: '/book' };
-
-  const journeys = [outbound, inbound].filter(Boolean);
+  const journeys = checkout.journeys.map(itineraryFromRefs).filter(Boolean);
+  if (journeys.length !== checkout.journeys.length) return { redirect: '/book' };
+  const outbound = journeys[0];
   const daysAhead = Math.max(0, daysBetween(today(), outbound.departDate));
   const fareType = fareTypeById[search.fareType] ?? fareTypeById.standard;
 
@@ -50,7 +48,7 @@ export default function faresView() {
     <div class="card card--sunken" style="margin-bottom:var(--s5)">
       ${journeys.map((journey, index) => html`
         ${index ? html`<hr>` : ''}
-        <p class="option__note">${index === 0 ? 'Outbound' : 'Return'} · ${formatDate(journey.departDate, 'long')}</p>
+        <p class="option__note">${checkout.legs[index]?.label ?? `Flight ${index + 1}`} · ${formatDate(journey.departDate, 'long')}</p>
         ${journeyLine(journey)}`)}
     </div>
 
@@ -70,7 +68,7 @@ export default function faresView() {
             data-family="${family.id}" ${sellable ? '' : raw('disabled')}
             aria-pressed="${isSelected ? 'true' : 'false'}">
             ${sellable && total === cheapest ? html`<span class="fare__flag">Lowest fare</span>` : ''}
-            ${family.id === 'flex' ? html`<span class="fare__flag" style="background:var(--express)">Most flexible for the price</span>` : ''}
+            ${family.id === 'flex' ? html`<span class="fare__flag" style="background:var(--express);color:#fff">Most flexible for the price</span>` : ''}
             <div class="fare__head">
               <div class="fare__name">${family.name}</div>
               <div class="fare__subtitle">${family.subtitle}</div>
@@ -78,7 +76,7 @@ export default function faresView() {
             ${sellable ? html`
               <div class="fare__price">
                 <div class="fare__amount">${moneyRounded(total)}</div>
-                <div class="fare__unit">total for ${journeys.length > 1 ? 'both directions' : 'the trip'}, all charges in</div>
+                <div class="fare__unit">total for ${journeys.length > 1 ? `all ${journeys.length} flights` : 'the trip'}, all charges in</div>
                 ${left <= 4 ? html`<div class="seats-left" style="margin-top:var(--s1)">${left} seat${left > 1 ? 's' : ''} left at this fare</div>` : ''}
               </div>` : html`<div class="fare__sold-out">Sold out on at least one flight</div>`}
             <ul class="fare__list">
@@ -94,7 +92,7 @@ export default function faresView() {
       <div class="disclosure__body">
         ${journeys.map((journey, index) => html`
           ${index ? html`<hr>` : ''}
-          <p class="option__note">${index === 0 ? 'Outbound' : 'Return'}</p>
+          <p class="option__note">${checkout.legs[index]?.label ?? `Flight ${index + 1}`}</p>
           ${legList(journey)}`)}
       </div>
     </details>

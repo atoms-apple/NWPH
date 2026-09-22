@@ -419,7 +419,62 @@ group('Bookings');
   ok(booking.fareRules('tundra')[0].body.includes('Not permitted'), 'the Tundra rules say changes are not permitted');
 }
 
-/* ── 8. Contrast ─────────────────────────────────────────────────────────── */
+/* ── 8. Navigation ───────────────────────────────────────────────────────── */
+
+group('Navigation');
+{
+  const { sections, tabs, utilityLinks, footerColumns, footerLegal, allLinks } =
+    await import('../app/src/data/sitemap.js');
+
+  // Every path the menus, the tab bar and the footer offer must be a route
+  // that exists. With six menus, a footer sitemap and fifty-odd screens, a
+  // dead link is otherwise found by a person, on the live site.
+  const mainSource = await readFile(path.join(source, 'src/main.js'), 'utf8');
+  const registered = new Set(
+    [...mainSource.matchAll(/route\('([^']+)'/g)].map((m) => m[1]),
+  );
+  ok(registered.size > 40, `${registered.size} routes registered`);
+
+  /** A concrete path matches a pattern with :params of the same shape. */
+  const resolves = (target) => {
+    const wanted = target.split('/').filter(Boolean);
+    for (const pattern of registered) {
+      const parts = pattern.split('/').filter(Boolean);
+      if (parts.length !== wanted.length) continue;
+      if (parts.every((part, i) => part.startsWith(':') || part === wanted[i])) return true;
+    }
+    return false;
+  };
+
+  const navPaths = [
+    ...allLinks().map((link) => ({ path: link.path, where: `${link.section} → ${link.group}` })),
+    ...tabs.map((tab) => ({ path: tab.path, where: 'tab bar' })),
+    ...utilityLinks.map((link) => ({ path: link.path, where: 'utility bar' })),
+    ...footerColumns.flatMap((column) => column.links.map((link) => ({ path: link.path, where: `footer — ${column.heading}` }))),
+    ...footerLegal.map((link) => ({ path: link.path, where: 'footer — legal' })),
+  ];
+
+  let dead = 0;
+  for (const entry of navPaths) {
+    // The phone's menu tab opens the sheet rather than navigating.
+    if (entry.path === '/menu') continue;
+    if (resolves(entry.path)) continue;
+    fail(`${entry.where}: "${entry.path}" is not a registered route`);
+    dead++;
+  }
+  ok(dead === 0, `${navPaths.length} navigation links all resolve`);
+
+  // And every link carries an explanation, because half these words mean
+  // nothing to someone who has not flown this network before.
+  const unexplained = allLinks().filter((link) => !link.note);
+  ok(unexplained.length === 0,
+    `every menu link explains itself${unexplained.length ? ` — missing on ${unexplained.map((l) => l.path).join(', ')}` : ''}`);
+
+  ok(sections.length >= 5, `${sections.length} menu sections`);
+  ok(tabs.length === 5, 'the phone tab bar has five destinations');
+}
+
+/* ── 9. Contrast ─────────────────────────────────────────────────────────── */
 
 group('Contrast (WCAG 2.2)');
 {
@@ -465,11 +520,12 @@ group('Contrast (WCAG 2.2)');
 
   const light = {
     bg: L('bg'), surface: L('surface'), surface2: L('surface-2'), sunken: L('surface-sunken'),
-    chrome: L('navy-800'), chrome2: L('navy-900'),
+    chrome: L('night-800'), chrome2: L('night-900'),
     ink: L('ink'), ink2: L('ink-2'), inkMuted: L('ink-muted'),
     onChrome: L('on-chrome'), onChromeMuted: L('on-chrome-muted'),
     altitude: L('altitude-text'), express: L('express-text'), connect: L('connect-text'),
-    goldText: L('gold-text'), goldLight: L('gold-light'), iceBright: L('ice-bright'),
+    aurora: L('aurora'), auroraDeep: L('aurora-deep'), auroraSoft: L('aurora-soft'),
+    sunDeep: L('sun-deep'), sunSoft: L('sun-soft'), iceDeep: L('ice-deep'),
     ok: L('ok'), warn: L('warn-text'), danger: L('danger'),
     flag: L('flag'), flagInk: L('flag-ink'),
     okBg: L('ok-bg'), warnBg: L('warn-bg'), dangerBg: L('danger-bg'), infoBg: L('info-bg'),
@@ -479,7 +535,8 @@ group('Contrast (WCAG 2.2)');
     ink: D('ink'), ink2: D('ink-2'), inkMuted: D('ink-muted'),
     onChrome: D('on-chrome'), onChromeMuted: D('on-chrome-muted'),
     altitude: D('altitude-text'), express: D('express-text'), connect: D('connect-text'),
-    goldText: D('gold-text'),
+    auroraDeep: D('aurora-deep'), auroraSoft: D('aurora-soft'),
+    sunDeep: D('sun-deep'), sunSoft: D('sun-soft'), iceDeep: D('ice-deep'),
     ok: D('ok'), warn: D('warn-text'), danger: D('danger'),
     okBg: D('ok-bg'), warnBg: D('warn-bg'), dangerBg: D('danger-bg'), infoBg: D('info-bg'),
     flag: D('flag'), flagInk: D('flag-ink'),
@@ -496,10 +553,16 @@ group('Contrast (WCAG 2.2)');
     ['Altitude text on a card', light.altitude, light.surface, 4.5],
     ['Express text on a card', light.express, light.surface, 4.5],
     ['Connect text on a card', light.connect, light.surface, 4.5],
-    ['gold text on a card', light.goldText, light.surface, 4.5],
+    ['aurora text on a card', light.auroraDeep, light.surface, 4.5],
+    ['aurora text on its soft panel', light.auroraDeep, light.auroraSoft, 4.5],
+    ['sun text on a card', light.sunDeep, light.surface, 4.5],
+    ['sun text on its soft panel', light.sunDeep, light.sunSoft, 4.5],
+    ['link text on a card', light.iceDeep, light.surface, 4.5],
+    ['link text on the page', light.iceDeep, light.bg, 4.5],
     ['white on the header', light.onChrome, light.chrome, 4.5],
     ['muted on the header', light.onChromeMuted, light.chrome, 4.5],
-    ['prototype chip text on gold', light.chrome2, light.goldLight, 4.5],
+    ['prototype chip text on aurora', light.chrome2, light.aurora, 4.5],
+    ['aurora chip against the header', light.aurora, light.chrome, 3],
     ['success text on its background', light.ok, light.okBg, 4.5],
     ['warning text on its background', light.warn, light.warnBg, 4.5],
     ['danger text on its background', light.danger, light.dangerBg, 4.5],
@@ -515,7 +578,10 @@ group('Contrast (WCAG 2.2)');
     ['dark: Altitude text on a card', dark.altitude, dark.surface, 4.5],
     ['dark: Express text on a card', dark.express, dark.surface, 4.5],
     ['dark: Connect text on a card', dark.connect, dark.surface, 4.5],
-    ['dark: gold text on a card', dark.goldText, dark.surface, 4.5],
+    ['dark: aurora text on a card', dark.auroraDeep, dark.surface, 4.5],
+    ['dark: aurora text on its soft panel', dark.auroraDeep, dark.auroraSoft, 4.5],
+    ['dark: sun text on its soft panel', dark.sunDeep, dark.sunSoft, 4.5],
+    ['dark: link text on a card', dark.iceDeep, dark.surface, 4.5],
     ['dark: white on the header', dark.onChrome, dark.chrome, 4.5],
     ['dark: muted on the header', dark.onChromeMuted, dark.chrome, 4.5],
     ['dark: success on its background', dark.ok, dark.okBg, 4.5],
@@ -532,7 +598,7 @@ group('Contrast (WCAG 2.2)');
   }
 }
 
-/* ── 9. Build output ─────────────────────────────────────────────────────── */
+/* ── 10. Build output ─────────────────────────────────────────────────────── */
 
 group('Build output');
 {
@@ -601,14 +667,18 @@ group('Build output');
   ok(css.includes('prefers-color-scheme: dark'), 'the stylesheet has a dark theme');
   ok(css.includes('prefers-reduced-motion'), 'the stylesheet respects reduced motion');
   ok(css.includes('@media print'), 'the stylesheet has print rules for the boarding pass');
-  ok(css.length < 60 * 1024, `the stylesheet is under 60 KB (${(css.length / 1024).toFixed(1)} KB)`);
+  // One stylesheet for the whole site — thirty-odd screens, two themes, a hero
+  // and a seat map. The budget exists to catch it doubling, not to hold it at a
+  // number set when the app was six screens.
+  ok(css.length < 90 * 1024, `the stylesheet is under 90 KB (${(css.length / 1024).toFixed(1)} KB)`);
 
   // The standing marker. This app describes an airline that does not exist and
   // must not be able to ship without saying so.
   const about = await readFile(path.join(source, 'src/views/about.js'), 'utf8');
   ok(/does not exist/.test(about), 'the about screen states the airline does not exist');
-  const main = await readFile(path.join(source, 'src/main.js'), 'utf8');
-  ok(/proto-chip/.test(main), 'every screen carries the prototype marker in its header');
+  const chrome = await readFile(path.join(source, 'src/views/chrome.js'), 'utf8');
+  ok(/proto-chip/.test(chrome), 'every screen carries the prototype marker in its header');
+  ok(/does not exist yet/.test(chrome), 'the footer states the airline does not exist');
   const payment = await readFile(path.join(source, 'src/views/payment.js'), 'utf8');
   ok(/No payment is taken/.test(payment), 'the payment screen states that no payment is taken');
 }

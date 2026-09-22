@@ -12,14 +12,14 @@
 
 import { html, raw, icon, on, $, $$ } from '../lib/dom.js';
 import { go } from '../lib/router.js';
-import { getCheckout, setCheckout } from '../lib/store.js';
+import { getCheckout, setCheckout, checkoutComplete } from '../lib/store.js';
 import { ancillaries, fareFamilyById } from '../data/brand.js';
 import { money } from '../engine/pricing.js';
 import { steps, pageHead, note } from './ui.js';
 
 export default function extrasView() {
   const checkout = getCheckout();
-  if (!checkout?.family || !checkout.passengers) return { redirect: '/book' };
+  if (!checkoutComplete(checkout) || !checkout.family || !checkout.passengers) return { redirect: '/book' };
 
   const family = fareFamilyById[checkout.family];
   const chosen = checkout.extras ?? {};
