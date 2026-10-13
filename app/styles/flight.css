@@ -1,6 +1,29 @@
 /* ── FLIGHT CARDS ────────────────────────────────────────────────────────── */
 
+/* On a wide screen a result is a row, not a stacked card: the journey on the
+   left, the fare and the action on the right, with the rule between them
+   vertical instead of horizontal. A full-width journey line with a thousand
+   pixels of nothing in the middle is the single thing that most makes a site
+   look like a phone layout someone stretched. */
 .flight-card { padding: 0; }
+@media (min-width: 900px) {
+  .flight-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    grid-template-areas: 'brand brand' 'body foot';
+  }
+  .flight-card__brand { grid-area: brand; }
+  /* Centred, so the journey sits in the middle of the row rather than at the
+     top of a box the price column made tall. */
+  .flight-card__body { grid-area: body; display: flex; align-items: center; }
+  .flight-card__foot {
+    grid-area: foot;
+    flex-direction: column; align-items: flex-end; justify-content: center;
+    gap: var(--s2);
+    border-top: 0; border-left: 1px solid var(--line);
+    text-align: right;
+  }
+}
 .flight-card__brand {
   display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; row-gap: var(--s1);
   padding: var(--s2) var(--s4);
@@ -20,9 +43,12 @@
 }
 
 /* The line of the journey: time, rail, time. */
+/* Capped: a departure and an arrival a thousand pixels apart stop reading as
+   one journey, and the rail between them becomes a rule rather than a flight. */
 .journey {
-  display: grid; grid-template-columns: auto 1fr auto; gap: var(--s3);
+  display: grid; grid-template-columns: auto minmax(3rem, 1fr) auto; gap: var(--s4);
   align-items: center;
+  max-width: 34rem;
 }
 .journey__point { min-width: 0; }
 .journey__point--end { text-align: right; }
@@ -90,6 +116,10 @@
 .leg__connection--overnight { background: var(--warn-bg); color: var(--warn-text); }
 
 .fare-from { text-align: right; }
+@media (min-width: 900px) {
+  /* In the right-hand column the price is the thing, so it gets the size. */
+  .flight-card__foot .fare-from__amount { font-size: var(--text-2xl); }
+}
 .fare-from__label { display: block; font-size: var(--text-xs); color: var(--ink-muted); }
 .fare-from__amount { font-size: var(--text-xl); font-weight: 700; letter-spacing: -0.02em; }
 .fare-from__each { display: block; font-size: var(--text-xs); color: var(--ink-muted); }
@@ -117,7 +147,13 @@
 .fare__price { padding: var(--s3) var(--s4) var(--s2); }
 .fare__amount { font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.025em; }
 .fare__unit { font-size: var(--text-xs); color: var(--ink-muted); }
-.fare__list { list-style: none; padding: 0 var(--s4) var(--s4); margin: 0; display: grid; gap: var(--s2); flex: 1; }
+/* align-content:start, or the grid stretches its rows to fill a card made tall
+   by a longer neighbour — and the four fares stop lining up with each other,
+   which is the one thing a comparison has to do. */
+.fare__list {
+  list-style: none; padding: 0 var(--s4) var(--s4); margin: 0;
+  display: grid; gap: var(--s2); align-content: start; flex: 1;
+}
 .fare__list li { display: flex; gap: var(--s2); font-size: var(--text-sm); margin: 0; line-height: 1.35; }
 .fare__list .icon { flex: none; margin-top: 1px; color: var(--ok); }
 .fare__list li.is-excluded { color: var(--ink-muted); }
@@ -126,7 +162,11 @@
   display: block; padding: var(--s1) var(--s4); font-size: var(--text-xs); font-weight: 700;
   letter-spacing: 0.04em; text-transform: uppercase;
   background: var(--flag); color: var(--flag-ink);
+  min-height: 1.5rem;
 }
+/* Every card reserves the banner row, flagged or not, so the names and the
+   prices sit on the same lines across all four. */
+.fare__flag--empty { background: none; }
 .fare__sold-out { padding: var(--s3) var(--s4); font-size: var(--text-sm); color: var(--danger); font-weight: 600; }
 
 /* ── SEAT MAP ────────────────────────────────────────────────────────────── */

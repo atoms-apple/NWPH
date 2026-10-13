@@ -10,6 +10,8 @@
 .card--raised { box-shadow: var(--shadow-sm); border-color: transparent; }
 .card--sunken { background: var(--surface-2); }
 .card--quiet { background: none; border-style: dashed; }
+/* A quiet aside carries one short message; it does not need the whole width. */
+.card--aside { max-width: 44rem; }
 .card__head {
   display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
   margin-bottom: var(--s3);
@@ -205,9 +207,13 @@ input[type='date'].input { min-height: 48px; }
 .note .icon { margin-top: 1px; }
 .note strong { display: block; }
 
+/* An empty state is a small, deliberate object — not a dashed box the width of
+   a desktop screen with four words floating in the middle of it. */
 .empty {
-  text-align: center; padding: var(--s10) var(--s4);
+  text-align: center; padding: var(--s10) var(--s5);
+  max-width: 40rem; margin-inline: auto;
   color: var(--ink-muted); border: 1px dashed var(--line-strong); border-radius: var(--radius);
+  background: var(--surface-2);
 }
 .empty h2 { font-size: var(--text-lg); color: var(--ink); margin-bottom: var(--s2); }
 .empty p { max-width: 32rem; margin-inline: auto; }
@@ -236,7 +242,12 @@ input[type='date'].input { min-height: 48px; }
 
 /* ── PROGRESS ────────────────────────────────────────────────────────────── */
 
-.steps { display: flex; gap: var(--s1); margin-bottom: var(--s5); list-style: none; padding: 0; }
+.steps {
+  display: flex; gap: var(--s1); margin-bottom: var(--s6); list-style: none; padding: 0;
+  /* Seven steps across a 1180px page is a row of hairlines with nothing to do.
+     Capped so it reads as a progress indicator rather than a ruler. */
+  max-width: 44rem;
+}
 .steps li { flex: 1 1 0; min-width: 0; margin: 0; }
 .steps__bar { display: block; height: 3px; border-radius: 2px; background: var(--surface-sunken); }
 .steps li[data-state='done'] .steps__bar { background: var(--aurora-deep); }
@@ -273,6 +284,7 @@ input[type='date'].input { min-height: 48px; }
 details.disclosure {
   border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
 }
+
 details.disclosure + details.disclosure { margin-top: var(--s2); }
 details.disclosure > summary {
   display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
@@ -287,6 +299,19 @@ details.disclosure > summary::after {
 }
 details.disclosure[open] > summary::after { transform: rotate(-135deg) translate(-3px, -3px); }
 details.disclosure > .disclosure__body { padding: 0 var(--s4) var(--s4); }
+
+/* A disclosure that belongs to the card above it: no box, no slab, just a line
+   of text that opens — "Flight details" under a result. Declared after the base
+   rules above so it actually wins; the same selector weight earlier in the file
+   would quietly lose. */
+details.disclosure--quiet { border: 0; background: none; }
+details.disclosure--quiet > summary {
+  justify-content: flex-start; gap: var(--s2);
+  padding: var(--s2) var(--s1); min-height: 40px;
+  font-size: var(--text-sm); font-weight: 650; color: var(--ice-deep);
+}
+details.disclosure--quiet > summary::after { width: 7px; height: 7px; border-color: var(--ice-deep); }
+details.disclosure--quiet > .disclosure__body { padding: 0 var(--s1) var(--s4); }
 
 /* ── OFFLINE ─────────────────────────────────────────────────────────────── */
 
@@ -306,6 +331,7 @@ details.disclosure > .disclosure__body { padding: 0 var(--s4) var(--s4); }
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 1fr);
+  max-width: 44rem;
   gap: 2px;
   margin-bottom: var(--s4);
   border: 1px solid var(--line);
@@ -342,7 +368,7 @@ details.disclosure > .disclosure__body { padding: 0 var(--s4) var(--s4); }
 
 /* ── ACCORDION LIST (help centre, policies) ─────────────────────────────── */
 
-.faq { display: grid; gap: var(--s2); }
+.faq { display: grid; gap: var(--s2); max-width: 54rem; }
 .faq__item {
   border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--surface); overflow: hidden;

@@ -113,7 +113,7 @@ export default function resultsView({ query }) {
                   <span class="fare-from__each">${paxSummary(passengers)}, all in</span>
                 </span>`,
             })}
-            <details class="disclosure" style="margin-top:var(--s1)">
+            <details class="disclosure disclosure--quiet">
               <summary>Flight details</summary>
               <div class="disclosure__body">${legList(result.itinerary)}</div>
             </details>

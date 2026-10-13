@@ -19,6 +19,21 @@ import { fareFamilies, fareTypeById } from '../data/brand.js';
 import { today, daysBetween, formatDate } from '../lib/dates.js';
 import { steps, note, journeyLine, legList, pageHead } from './ui.js';
 
+/**
+ * The banner across the top of a fare card.
+ *
+ * Always rendered, even when there is nothing to say — an empty band keeps the
+ * four cards' names and prices on the same lines, and a comparison whose rows
+ * do not line up is not a comparison.
+ */
+function flagFor(family, isCheapest) {
+  if (isCheapest) return html`<span class="fare__flag">Lowest fare</span>`;
+  if (family.id === 'flex') {
+    return html`<span class="fare__flag" style="background:var(--express);color:#fff">Most flexible for the price</span>`;
+  }
+  return html`<span class="fare__flag fare__flag--empty" aria-hidden="true"></span>`;
+}
+
 export default function faresView() {
   const checkout = getCheckout();
   if (!checkoutComplete(checkout)) return { redirect: '/book' };
@@ -67,8 +82,7 @@ export default function faresView() {
           <button type="button" class="fare ${isSelected ? 'is-selected' : ''}"
             data-family="${family.id}" ${sellable ? '' : raw('disabled')}
             aria-pressed="${isSelected ? 'true' : 'false'}">
-            ${sellable && total === cheapest ? html`<span class="fare__flag">Lowest fare</span>` : ''}
-            ${family.id === 'flex' ? html`<span class="fare__flag" style="background:var(--express);color:#fff">Most flexible for the price</span>` : ''}
+            ${flagFor(family, sellable && total === cheapest)}
             <div class="fare__head">
               <div class="fare__name">${family.name}</div>
               <div class="fare__subtitle">${family.subtitle}</div>

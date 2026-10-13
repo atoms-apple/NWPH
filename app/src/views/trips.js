@@ -50,7 +50,7 @@ export function tripsView() {
       </section>` : ''}
 
     <section class="section">
-      <div class="card card--quiet">
+      <div class="card card--quiet card--aside">
         <h2 class="card__title">Booked somewhere else?</h2>
         <p class="option__note" style="margin:var(--s2) 0 var(--s3)">
           A booking made on another device or by telephone is not on this one. In a live system it

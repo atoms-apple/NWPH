@@ -65,6 +65,27 @@ hr { border: 0; border-top: 1px solid var(--line); margin: var(--s5) 0; }
 }
 .skip-link:focus { top: calc(var(--safe-top) + var(--s3)); }
 
+/* ── MEASURE ────────────────────────────────────────────────────────────────
+   Running text stops at a readable measure wherever it appears, not only in
+   the places someone remembered to constrain. A card that spans 1,180px of a
+   wide screen still sets its paragraphs at about seventy characters, which is
+   the single rule that most separates a designed page from a phone layout
+   someone stretched.
+
+   Tables, grids and figures are unaffected — they are not running text.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.card p, .card li, .card dd, .card dt,
+.note p, .note div, .advisory p, .option__note {
+  max-width: 70ch;
+}
+/* …except where the element's job is to fill its column. */
+.deflist dt, .deflist dd, .kv-strip dt, .kv-strip dd,
+.price-line dt, .price-line dd, .fare__list li, .table td, .table th,
+.pass__cell dt, .pass__cell dd, .stat-tile__note {
+  max-width: none;
+}
+
 /* Numbers that line up in a column: fares, times, seat rows. */
 .tnum { font-variant-numeric: tabular-nums; }
 

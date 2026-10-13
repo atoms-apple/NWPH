@@ -151,7 +151,7 @@ export function baggageView({ query }) {
       </div>
     </section>
 
-    <section class="section">
+    <section class="section column">
       <div class="section__head"><div><h2>Restricted and prohibited</h2><p>What the rules actually are up here.</p></div></div>
       <div class="faq">
         ${baggage.restricted.map((item) => html`
@@ -162,7 +162,7 @@ export function baggageView({ query }) {
       </div>
     </section>
 
-    ${note(baggage.delayed, { kind: 'warn', title: 'If your bag does not travel with you' })}`;
+    <div class="column">${note(baggage.delayed, { kind: 'warn', title: 'If your bag does not travel with you' })}</div>`;
 
   return {
     title: 'Baggage',
@@ -186,7 +186,7 @@ export function documentsView() {
   const body = html`
     ${pageHead('Identification', identification.intro)}
 
-    <div class="grid-2" style="margin-bottom:var(--s8)">
+    <div class="grid-2 column--wide" style="margin-bottom:var(--s8)">
       <div class="card">
         <h2 class="card__title" style="margin-bottom:var(--s3)">What we accept</h2>
         <ul style="margin:0;color:var(--ink-2)">${identification.accepted.map((item) => html`<li>${item}</li>`)}</ul>
@@ -203,9 +203,9 @@ export function documentsView() {
       </div>
     </div>
 
-    ${note(identification.noId, { kind: 'warn', title: 'If you cannot produce identification' })}
+    <div class="column">${note(identification.noId, { kind: 'warn', title: 'If you cannot produce identification' })}</div>
 
-    <section class="section" style="margin-top:var(--s8)">
+    <section class="section column" style="margin-top:var(--s8)">
       <div class="card card--quiet">
         <h2 class="card__title">Travelling internationally</h2>
         <p class="option__note" style="margin-top:var(--s2)">
@@ -231,7 +231,7 @@ export function advisoriesView() {
 
     <p class="option__note" style="margin-bottom:var(--s5)">Updated ${formatDate(now, 'long')}</p>
 
-    <section class="section">
+    <section class="section column--wide">
       <div class="section__head">
         <div><h2>In force now</h2><p>Disruption over the next three days.</p></div>
         <a class="section__more" href="${href('/flights')}">Flight status</a>
@@ -260,7 +260,7 @@ export function advisoriesView() {
         </div>`}
     </section>
 
-    <section class="section">
+    <section class="section column--wide">
       <div class="section__head"><div><h2>Standing advisories</h2><p>True whether or not anything is going wrong today.</p></div></div>
       <div class="stack">
         ${standing.map((advisory) => html`
@@ -294,62 +294,93 @@ export function helpView({ query }) {
   const category = query.c ?? null;
   const results = search ? searchHelp(search) : null;
   const shown = results ?? (category ? byCategory(category) : questions);
+  const activeCategory = categories.find((c) => c.id === category);
 
   const body = html`
     ${pageHead('Help centre', 'Answers to what people actually ask. If the answer is not here, the contact page has a human on it.')}
 
-    <div class="field" style="max-width:34rem;margin-bottom:var(--s6)">
-      <label class="visually-hidden" for="help-search">Search help</label>
-      <div class="searchfield">
-        ${icon('search', { size: 18 })}
-        <input class="input" id="help-search" placeholder="Search — try “country food” or “refund”"
-          value="${search}" autocomplete="off">
+    <div class="with-side">
+      <nav class="with-side__side" aria-label="Help categories">
+        <div class="field" style="margin-bottom:var(--s4)">
+          <label class="visually-hidden" for="help-search">Search help</label>
+          <div class="searchfield">
+            ${icon('search', { size: 18 })}
+            <input class="input" id="help-search" placeholder="Search help"
+              value="${search}" autocomplete="off">
+          </div>
+        </div>
+
+        <ul class="side-nav">
+          <li>
+            <button type="button" data-help-cat=""
+              ${!category && !search ? raw('aria-current="true"') : ''}>
+              ${icon('grid', { size: 16 })} Everything
+              <span class="grow"></span>
+              <span class="option__note">${questions.length}</span>
+            </button>
+          </li>
+          ${categories.map((c) => html`
+            <li>
+              <button type="button" data-help-cat="${c.id}"
+                ${category === c.id ? raw('aria-current="true"') : ''}>
+                ${icon(c.icon, { size: 16 })} ${c.name}
+                <span class="grow"></span>
+                <span class="option__note">${byCategory(c.id).length}</span>
+              </button>
+            </li>`)}
+        </ul>
+
+        <div class="card card--quiet" style="margin-top:var(--s5)">
+          <p class="option__note" style="margin-bottom:var(--s3)">
+            Not finding it? Our reservations line is open every day, 06:00 – 22:00 ET.
+          </p>
+          <a class="btn btn--secondary btn--sm" href="${href('/contact')}">Contact us</a>
+        </div>
+      </nav>
+
+      <div>
+        <div class="row row--between row--wrap" style="margin-bottom:var(--s4)">
+          <h2 style="font-size:var(--text-lg)">
+            ${search ? `Results for “${search}”` : activeCategory ? activeCategory.name : 'Everything'}
+          </h2>
+          <p class="option__note" role="status">
+            ${shown.length} question${shown.length === 1 ? '' : 's'}
+          </p>
+        </div>
+
+        ${shown.length ? html`
+          <div class="faq">
+            ${shown.map((question) => html`
+              <details class="faq__item" id="q-${question.id}">
+                <summary>${question.q}</summary>
+                <div class="faq__body">
+                  ${question.a.map((paragraph) => html`<p>${paragraph}</p>`)}
+                  <p class="option__note">
+                    ${categories.find((c) => c.id === question.category)?.name}
+                  </p>
+                </div>
+              </details>`)}
+          </div>` : empty(
+            'Nothing matches that',
+            'Try a different word, or browse by category. The contact page has our reservations line.',
+            html`<a class="btn btn--primary" href="${href('/contact')}">Contact us</a>`)}
+
+        <section class="section" style="margin-top:var(--s10)">
+          <div class="grid-3">
+            ${[
+              ['/contact', 'phone', 'Still stuck?', 'Reservations, baggage, cargo and complaints — with the hours each desk keeps.'],
+              ['/legal', 'doc', 'Conditions of carriage', 'The contract a ticket makes, in the order the questions come up.'],
+              ['/accessibility', 'accessible', 'Accessibility', 'How this site is built, and what is still outstanding.'],
+            ].map(([path, iconName, title, text]) => html`
+              <a class="feature" href="${href(path)}">
+                <span class="feature__icon feature__icon--ice">${icon(iconName, { size: 20 })}</span>
+                <span class="feature__title">${title}</span>
+                <span class="feature__note">${text}</span>
+              </a>`)}
+          </div>
+        </section>
       </div>
-    </div>
-
-    ${search ? html`
-      <p class="option__note" role="status" style="margin-bottom:var(--s4)">
-        ${shown.length} result${shown.length === 1 ? '' : 's'} for “${search}”
-      </p>` : html`
-      <div class="chips" style="margin-bottom:var(--s6)">
-        <button type="button" class="chip ${!category ? 'is-active' : ''}" data-help-cat="">Everything</button>
-        ${categories.map((c) => html`
-          <button type="button" class="chip ${category === c.id ? 'is-active' : ''}" data-help-cat="${c.id}">
-            ${icon(c.icon, { size: 14 })} ${c.name}
-          </button>`)}
-      </div>`}
-
-    ${shown.length ? html`
-      <div class="faq">
-        ${shown.map((question) => html`
-          <details class="faq__item" id="q-${question.id}">
-            <summary>${question.q}</summary>
-            <div class="faq__body">
-              ${question.a.map((paragraph) => html`<p>${paragraph}</p>`)}
-              <p class="option__note">
-                ${categories.find((c) => c.id === question.category)?.name}
-              </p>
-            </div>
-          </details>`)}
-      </div>` : empty(
-        'Nothing matches that',
-        'Try a different word, or browse by category. The contact page has our reservations line.',
-        html`<a class="btn btn--primary" href="${href('/contact')}">Contact us</a>`)}
-
-    <section class="section" style="margin-top:var(--s10)">
-      <div class="grid-3">
-        ${[
-          ['/contact', 'phone', 'Still stuck?', 'Reservations, baggage, cargo and complaints — with the hours each desk keeps.'],
-          ['/legal', 'doc', 'Conditions of carriage', 'The contract a ticket makes, in the order the questions come up.'],
-          ['/accessibility', 'accessible', 'Accessibility', 'How this site is built, and what is still outstanding.'],
-        ].map(([path, iconName, title, text]) => html`
-          <a class="feature" href="${href(path)}">
-            <span class="feature__icon feature__icon--ice">${icon(iconName, { size: 20 })}</span>
-            <span class="feature__title">${title}</span>
-            <span class="feature__note">${text}</span>
-          </a>`)}
-      </div>
-    </section>`;
+    </div>`;
 
   return {
     title: 'Help centre',
@@ -493,7 +524,7 @@ export function accessibilityView() {
       </div>
     </section>
 
-    <section class="section">
+    <section class="section column">
       <div class="section__head"><div><h2>What is outstanding</h2></div></div>
       <div class="stack stack--tight">
         ${[
@@ -508,7 +539,7 @@ export function accessibilityView() {
       </div>
     </section>
 
-    <section class="section">
+    <section class="section column">
       <div class="card">
         <h2 class="card__title" style="margin-bottom:var(--s3)">Travelling with a disability</h2>
         <p style="color:var(--ink-2)">
