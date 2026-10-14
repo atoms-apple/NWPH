@@ -7,7 +7,11 @@ import { site } from '../data/site.mjs';
 
 const CONTENT_ROOT = new URL('../content/', import.meta.url);
 
-const slugify = (name) => name.replace(/\.md$/, '').toLowerCase();
+// A leading 1-3 digit ordering prefix (01-, 10-) is a filing convention, not
+// part of the URL. A 4-digit year prefix (2026-) is kept, since dated slugs are
+// deliberate.
+const slugify = (name) =>
+  name.replace(/\.md$/, '').replace(/^\d{1,3}-/, '').toLowerCase();
 
 /**
  * Load one content collection. Every entry is validated against the schema and

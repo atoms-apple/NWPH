@@ -1,44 +1,58 @@
 ---
+name: Polar Express Stores
+legalName: Polar Express Stores Ltd.
 sector: Retail & Supply
-status: planned
-summary: Community retail supplying everyday essentials and northern goods, structured so that margin stays in the community rather than leaving it.
-order: 3
+status: operating
+founded: 2027
+generalManager: Margaret Doe
+staff: "14"
+communities: 2 communities
+summary: Community retail supplying everyday essentials, country food equipment and northern goods — with live in-store availability published to anyone before they make the trip.
+slug: polar-express-stores
+order: 1
 draft: false
 ---
-
-## The gap
 
 Retail in Nunavut is concentrated in a small number of chains. Prices reflect
 genuine costs — sealift, air freight, warehousing, spoilage, and the expense of
 operating a building through an Arctic winter — but the margin, once earned,
 leaves the territory.
 
-The cost of living is not a problem retail ownership alone can solve. What
-ownership changes is where the surplus goes, and who decides what a community
-store stocks.
+Polar Express is the corporation's first operating company. It opened in
+Pangnirtung in 2027 and in Qikiqtarjuaq in 2028.
 
-## What a venture here would require
+## What it does
 
-- Working capital sufficient to buy a year of inventory ahead of sealift, and to
-  carry it until it sells.
-- Warehousing and cold storage capable of holding stock through a winter.
-- Buying arrangements at a scale that can approach the terms incumbents already
-  hold — the hardest single problem in this sector.
-- Point-of-sale, inventory and accounting systems that function on intermittent
-  connectivity.
-- Retail management and staff, trained and retained in a competitive labour
-  market.
+General retail: groceries, household goods, hardware, harvesting and outdoor
+equipment, and Inuit art and craft supplies.
 
-## Why not first
+Buying is consolidated across both stores and shipped on sealift, with air
+freight reserved for perishables and urgent lines. Inventory is planned a season
+ahead, which is the discipline the business lives or dies by.
 
-Retail is capital-hungry in a specific and unforgiving way: inventory must be
-bought and shipped long before it is sold, and a buying error is discovered a
-year later. Competing on price against established buying power is difficult
-from a standing start. This sector is more approachable once NWPH has trading
-history and a balance sheet a supplier will extend terms against.
+## Live availability
 
-## Status
+The company publishes **real-time stock levels** for both stores, to the web and
+to the Polar Express app.
 
-No company has been formed. No premises, buying arrangements or supply
-agreements have been sought. This page describes a gap NWPH intends to address,
-not work that is underway.
+The reason is specific to the North. In a community where the store is a walk or
+a ride away in weather that can turn, and where an out-of-stock item may mean
+waiting for the next flight, "is it actually there?" is the question that
+matters most. Nobody else operating here answers it.
+
+Customers can browse what is on the shelf right now, reserve it for collection,
+and see when stock last changed.
+
+## Where it stands
+
+Two stores, fourteen staff, and a second full year of trading. The company
+reached operating break-even in its second year, ahead of the plan, largely
+because the second store shared buying and warehousing with the first.
+
+It is not yet returning capital to the holding company, and was not expected to.
+
+## Employment
+
+Store teams are recruited and promoted locally, with management training
+delivered in community rather than requiring relocation south. Nine of the
+fourteen staff joined with no prior retail experience.

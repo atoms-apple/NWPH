@@ -1,5 +1,5 @@
 import { html, raw, render } from '../lib/html.mjs';
-import { site } from '../data/site.mjs';
+import { site, demo } from '../data/site.mjs';
 import { SiteHeader, SiteFooter } from '../components/chrome.mjs';
 
 /**
@@ -28,6 +28,7 @@ const organizationJsonLd = () => JSON.stringify({
 
 export const BaseLayout = ({
   title, description, path, body, current, stats = { operating: 0, total: 0 }, noindex = false,
+  shopApp = null,
 }) => {
   const base = site.base;
   const canonical = `${site.origin}${base}${path}`;
@@ -41,7 +42,7 @@ export const BaseLayout = ({
 <title>${fullTitle}</title>
 <meta name="description" content="${description}" />
 <link rel="canonical" href="${canonical}" />
-${noindex ? raw('<meta name="robots" content="noindex" />') : ''}
+${noindex || demo.enabled ? raw('<meta name="robots" content="noindex, nofollow" />') : ''}
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="${site.name}" />
@@ -55,14 +56,26 @@ ${noindex ? raw('<meta name="robots" content="noindex" />') : ''}
 <link rel="stylesheet" href="${base}/assets/site.css" />
 <script type="application/ld+json">${raw(organizationJsonLd())}</script>
 </head>
-<body>
+<body${demo.enabled ? raw(' class="is-demo"') : raw('')}>
 <a class="skip-link" href="#main">Skip to main content</a>
+${demo.enabled ? html`
+<div class="demo-banner" role="note">
+  <div class="wrap demo-banner__inner">
+    <strong>${demo.bannerLabel}</strong>
+    <span>${demo.banner}</span>
+  </div>
+</div>` : ''}
 ${SiteHeader({ current, base })}
 <main id="main">
 ${body}
 </main>
 ${SiteFooter({ base, operating: stats.operating, total: stats.total })}
 <script src="${base}/assets/enhance.js" defer></script>
+${shopApp ? html`
+<p class="visually-hidden" data-shop-live role="status" aria-live="polite"></p>
+<script type="application/json" id="shop-config">${raw(JSON.stringify(shopApp.config))}</script>
+<script type="application/json" id="shop-catalogue">${raw(JSON.stringify(shopApp.catalogue))}</script>
+<script src="${base}/assets/shop.js" defer></script>` : ''}
 </body>
 </html>`);
 };

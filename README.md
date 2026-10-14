@@ -1,5 +1,9 @@
 # North West Passage Holdings Corporation — website
 
+> **You are on the `demo/25-year-anniversary` branch.** It presents NWPH as a
+> 25-year-old operating corporation, which it is not. See [`DEMO.md`](DEMO.md).
+> The factual site is on `main`.
+
 Static site for NWPH, an Inuit-owned holding company in Iqaluit, Nunavut.
 
 **The site's central claim is that nothing is operating yet.** That is not a

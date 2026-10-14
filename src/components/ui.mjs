@@ -1,5 +1,6 @@
 import { html, raw, attrs } from '../lib/html.mjs';
 import { statusMeta, STATUS_VALUES, STATUS } from '../data/status.mjs';
+import { SectorIcon } from './icons.mjs';
 
 /** Status is conveyed by word first; the dot is decorative reinforcement. */
 export const StatusPill = (status) => {
@@ -18,7 +19,8 @@ export const StatusPill = (status) => {
 export const SubsidiaryCard = (subsidiary, { base = '' } = {}) => {
   const named = Boolean(subsidiary.name);
   return html`
-    <li class="card card--link ${named ? '' : 'card--unnamed'}" data-status="${subsidiary.status}">
+    <li class="card card--link card--venture ${named ? '' : 'card--unnamed'}" data-status="${subsidiary.status}">
+      <p class="card__mark">${SectorIcon(subsidiary.sector)}</p>
       ${named ? html`<p class="card__sector">${subsidiary.sector}</p>` : ''}
       <h3 class="card__title">
         <a href="${base}/subsidiaries/${subsidiary.slug}/">${named ? subsidiary.name : subsidiary.sector}</a>

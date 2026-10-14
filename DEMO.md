@@ -1,0 +1,99 @@
+# Future-state model — NWPH at 25 years
+
+This branch renders North West Passage Holdings Corporation as it could look
+once operating: twenty-five years in, seven trading subsidiaries, a board and
+executive, 214 staff, a job board, a news record and a reporting archive.
+
+**It is a vision model, not a record.** NWPH is currently pre-incorporation.
+None of this has happened. Every page says so in a banner.
+
+Published at `/NWPH/demo/`. The factual site is on `main`, at `/NWPH/`.
+
+## Why the figures are concrete
+
+An earlier version rendered every number as `XX`. That defeats the purpose — a
+stat strip full of Xs shows nothing, and the point of this branch is to be
+looked at.
+
+Figures are therefore illustrative but concrete, and defined once in
+`demo.figures` in `src/data/site.mjs` so they stay consistent across the site.
+Change them there and every page follows.
+
+## Why the names look like that
+
+People use the standard legal fictitious-person names — **Doe, Roe, Major,
+Stiles**.
+
+Nunavut has roughly 40,000 residents. A plausibly-generated Inuit name has a
+real chance of matching an actual person, who would then appear on a public
+website as a director or managing director of a company they have never heard
+of. Doe and Roe cannot be mistaken for anyone.
+
+Adam Aliqatuqtuq's biography is his real reviewed copy; his role and appointment
+date on this branch are not.
+
+## The Polar Express app
+
+The first operating company is retail, and its customer-facing app is the
+substantial piece of this model: browse what is on the shelf in either store,
+see live stock, and reserve items for collection.
+
+- 53 items across 8 categories and 2 stores.
+- Live stock polled from one small JSON feed, cached for offline, with the age
+  of the figures stated on every page. See
+  [`docs/INVENTORY-FEED.md`](docs/INVENTORY-FEED.md).
+- Search, category and "in stock in this store" filters, all client-side over a
+  fully server-rendered catalogue — the whole list works with JavaScript off.
+- An order built in `localStorage`, reviewed on its own page, with a reservation
+  form. Nothing is charged; payment is at the counter.
+- A service worker so the app opens offline and shows the last known stock,
+  labelled as old. Connections drop here.
+
+`npm run sim` rewrites the feed the way a till would, so the live updating can
+be watched locally.
+
+## What is here
+
+| | |
+|---|---|
+| Pages | 45 |
+| Operating companies | 1 — Polar Express Stores, retail, two communities |
+| Portfolio | 1 operating, 1 in development, 2 planned, 3 concept |
+| Shop | 53 items, 2 stores, live stock, reservations, offline |
+| Job board | 4 postings with full detail pages |
+| News | 7 entries |
+| Reports | 4 documents |
+| Board | 4 directors, 2 independent |
+| Executive | 3 officers |
+
+Pages: home, about, governance, leadership, history, portfolio + 7 company
+pages, careers + 12 role pages, community, news + 10 entries, procurement,
+reports, contact, privacy, accessibility, thank-you, 404.
+
+## Design
+
+The head office site is meant to read as more senior than a subsidiary's, not
+flashier. What carries that:
+
+- A three-tier masthead — model notice, utility bar (head office, leadership,
+  reports, contact), then the wordmark and navigation.
+- Line-drawn sector marks on the same 24-unit grid as the corporate mark, so the
+  portfolio reads as one family.
+- A generated contour field behind the hero — chart isolines, a few hundred
+  bytes of SVG rather than an image request.
+- A shallow two-step elevation system over the hairline grid. Restrained on
+  purpose: a holding company is not a consumer product.
+
+Webfonts are still not installed, so this renders in Georgia and system sans
+rather than Newsreader and Inter. `npm run fetch-fonts` on any machine with
+network access closes that gap.
+
+## Guards
+
+- Every page carries the banner naming it an illustrative future-state model.
+- Every page is `noindex, nofollow`, and `robots.txt` disallows the path.
+- The deploy workflow **fails** if any demo page is missing either.
+
+## Returning to the factual site
+
+Set `demo.enabled` to `false` in `src/data/site.mjs`, or use `main`.

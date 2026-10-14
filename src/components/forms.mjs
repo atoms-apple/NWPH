@@ -144,7 +144,7 @@ export const InterestForm = () => Form({
   id: 'interest-form',
   kind: 'career-interest',
   title: 'Expression of interest',
-  description: 'There are no open positions. This registers your interest so you can be contacted when hiring begins.',
+  description: 'For candidates whose skills do not match a currently posted role. Registers your interest across all seven operating companies.',
   submitLabel: 'Register my interest',
   fields: html`
     ${nameFields('interest')}
@@ -179,6 +179,6 @@ export const DocumentRequestForm = () => Form({
     ${Field({
       id: 'docs-what', name: 'documents', label: 'What do you need?', type: 'textarea',
       required: true, minlength: 15, maxlength: 2000, rows: 5,
-      hint: 'Note that NWPH is pre-incorporation: audited statements and operating history do not exist yet.',
+      hint: 'Audited statements, the annual report and corporate registration documents are available on request.',
     })}`,
 });

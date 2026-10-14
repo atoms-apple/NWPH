@@ -22,12 +22,18 @@ import homePage from './src/pages/index.mjs';
 import aboutPage from './src/pages/about.mjs';
 import { subsidiariesIndex, subsidiaryDetail } from './src/pages/subsidiaries.mjs';
 import procurementPage from './src/pages/procurement.mjs';
-import careersPage from './src/pages/careers.mjs';
+import { careersIndex, roleDetail } from './src/pages/careers.mjs';
 import contactPage from './src/pages/contact.mjs';
 import { newsIndex, newsDetail } from './src/pages/news.mjs';
 import governancePage from './src/pages/governance.mjs';
+import communityPage from './src/pages/community.mjs';
 import { reportsPage, privacyPage, accessibilityPage } from './src/pages/policies.mjs';
+import leadershipPage from './src/pages/leadership.mjs';
+import historyPage from './src/pages/history.mjs';
 import { thankYouPage, notFoundPage } from './src/pages/static.mjs';
+import { shopIndex, productDetail, orderPage } from './src/pages/shop.mjs';
+import { shop, stores, products } from './src/data/polar-express.mjs';
+import { inventoryFeed } from './src/lib/shop.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, 'dist');
@@ -36,7 +42,7 @@ const base = site.base;
 /* ── Asset pipeline ──────────────────────────────────────────────────────── */
 
 // Order is cascade order: tokens, then base, then layout, then components.
-const CSS_FILES = ['tokens.css', 'base.css', 'layout.css', 'components.css', 'forms.css', 'print.css'];
+const CSS_FILES = ['tokens.css', 'base.css', 'layout.css', 'components.css', 'forms.css', 'shop.css', 'print.css'];
 
 /** Conservative minifier: strips comments and collapses whitespace only. */
 function minifyCss(css) {
@@ -54,17 +60,31 @@ async function buildStyles() {
     parts.push(await readFile(path.join(root, 'src/styles', file), 'utf8'));
   }
   const printHost = site.origin.replace(/^https?:\/\//, '');
-  const css = minifyCss(parts.join('\n')).replaceAll('__PRINT_HOST__', printHost);
+
+  // Filter rules, one pair per status. Generated rather than hand-written so a
+  // new status cannot ship with a filter option that quietly does nothing.
+  const filterRules = STATUS_VALUES.map((value) => [
+    `.subsidiary-browser:has(#filter-${value}:checked) .subsidiary-grid > .card:not([data-status='${value}']) { display: none; }`,
+    `.subsidiary-browser:has(#filter-${value}:checked) .filter-empty[data-for='${value}'] { display: block; }`,
+  ].join('\n')).join('\n');
+
+  const css = minifyCss(parts.join('\n'))
+    .replaceAll('__PRINT_HOST__', printHost)
+    .replace('__FILTER_RULES__', filterRules);
   await writeFile(path.join(dist, 'assets/site.css'), css);
   return css.length;
 }
 
 async function buildScripts() {
-  const js = await readFile(path.join(root, 'src/client/enhance.js'), 'utf8');
-  // Left unminified: it is small, and a readable script a maintainer can open
-  // in devtools is worth more here than the few hundred bytes gzip recovers.
-  await writeFile(path.join(dist, 'assets/enhance.js'), js);
-  return js.length;
+  let total = 0;
+  for (const name of ['enhance.js', 'shop.js']) {
+    const js = await readFile(path.join(root, 'src/client', name), 'utf8');
+    // Left unminified: both are small, and a readable script a maintainer can
+    // open in devtools is worth more than the few hundred bytes gzip recovers.
+    await writeFile(path.join(dist, 'assets', name), js);
+    total += js.length;
+  }
+  return total;
 }
 
 /** Copy public/ verbatim. */
@@ -127,7 +147,14 @@ async function build() {
   for (const [name, config] of Object.entries(collections)) {
     loaded[name] = await loadCollection(name, config.schema, { sort: config.sort });
   }
-  const { subsidiaries, people, roles, procurement, faq, news, milestones } = loaded;
+  const { subsidiaries, people, roles, procurement, faq, news, milestones, history, reports } = loaded;
+
+  // A posting past its closing date is not an open position. Marked rather
+  // than deleted, so an existing link reaches the posting and is told it
+  // closed instead of 404ing.
+  const today = new Date().toISOString().slice(0, 10);
+  for (const role of roles) role.closed = Boolean(role.closes && role.closes < today);
+  const openRoles = roles.filter((role) => !role.closed);
 
   // 2. Derived statistics. Never authored by hand — see src/data/status.mjs.
   const stats = {
@@ -141,9 +168,11 @@ async function build() {
 
   // 3. Pages.
   const pages = [
-    homePage({ subsidiaries, stats, base }),
+    homePage({ subsidiaries, people, history, news, roles: openRoles, stats, base }),
     aboutPage({ people, stats, base }),
     governancePage({ stats, base }),
+    leadershipPage({ people, subsidiaries, base }),
+    ...(history.length ? [historyPage({ history, stats, base })] : []),
     subsidiariesIndex({ subsidiaries, stats, base }),
     // Every venture gets a page. A named one is a company page; an unnamed one
     // is a sector assessment — the gap, what a venture there would need, and a
@@ -152,18 +181,45 @@ async function build() {
       stats,
       base,
       milestones: milestones.filter((milestone) => milestone.venture === subsidiary.name),
+      manager: people.find((p) => p.group === 'subsidiary' && p.venture === subsidiary.name) ?? null,
+      roles: openRoles.filter((role) => role.subsidiary === subsidiary.name),
+      // Match news to a company by name mention, so an entry appears on the
+      // page of the company it is about without needing a field maintained.
+      news: news.filter((entry) => subsidiary.name && (
+        entry.title.includes(subsidiary.name) || entry.summary.includes(subsidiary.name) ||
+        entry.body.includes(subsidiary.name)
+      )).slice(0, 3),
     })),
     procurementPage({ tiers: procurement, faq, base }),
-    careersPage({ roles, base }),
+    careersIndex({ roles: openRoles, subsidiaries, base }),
+    ...roles.map((role) => roleDetail(role, { base })),
     newsIndex({ news, base }),
     ...news.map((entry) => newsDetail(entry, { base })),
+    communityPage({ base }),
     contactPage({ base }),
-    reportsPage({ stats, base }),
+    reportsPage({ stats, reports, base }),
     privacyPage({ base }),
     accessibilityPage({ base }),
     thankYouPage({ base }),
     notFoundPage({ base }),
   ];
+
+  // The Polar Express app. Its three pages carry the catalogue and the feed
+  // configuration so the client script needs no second request to start.
+  const shopApp = {
+    config: {
+      base,
+      inventoryEndpoint: base + shop.inventoryEndpoint,
+      pollSeconds: shop.pollSeconds,
+      staleMinutes: shop.staleMinutes,
+      lowStockAt: shop.lowStockAt,
+      currency: shop.currency,
+    },
+    catalogue: products.map(({ sku, name, unit, price }) => ({ sku, name, unit, price })),
+  };
+  for (const page of [shopIndex({ base }), ...products.map((p) => productDetail(p, { base })), orderPage({ base })]) {
+    pages.push({ ...page, shopApp });
+  }
 
   const written = [];
   for (const page of pages) written.push(await writePage(page, stats));
@@ -174,6 +230,21 @@ async function build() {
   await writeFile(path.join(dist, 'sitemap.xml'), sitemap(pages.filter((p) => !p.noindex).map((p) => p.path)));
   await writeFile(path.join(dist, 'robots.txt'), robots());
   await writeFile(path.join(dist, 'favicon.svg'), favicon());
+
+  // The service worker gives the shop offline access. It sits at the site root
+  // because a worker can only control the scope it is served from.
+  await writeFile(
+    path.join(dist, 'sw.js'),
+    await readFile(path.join(root, 'src/client/sw.js'), 'utf8'),
+  );
+
+  // The stock feed. In production this is the point-of-sale system's endpoint;
+  // here the build emits the same shape as a static snapshot.
+  await mkdir(path.join(dist, 'shop'), { recursive: true });
+  await writeFile(
+    path.join(dist, 'shop/inventory.json'),
+    JSON.stringify(inventoryFeed({ stores, products, generatedAt: new Date().toISOString() })),
+  );
   // Tell GitHub Pages not to run Jekyll over the output.
   await writeFile(path.join(dist, '.nojekyll'), '');
   const publicFiles = await copyPublic();
@@ -191,6 +262,9 @@ async function build() {
   const named = subsidiaries.filter((s) => s.name).length;
   console.log(`  Portfolio: ${stats.total} ventures — ${stats.operating} operating (${STATUS_VALUES.map((v) => `${stats.byStatus[v]} ${v}`).join(', ')})`);
   console.log(`  ${named} named, ${stats.total - named} published by sector only`);
+  if (roles.length) {
+    console.log(`  Roles: ${openRoles.length} open, ${roles.length - openRoles.length} closed`);
+  }
 
   const fonts = await readdir(path.join(root, 'public/fonts')).catch(() => []);
   if (!fonts.some((file) => file.endsWith('.woff2'))) {

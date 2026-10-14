@@ -17,8 +17,8 @@ export function thankYouPage({ base }) {
           </div>
           <h1 style="margin-top: var(--space-l)">Thank you</h1>
           <p class="section__intro">
-            NWPH is pre-incorporation and has no staff, so replies come from the founding group
-            and may take time. If your enquiry is urgent, email
+            Your message has been directed to the relevant team. If your enquiry is urgent,
+            email
             <a href="mailto:${site.email}">${site.email}</a> directly.
           </p>
           <p class="hero__actions">

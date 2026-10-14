@@ -81,6 +81,11 @@ body {
 }
 
 img, svg, video { display: block; max-width: 100%; height: auto; }
+
+/* Any `display` on a class beats the user agent's [hidden] rule, so an element
+   hidden from script stays on screen. This has to win, or every filter on the
+   site silently stops working. */
+[hidden] { display: none !important; }
 input, button, textarea, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 
