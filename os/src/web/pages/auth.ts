@@ -52,11 +52,13 @@ function setupPage(ctx: Context, values: Record<string, string> = {}, error?: st
   return barePage(
     'Set up NWPH OS',
     html`<h1>Create the first owner account</h1>
-    <p class="muted">Enter the setup token printed in the server console when NWPH OS started (or the SETUP_TOKEN environment variable). This page stops working once an account exists.</p>
+    ${ctx.config.setupWithoutToken
+      ? html`<p class="muted">Welcome. Choose the email and password you will use to sign in. This account will be the owner of NWPH OS. This page stops working once an account exists.</p>`
+      : html`<p class="muted">Enter the setup token printed in the server console when NWPH OS started (or the SETUP_TOKEN environment variable). This page stops working once an account exists.</p>`}
     ${error ? notice('error', error) : ''}
     <form method="post" action="/setup" class="form form--narrow">
       <input type="hidden" name="_csrf" value="${csrf}">
-      <div class="field"><label for="token">Setup token</label><input id="token" name="token" type="password" autocomplete="off" required></div>
+      ${ctx.config.setupWithoutToken ? '' : html`<div class="field"><label for="token">Setup token</label><input id="token" name="token" type="password" autocomplete="off" required></div>`}
       <div class="field"><label for="display_name">Your name</label><input id="display_name" name="display_name" required maxlength="120" value="${values.display_name ?? ''}"></div>
       <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="username" required value="${values.email ?? ''}"></div>
       <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="${MIN_PASSWORD_LENGTH}" required>
@@ -116,7 +118,7 @@ export function registerAuth(router: Router): void {
   router.post('/setup', 'public', async (ctx) => {
     if (countUsers() > 0) return redirect('/login');
     const values = ctx.form.values();
-    if (!setupToken || !safeEqual(ctx.form.get('token').trim(), setupToken)) {
+    if (!ctx.config.setupWithoutToken && (!setupToken || !safeEqual(ctx.form.get('token').trim(), setupToken))) {
       return htmlReply(setupPage(ctx, values, 'The setup token is not correct. Check the server console output.'), 403);
     }
     try {

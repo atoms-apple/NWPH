@@ -25,12 +25,17 @@ if (config.production && !config.cookieSecure) {
 }
 
 if (countUsers() === 0) {
-  const token = config.setupToken ?? randomToken(18);
-  setSetupToken(token);
-  console.log('\nNo user accounts exist yet. Create the first owner account at:');
-  console.log(`  http://${config.host}:${config.port}/setup`);
-  console.log(`  Setup token: ${token}${config.setupToken ? ' (from SETUP_TOKEN)' : ''}`);
-  console.log('Or run: npm run user:create\n');
+  if (config.setupWithoutToken) {
+    console.log('\nNo user accounts exist yet. Open NWPH OS (port 4400) in your browser to create your owner account.');
+    console.log('Inside a GitHub Codespace no setup token is needed: the forwarded port is private to you.\n');
+  } else {
+    const token = config.setupToken ?? randomToken(18);
+    setSetupToken(token);
+    console.log('\nNo user accounts exist yet. Create the first owner account at:');
+    console.log(`  http://${config.host}:${config.port}/setup`);
+    console.log(`  Setup token: ${token}${config.setupToken ? ' (from SETUP_TOKEN)' : ''}`);
+    console.log('Or run: npm run user:create\n');
+  }
 }
 
 purgeExpiredSessions();

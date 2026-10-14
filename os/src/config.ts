@@ -15,6 +15,8 @@ export interface Config {
   cookieSecure: boolean;
   trustProxy: boolean;
   setupToken: string | null;
+  /** First-owner setup without a token: only inside a GitHub Codespace, whose forwarded port is private to its owner. */
+  setupWithoutToken: boolean;
 }
 
 function bool(value: string | undefined, fallback: boolean): boolean {
@@ -44,5 +46,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     cookieSecure: bool(env.COOKIE_SECURE, production),
     trustProxy: bool(env.TRUST_PROXY, false),
     setupToken: env.SETUP_TOKEN || null,
+    setupWithoutToken: env.CODESPACES === 'true' && !bool(env.SETUP_REQUIRE_TOKEN, false),
   };
 }
