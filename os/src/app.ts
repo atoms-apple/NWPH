@@ -142,7 +142,7 @@ async function dispatch(ctx: Context, router: Router): Promise<Reply> {
       } catch {
         /* invalid */
       }
-      if (originHost !== ctx.req.headers.host) throw new HttpError(403, 'Cross-site request refused.');
+      if (originHost !== ctx.publicHost) throw new HttpError(403, 'Cross-site request refused.');
     }
     ctx.form = await parseForm(ctx.req, ctx.config.maxUploadBytes);
     const expected = ctx.session?.csrfToken ?? ctx.cookies[PRE_AUTH_COOKIE] ?? '';

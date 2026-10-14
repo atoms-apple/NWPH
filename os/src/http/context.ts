@@ -105,6 +105,20 @@ export class Context {
     if (this.session) setFlash(this.session.tokenHash, { kind, message });
   }
 
+  /**
+   * The host the browser addressed. Behind a trusted reverse proxy (TRUST_PROXY,
+   * e.g. GitHub Codespaces port forwarding) the Host header is rewritten, so the
+   * original is read from X-Forwarded-Host instead.
+   */
+  get publicHost(): string {
+    if (this.config.trustProxy) {
+      const fwd = this.req.headers['x-forwarded-host'];
+      const first = (Array.isArray(fwd) ? fwd[0] : fwd)?.split(',')[0]?.trim();
+      if (first) return first;
+    }
+    return this.req.headers.host ?? '';
+  }
+
   /** The address used for throttling. Only trusts X-Forwarded-For when configured. */
   get clientAddress(): string {
     if (this.config.trustProxy) {

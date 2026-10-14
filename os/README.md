@@ -19,6 +19,43 @@ these pairs apart:
 
 ---
 
+## Run it on GitHub (Codespaces)
+
+The quickest way to try NWPH OS is to run it in your browser in a GitHub
+Codespace. This needs no installation, and the codespace is private to your
+GitHub account.
+
+1. On the repository page, click **Code → Codespaces → Create codespace on main**.
+2. Wait for it to build (a few minutes the first time). The database is
+   created automatically, and a terminal named **NWPH OS server** starts the
+   app.
+3. In that terminal, copy the **Setup token** line. A browser tab opens on
+   NWPH OS; if it doesn't, open the **Ports** tab and click the globe icon
+   next to port 4400.
+4. Paste the token into the **Create the first owner account** page and
+   choose your email and password. You're in.
+
+Keep in mind:
+
+- **Access:** the forwarded port is **private**, so only your signed-in
+  GitHub account can open it. Don't change its visibility to Public.
+- **Your data:** it lives in `os/data/` inside the codespace. It survives
+  stopping and restarting the codespace, but is **deleted with the
+  codespace**. GitHub deletes inactive codespaces after 30 days by default.
+  Download anything you need to keep.
+- **Cost:** codespaces use your GitHub Codespaces allowance. Personal
+  accounts get a free monthly quota; stop the codespace when you're done
+  (**Codespaces → Stop**) so it doesn't run down the quota.
+- **Restarting the server:** if you close its terminal, open a new one and run
+  `cd os && npm start`.
+- **Not for production:** Codespaces is meant for trying NWPH OS out, not for
+  holding NWPH's real records long-term. See
+  [Deployment considerations](#deployment-considerations).
+
+The configuration is in `.devcontainer/devcontainer.json` at the repository
+root. It sets `TRUST_PROXY=true` because GitHub's port forwarding is a reverse
+proxy (see Configuration).
+
 ## Requirements
 
 - **Node.js 22.18 or newer.** Node runs the TypeScript source directly through
@@ -80,7 +117,7 @@ it exists. `.env` is git-ignored; `.env.example` lists every variable.
 | `SESSION_IDLE_HOURS` | `12` | Idle timeout |
 | `SESSION_MAX_DAYS` | `7` | Absolute session lifetime |
 | `COOKIE_SECURE` | `true` in production | Adds `Secure` to cookies, plus an HSTS header |
-| `TRUST_PROXY` | `false` | Trust `X-Forwarded-For` for login throttling (only behind your own proxy) |
+| `TRUST_PROXY` | `false` | Behind a reverse proxy you trust (your own, or Codespaces): read `X-Forwarded-For` for login throttling and `X-Forwarded-Host` for the cross-site check. Leave `false` when clients connect directly. |
 | `SETUP_TOKEN` | random each start | Token for the first-owner `/setup` page |
 | `TZ` | system | Sets which date counts as "today" for overdue checks. `America/Iqaluit` is a sensible value. |
 
