@@ -1,0 +1,31 @@
+name: NWPH OS
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["os/**", ".github/workflows/os.yml"]
+  pull_request:
+    paths: ["os/**", ".github/workflows/os.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: os
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # NWPH OS has no runtime dependencies. TypeScript is only needed to type-check.
+      - name: Type-check
+        run: |
+          npm i --no-save --no-package-lock typescript@6.0.2 @types/node@26.1.2
+          npx tsc -p tsconfig.json
+      - name: Test
+        run: npm test
