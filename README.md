@@ -2,6 +2,10 @@
 
 Static site for NWPH, an Inuit-owned holding company in Iqaluit, Nunavut.
 
+> **NWPH OS**, the private internal management platform, lives in [`os/`](os/README.md).
+> It is a separate server application with its own database and login, and is
+> never part of the GitHub Pages build.
+
 **The site's central claim is that nothing is operating yet.** That is not a
 disclaimer bolted on to marketing copy — it is enforced by the content schema.
 Read [The status enum](#the-status-enum) before editing anything.

@@ -1,0 +1,23 @@
+{
+  "name": "nwph-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NWPH OS: private enterprise management platform for NWPH and its venture portfolio",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/server.ts",
+    "dev": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env --watch src/server.ts",
+    "db:migrate": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/cli.ts migrate",
+    "db:reset": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/cli.ts reset",
+    "db:examples": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/cli.ts examples",
+    "user:create": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/cli.ts create-user",
+    "test": "node --disable-warning=ExperimentalWarning --test --test-concurrency=1 test/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "e2e": "node --disable-warning=ExperimentalWarning tools/browser-check.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
