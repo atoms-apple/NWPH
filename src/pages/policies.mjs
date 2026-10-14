@@ -30,7 +30,7 @@ export function reportsPage({ stats, reports = [], base }) {
           <div class="status-notice">
             <p class="status-notice__head">First full reporting year complete.</p>
             <p>
-              Consolidated statements cover the holding company and both operating subsidiaries.
+              Consolidated statements cover the holding company and its operating subsidiary.
               The annual report sets out where each company stands against its plan, including
               where it does not meet it.
             </p>

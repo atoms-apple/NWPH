@@ -220,6 +220,14 @@ export function subsidiaryDetail(subsidiary, { stats, base, milestones = [], man
 
       <section class="section">
         <div class="wrap">
+          ${subsidiary.slug === 'polar-express-stores' ? CTABlock({
+            title: 'Shop and check availability',
+            body: 'See what is on the shelf in both stores right now, and reserve anything you want held for collection.',
+            actions: [
+              { href: `${base}/shop/`, label: 'Browse the shop', primary: true },
+              { href: `${base}/shop/order/`, label: 'Your order' },
+            ],
+          }) : ''}
           ${CTABlock({
             title: named ? 'Working with this company' : 'Interested in this sector?',
             body: named

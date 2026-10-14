@@ -32,18 +32,39 @@ of. Doe and Roe cannot be mistaken for anyone.
 Adam Aliqatuqtuq's biography is his real reviewed copy; his role and appointment
 date on this branch are not.
 
+## The Polar Express app
+
+The first operating company is retail, and its customer-facing app is the
+substantial piece of this model: browse what is on the shelf in either store,
+see live stock, and reserve items for collection.
+
+- 53 items across 8 categories and 2 stores.
+- Live stock polled from one small JSON feed, cached for offline, with the age
+  of the figures stated on every page. See
+  [`docs/INVENTORY-FEED.md`](docs/INVENTORY-FEED.md).
+- Search, category and "in stock in this store" filters, all client-side over a
+  fully server-rendered catalogue — the whole list works with JavaScript off.
+- An order built in `localStorage`, reviewed on its own page, with a reservation
+  form. Nothing is charged; payment is at the counter.
+- A service worker so the app opens offline and shows the last known stock,
+  labelled as old. Connections drop here.
+
+`npm run sim` rewrites the feed the way a till would, so the live updating can
+be watched locally.
+
 ## What is here
 
 | | |
 |---|---|
 | Pages | 45 |
-| Companies | 7 named, all trading, each with leadership, openings and news |
-| Job board | 12 postings with full detail pages, salary bands and references |
-| News | 10 entries, including the 2024 subsidiary wind-up |
-| Reports | 8 documents across 5 years |
-| Board | 6 directors, 3 independent, 3 committees |
-| Executive | 5 officers |
-| Subsidiary management | 7 managing directors |
+| Operating companies | 1 — Polar Express Stores, retail, two communities |
+| Portfolio | 1 operating, 1 in development, 2 planned, 3 concept |
+| Shop | 53 items, 2 stores, live stock, reservations, offline |
+| Job board | 4 postings with full detail pages |
+| News | 7 entries |
+| Reports | 4 documents |
+| Board | 4 directors, 2 independent |
+| Executive | 3 officers |
 
 Pages: home, about, governance, leadership, history, portfolio + 7 company
 pages, careers + 12 role pages, community, news + 10 entries, procurement,

@@ -28,6 +28,7 @@ const organizationJsonLd = () => JSON.stringify({
 
 export const BaseLayout = ({
   title, description, path, body, current, stats = { operating: 0, total: 0 }, noindex = false,
+  shopApp = null,
 }) => {
   const base = site.base;
   const canonical = `${site.origin}${base}${path}`;
@@ -70,6 +71,11 @@ ${body}
 </main>
 ${SiteFooter({ base, operating: stats.operating, total: stats.total })}
 <script src="${base}/assets/enhance.js" defer></script>
+${shopApp ? html`
+<p class="visually-hidden" data-shop-live role="status" aria-live="polite"></p>
+<script type="application/json" id="shop-config">${raw(JSON.stringify(shopApp.config))}</script>
+<script type="application/json" id="shop-catalogue">${raw(JSON.stringify(shopApp.catalogue))}</script>
+<script src="${base}/assets/shop.js" defer></script>` : ''}
 </body>
 </html>`);
 };

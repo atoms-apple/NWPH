@@ -31,6 +31,9 @@ import { reportsPage, privacyPage, accessibilityPage } from './src/pages/policie
 import leadershipPage from './src/pages/leadership.mjs';
 import historyPage from './src/pages/history.mjs';
 import { thankYouPage, notFoundPage } from './src/pages/static.mjs';
+import { shopIndex, productDetail, orderPage } from './src/pages/shop.mjs';
+import { shop, stores, products } from './src/data/polar-express.mjs';
+import { inventoryFeed } from './src/lib/shop.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, 'dist');
@@ -39,7 +42,7 @@ const base = site.base;
 /* ── Asset pipeline ──────────────────────────────────────────────────────── */
 
 // Order is cascade order: tokens, then base, then layout, then components.
-const CSS_FILES = ['tokens.css', 'base.css', 'layout.css', 'components.css', 'forms.css', 'print.css'];
+const CSS_FILES = ['tokens.css', 'base.css', 'layout.css', 'components.css', 'forms.css', 'shop.css', 'print.css'];
 
 /** Conservative minifier: strips comments and collapses whitespace only. */
 function minifyCss(css) {
@@ -73,11 +76,15 @@ async function buildStyles() {
 }
 
 async function buildScripts() {
-  const js = await readFile(path.join(root, 'src/client/enhance.js'), 'utf8');
-  // Left unminified: it is small, and a readable script a maintainer can open
-  // in devtools is worth more here than the few hundred bytes gzip recovers.
-  await writeFile(path.join(dist, 'assets/enhance.js'), js);
-  return js.length;
+  let total = 0;
+  for (const name of ['enhance.js', 'shop.js']) {
+    const js = await readFile(path.join(root, 'src/client', name), 'utf8');
+    // Left unminified: both are small, and a readable script a maintainer can
+    // open in devtools is worth more than the few hundred bytes gzip recovers.
+    await writeFile(path.join(dist, 'assets', name), js);
+    total += js.length;
+  }
+  return total;
 }
 
 /** Copy public/ verbatim. */
@@ -195,6 +202,23 @@ async function build() {
     notFoundPage({ base }),
   ];
 
+  // The Polar Express app. Its three pages carry the catalogue and the feed
+  // configuration so the client script needs no second request to start.
+  const shopApp = {
+    config: {
+      base,
+      inventoryEndpoint: base + shop.inventoryEndpoint,
+      pollSeconds: shop.pollSeconds,
+      staleMinutes: shop.staleMinutes,
+      lowStockAt: shop.lowStockAt,
+      currency: shop.currency,
+    },
+    catalogue: products.map(({ sku, name, unit, price }) => ({ sku, name, unit, price })),
+  };
+  for (const page of [shopIndex({ base }), ...products.map((p) => productDetail(p, { base })), orderPage({ base })]) {
+    pages.push({ ...page, shopApp });
+  }
+
   const written = [];
   for (const page of pages) written.push(await writePage(page, stats));
 
@@ -204,6 +228,21 @@ async function build() {
   await writeFile(path.join(dist, 'sitemap.xml'), sitemap(pages.filter((p) => !p.noindex).map((p) => p.path)));
   await writeFile(path.join(dist, 'robots.txt'), robots());
   await writeFile(path.join(dist, 'favicon.svg'), favicon());
+
+  // The service worker gives the shop offline access. It sits at the site root
+  // because a worker can only control the scope it is served from.
+  await writeFile(
+    path.join(dist, 'sw.js'),
+    await readFile(path.join(root, 'src/client/sw.js'), 'utf8'),
+  );
+
+  // The stock feed. In production this is the point-of-sale system's endpoint;
+  // here the build emits the same shape as a static snapshot.
+  await mkdir(path.join(dist, 'shop'), { recursive: true });
+  await writeFile(
+    path.join(dist, 'shop/inventory.json'),
+    JSON.stringify(inventoryFeed({ stores, products, generatedAt: new Date().toISOString() })),
+  );
   // Tell GitHub Pages not to run Jekyll over the output.
   await writeFile(path.join(dist, '.nojekyll'), '');
   const publicFiles = await copyPublic();

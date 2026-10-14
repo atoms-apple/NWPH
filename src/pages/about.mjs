@@ -31,11 +31,11 @@ export default function aboutPage({ people, stats, base }) {
             companies operating in Nunavut — not to add to their number.
           </p>
           <div class="status-notice">
-            <p class="status-notice__head">Two years in</p>
+            <p class="status-notice__head">Two years in, one company trading</p>
             <p>
-              NWPH was incorporated in <strong>2026</strong> and operates two companies, in tourism
-              and in technology. Five further sectors are at earlier stages. What follows is the
-              mandate all of them are held to.
+              NWPH was incorporated in <strong>2026</strong> and operates one company: Polar
+              Express Stores, in retail, across two communities. Six further sectors are at
+              earlier stages. What follows is the mandate all of them are held to.
             </p>
           </div>
 

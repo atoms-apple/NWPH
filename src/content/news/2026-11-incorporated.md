@@ -13,4 +13,4 @@ An independent chair and an audit committee chair were appointed at
 incorporation rather than deferred. Governance is cheapest to establish before
 there is anything to govern, and hardest to retrofit afterwards.
 
-No subsidiary is trading yet. The first, in tourism, is targeted for 2027.
+No subsidiary is trading yet. The first, in retail, is targeted for 2027.

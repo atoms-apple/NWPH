@@ -1,8 +1,8 @@
 ---
 sector: Real Estate & Housing
-status: planned
+status: concept
 summary: Development and property management addressing the territory's housing shortage, built for northern climate and northern households.
-order: 4
+order: 5
 draft: false
 ---
 

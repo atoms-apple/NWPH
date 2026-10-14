@@ -128,13 +128,14 @@
 .nav__list {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-m);
+  gap: var(--space-s);
   list-style: none;
   padding: 0;
 }
+@media (min-width: 78em) { .nav__list { gap: var(--space-m); } }
 .nav__link {
   display: inline-block;
-  font-size: var(--step--1);
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;

@@ -7,7 +7,7 @@ category: Corporate
 reference: NWPH-29-001
 salary: $72,000–$85,000
 posted: 2028-08-26
-closes: 2028-10-06
+closes: 2028-10-16
 priority: true
 order: 4
 draft: false
@@ -16,8 +16,8 @@ draft: false
 ## The role
 
 Bookkeeping, payables, payroll and reporting support across the holding company
-and both operating subsidiaries. You would be the corporation's fourth
-head-office appointment.
+and its operating subsidiary. You would be the corporation's fourth head-office
+appointment.
 
 A small organisation means the work is broad rather than narrow: month end,
 audit preparation, and the procurement and insurance administration that sits

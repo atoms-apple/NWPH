@@ -2,47 +2,37 @@
 name: ArcTrek Expeditions
 legalName: ArcTrek Expeditions Ltd.
 sector: Tourism & Expeditions
-status: operating
-founded: 2027
-generalManager: Sarah Roe
-staff: 11 seasonal, 2 year-round
-communities: 2 communities
+status: development
+target: Targeting summer 2029
 summary: Inuit-guided Arctic expedition tourism across Nunavut — multi-day land-based trips led by guides who know the country, with outfitting and logistics handled in the territory.
-order: 1
+order: 2
 draft: false
 ---
 
 Visitors already come to Nunavut. The guiding, outfitting and logistics that get
-them onto the land have largely been arranged by operators based outside the
-territory, and most of what a visitor spends has been booked, invoiced and
-banked elsewhere. The knowledge is here. The company was not.
+them onto the land are largely arranged by operators based outside the
+territory, and most of what a visitor spends is booked, invoiced and banked
+elsewhere. The knowledge is here. The company is not.
 
-ArcTrek is the corporation's first operating company. It completed its first
-season in 2027 and its second in 2028.
+ArcTrek is the corporation's second company and the next one to incorporate.
 
-## What it does
+## What it will be
 
 Land-based expedition tourism: multi-day trips run by Inuit guides, using local
 knowledge of ice, weather, wildlife and route, with the outfitting and logistics
 handled in the territory rather than contracted in from the south.
 
-It is a guiding and outfitting business, not a travel agency. The people leading
-trips are the people who know the country.
+A guiding and outfitting business, not a travel agency.
 
 ## Where it stands
 
-Two seasons in. The company runs a spring floe-edge programme and a shorter
-open-water season, and it is deliberately small: capacity is set by the number
-of experienced lead guides, not by demand.
+Incorporation and licensing are underway, with a first season targeted for
+summer 2029. Financing is the step most likely to move that date.
 
-The second season ran at a modest operating surplus, which is earlier than the
-plan assumed. That is not yet a trend.
+Guide recruitment has begun, and certification for the first intake is funded.
 
-## Employment
+## What this is not
 
-Guiding is the corporation's largest source of seasonal work for young
-Nunavummiut. Guides progress through a structured pathway — assistant, guide,
-lead guide — with wilderness first aid, firearms safety and marine certification
-funded by the company.
-
-Two assistant guides advanced to guide after the 2028 season.
+ArcTrek is not taking bookings, holding dates, accepting deposits, or publishing
+itineraries or prices. No service is available for purchase. That will be stated
+here when it changes, and not before.

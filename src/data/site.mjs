@@ -7,8 +7,8 @@
  * FUTURE-STATE MODEL.
  *
  * This branch renders North West Passage Holdings Corporation as a newly-formed
- * corporation in its early operating years: incorporated, one company trading a
- * second season, a second just launched, and the rest still ahead of it.
+ * corporation in its early operating years: incorporated, one company trading —
+ * Polar Express Stores, in retail — and the rest still ahead of it.
  *
  * It is a vision model, not a record. NWPH is pre-incorporation today and none
  * of this has happened. The figures are deliberately small and concrete — a
@@ -33,13 +33,13 @@ export const demo = {
 
   /** Illustrative figures for a young corporation. One place, kept consistent. */
   figures: {
-    employees: 23,
-    inuitEmployment: '74%',
-    revenue: '$2.4M',
-    communities: 3,
-    apprentices: 4,
+    employees: 19,
+    inuitEmployment: '79%',
+    revenue: '$3.4M',
+    communities: 2,
+    apprentices: 3,
     scholarships: 2,
-    procurementLocal: '$610,000',
+    procurementLocal: '$480,000',
     yearEnd: '31 March',
   },
 };
@@ -79,8 +79,8 @@ export const formEndpoint = null;
 
 export const nav = [
   { href: '/about/', label: 'About' },
-  { href: '/about/history/', label: 'History' },
   { href: '/subsidiaries/', label: 'Portfolio' },
+  { href: '/shop/', label: 'Shop' },
   { href: '/procurement/', label: 'Procurement' },
   { href: '/careers/', label: 'Careers' },
   { href: '/community/', label: 'Community' },
@@ -96,14 +96,15 @@ export const footerNav = [
       { href: '/about/', label: 'About & mission' },
       { href: '/about/governance/', label: 'Governance' },
       { href: '/about/leadership/', label: 'Leadership & board' },
-      { href: '/about/history/', label: 'History' },
-      { href: '/reports/', label: 'Reports & documents' },
+          { href: '/reports/', label: 'Reports & documents' },
     ],
   },
   {
     heading: 'Portfolio',
     links: [
       { href: '/subsidiaries/', label: 'All companies' },
+      { href: '/shop/', label: 'Polar Express shop' },
+      { href: '/shop/order/', label: 'Your order' },
       { href: '/news/', label: 'News' },
       { href: '/community/', label: 'Community' },
     ],

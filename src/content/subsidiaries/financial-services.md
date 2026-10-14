@@ -2,7 +2,7 @@
 sector: Financial Services
 status: concept
 summary: Banking, lending and financial literacy designed around northern economic realities rather than transplanted from southern models.
-order: 5
+order: 6
 draft: false
 ---
 

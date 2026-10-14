@@ -15,6 +15,8 @@ export const SiteHeader = ({ current, base = '' }) => html`
         </p>
         <nav class="site-header__secondary" aria-label="Secondary">
           <ul>
+            <li><a class="cart-link" href="${base}/shop/order/">Your order<span
+                  class="cart-count" data-cart-count hidden>0</span></a></li>
             <li><a href="${base}/about/leadership/">Leadership</a></li>
             <li><a href="${base}/reports/">Reports</a></li>
             <li><a href="mailto:${site.email}">${site.email}</a></li>

@@ -224,7 +224,6 @@
 .tabs__tab:hover { color: var(--navy); }
 .tabs__tab[aria-selected='true'] { color: var(--navy); border-bottom-color: var(--gold-text); }
 .tabs__panel { padding-top: var(--space-m); }
-.js .tabs__panel[hidden] { display: none; }
 .tabs__panel-heading { margin-bottom: var(--space-xs); }
 .js .tabs__panel-heading { display: none; }
 

@@ -24,11 +24,11 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
             <span class="anniversary__label">Years · Incorporated ${demo.founded}</span>
           </p>
           <p class="section__label">Inuit-owned · Iqaluit, Nunavut</p>
-          <h1>Two companies trading. Five sectors to go.</h1>
+          <h1>One store open. Six sectors to go.</h1>
           <p class="hero__lede">
             North West Passage Holdings Corporation builds and operates companies in sectors where
             Nunavummiut would otherwise have no locally-owned alternative. It was incorporated in
-            ${demo.founded}, and it is early.
+            ${demo.founded} and opened its first store in 2027.
           </p>
 
           <p class="hero__actions">
@@ -37,7 +37,7 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
           </p>
 
           ${StatStrip([
-            { label: 'Operating companies', value: String(stats.byStatus.operating), flag: true },
+            { label: 'Stores open', value: '2', flag: true },
             { label: 'Sectors still ahead', value: String(stats.total - stats.byStatus.operating) },
             { label: 'Employees', value: String(f.employees) },
             { label: 'Inuit employment', value: f.inuitEmployment },
@@ -86,7 +86,7 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
       <section class="section section--tint">
         <div class="wrap">
           <p class="section__label">The portfolio</p>
-          <h2>${stats.byStatus.operating} operating, ${stats.total - stats.byStatus.operating} ahead</h2>
+          <h2>One operating, ${stats.total - stats.byStatus.operating} ahead</h2>
           <p class="section__intro">
             The order is deliberate. Companies are started one at a time, beginning with the one
             whose failure would cost least.
@@ -108,7 +108,7 @@ export default function homePage({ subsidiaries, people, history, news, roles, s
           </blockquote>
           <p class="section__intro" style="margin-top: var(--space-l)">
             Each company has to work as a business on its own terms. Inuit ownership is the point,
-            not the excuse. Neither operating company is being carried, and neither would be.
+            not the excuse. Polar Express is not being carried, and would not be.
           </p>
         </div>
       </section>
