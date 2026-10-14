@@ -27,9 +27,9 @@ export interface App {
   close(opts?: { keepFiles?: boolean }): Promise<void>;
 }
 
-export async function startApp(opts: { dir?: string; users?: boolean } = {}): Promise<App> {
+export async function startApp(opts: { dir?: string; users?: boolean; env?: Record<string, string> } = {}): Promise<App> {
   const dir = opts.dir ?? fs.mkdtempSync(path.join(os.tmpdir(), 'nwph-os-test-'));
-  const config = loadConfig({ DATABASE_PATH: path.join(dir, 'test.db'), UPLOAD_DIR: path.join(dir, 'uploads'), MAX_UPLOAD_MB: '1' });
+  const config = loadConfig({ DATABASE_PATH: path.join(dir, 'test.db'), UPLOAD_DIR: path.join(dir, 'uploads'), MAX_UPLOAD_MB: '1', ...opts.env });
   openDatabase(config.databasePath);
   migrate();
   seedBaseline();

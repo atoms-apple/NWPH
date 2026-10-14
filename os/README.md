@@ -19,6 +19,37 @@ these pairs apart:
 
 ---
 
+## Run it on GitHub (Codespaces)
+
+**[▶ Open NWPH OS in GitHub Codespaces](https://codespaces.new/atoms-apple/NWPH?quickstart=1)**
+
+1. Click the link above, then **Create codespace**. Next time, the same link
+   takes you back to your existing codespace with your data.
+2. Wait a couple of minutes the first time. NWPH OS opens in a new browser tab
+   on its own.
+3. Choose your email and password. You're in.
+
+If the tab doesn't open, click **Ports** at the bottom of the window, then the
+globe icon next to **NWPH OS (4400)**. If NWPH OS stops, click **+** in the
+terminal panel and run `cd os && npm start`.
+
+Keep in mind:
+
+- **It's private.** Only your GitHub account can open it. Don't change the
+  port's visibility to Public.
+- **Your data lives in the codespace.** It survives stopping and restarting,
+  but is deleted if the codespace is deleted. GitHub deletes codespaces left
+  unused for 30 days by default. It's for trying NWPH OS out, not for keeping
+  NWPH's real records long-term (see
+  [Deployment considerations](#deployment-considerations)).
+- **It uses your free Codespaces allowance.** When you're done, stop the
+  codespace from [github.com/codespaces](https://github.com/codespaces).
+
+The setup is in `.devcontainer/devcontainer.json`. Inside a codespace the
+sign-up page needs no setup token, because the forwarded port is already
+private to you; set `SETUP_REQUIRE_TOKEN=true` to require one anyway. Anywhere
+else, the token is always required.
+
 ## Requirements
 
 - **Node.js 22.18 or newer.** Node runs the TypeScript source directly through
@@ -80,8 +111,9 @@ it exists. `.env` is git-ignored; `.env.example` lists every variable.
 | `SESSION_IDLE_HOURS` | `12` | Idle timeout |
 | `SESSION_MAX_DAYS` | `7` | Absolute session lifetime |
 | `COOKIE_SECURE` | `true` in production | Adds `Secure` to cookies, plus an HSTS header |
-| `TRUST_PROXY` | `false` | Trust `X-Forwarded-For` for login throttling (only behind your own proxy) |
-| `SETUP_TOKEN` | random each start | Token for the first-owner `/setup` page |
+| `TRUST_PROXY` | `false` | Behind a reverse proxy you trust (your own, or Codespaces): read `X-Forwarded-For` for login throttling and `X-Forwarded-Host` for the cross-site check. Leave `false` when clients connect directly. |
+| `SETUP_TOKEN` | random each start | Token for the first-owner `/setup` page (not needed inside a GitHub Codespace) |
+| `SETUP_REQUIRE_TOKEN` | `false` | Require the setup token even inside a Codespace |
 | `TZ` | system | Sets which date counts as "today" for overdue checks. `America/Iqaluit` is a sensible value. |
 
 `os/data/` is git-ignored. Never commit the database or uploads.

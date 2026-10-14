@@ -1,0 +1,29 @@
+{
+  "name": "NWPH OS",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "hostRequirements": { "cpus": 2 },
+  "containerEnv": {
+    "HOST": "127.0.0.1",
+    "PORT": "4400",
+    "TZ": "America/Iqaluit",
+    "TRUST_PROXY": "true",
+    "COOKIE_SECURE": "true"
+  },
+  "postCreateCommand": "cd os && node --version && npm run db:migrate",
+  "postAttachCommand": {
+    "NWPH OS server": "cd os && npm start"
+  },
+  "forwardPorts": [4400],
+  "portsAttributes": {
+    "4400": {
+      "label": "NWPH OS",
+      "onAutoForward": "openBrowser",
+      "requireLocalPort": false
+    }
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["os/README.md"]
+    }
+  }
+}

@@ -5,6 +5,9 @@ Static site for NWPH, an Inuit-owned holding company in Iqaluit, Nunavut.
 > **NWPH OS**, the private internal management platform, lives in [`os/`](os/README.md).
 > It is a separate server application with its own database and login, and is
 > never part of the GitHub Pages build.
+>
+> **[▶ Open NWPH OS in GitHub Codespaces](https://codespaces.new/atoms-apple/NWPH?quickstart=1)**: one click,
+> runs privately in your browser. See [Run it on GitHub](os/README.md#run-it-on-github-codespaces).
 
 **The site's central claim is that nothing is operating yet.** That is not a
 disclaimer bolted on to marketing copy — it is enforced by the content schema.
